@@ -5,7 +5,7 @@ import Creators from "../public/Creators"
 const ContentCreators = () => {
     return (
         <div className="flex flex-col">
-            <div className="text-black font-medium text-2xl mb-8">Creadores de Contenido</div>
+            <div className="text-black font-bold text-2xl mb-8">Creadores de Contenido</div>
             <div className="flex flex-wrap items-center justify-center">
                 {Creators.creators.map((creator) => (
                     <div
@@ -16,7 +16,7 @@ const ContentCreators = () => {
                             <img
                                 className="block h-20 w-auto rounded-md"
                                 src={creator.img}
-                                alt="Heretics Logo"
+                                alt="creator img"
                             />
                         </div>
                         <div className="flex flex-col items-center justify-center w-full">

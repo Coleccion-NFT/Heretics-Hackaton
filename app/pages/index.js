@@ -2,7 +2,7 @@ import { Navbar } from "../components"
 
 export default function Home() {
     return (
-        <div className="flex">
+        <div className="flex h-full">
             <div className="w-1/6 h-full">
                 <Navbar />
             </div>

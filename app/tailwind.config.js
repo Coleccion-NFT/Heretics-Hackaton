@@ -7,7 +7,11 @@ module.exports = {
     ],
     mode: "all",
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                "gray-100": "hsla(0, 0%, 0%, 0.02)",
+            },
+        },
     },
     plugins: [],
 }

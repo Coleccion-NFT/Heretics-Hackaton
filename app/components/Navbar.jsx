@@ -7,15 +7,15 @@ const logo = "https://t9h7n3i5.stackpathcdn.com/wp-content/uploads/2020/10/HERET
 
 export const Navbar = () => {
     return (
-        <nav>
-            <div className="flex flex-col flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+        <nav className="h-screen">
+            <div className="flex flex-col h-full items-center justify-start py-8">
                 <div className="flex items-center justify-center">
                     <img className="h-20 w-auto block" src={logo} alt="Heretics Logo" />
                 </div>
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col h-full items-center justify-evenly">
                     {NavItems.navitems.map((navitem) => (
                         <div
-                            className="my-2 w-full focus:border-2 border-solid border-black sm:pl-6"
+                            className="my-2 w-full focus:border-2 border-solid border-black"
                             key={navitem.id}
                         >
                             <Link
