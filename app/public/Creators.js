@@ -1,4 +1,4 @@
-const Creators = {
+export default Creators = {
     creators: [
         {
             id: 1,
@@ -32,5 +32,3 @@ const Creators = {
         },
     ],
 }
-
-export default Creators

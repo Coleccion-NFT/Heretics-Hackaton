@@ -3,16 +3,14 @@ import React from "react"
 
 import NavItems from "../public/Navitems"
 
+const logo = "https://t9h7n3i5.stackpathcdn.com/wp-content/uploads/2020/10/HERETICS.png"
+
 export const Navbar = () => {
     return (
         <nav>
             <div class="flex flex-col flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex items-center justify-center">
-                    <img
-                        class="h-20 w-auto block"
-                        src="https://t9h7n3i5.stackpathcdn.com/wp-content/uploads/2020/10/HERETICS.png"
-                        alt="Heretics Logo"
-                    />
+                    <img class="h-20 w-auto block" src={logo} alt="Heretics Logo" />
                 </div>
                 <div class="flex flex-col justify-between">
                     {NavItems.navitems.map((navitem) => (

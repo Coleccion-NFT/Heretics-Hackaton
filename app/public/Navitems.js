@@ -1,4 +1,4 @@
-const NavItems = {
+export default NavItems = {
     navitems: [
         {
             id: 1,
@@ -42,5 +42,3 @@ const NavItems = {
         },
     ],
 }
-
-export default NavItems
