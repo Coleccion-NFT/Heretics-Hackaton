@@ -1,8 +1,12 @@
 import { createContext, useContext } from "react"
 import { useRouter } from "next/router"
+
 import { Web3Context } from "../context/Web3Context"
+
 import { auth, googleProvider, db } from "../backend/firebase"
-import { setDoc, doc } from "firebase/firestore"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { doc, setDoc, getDocs, collection } from "firebase/firestore"
+
 import { toast } from "react-toastify"
 import {
     signInWithPopup,
@@ -181,16 +185,62 @@ export const FirebaseProvider = ({ children }) => {
         }
     }
 
+    // Hook para obtener los datos del usuario del authentication
+    const [userFirebaseData, loadingFirebaseData, errorFirebaseData] = useAuthState(auth)
+
     // BASE DE DATOS --------------------------------------------------------------------------------------
 
+    // Funcion para la creacion del usuario en la base de datos
     const addUserToFirestore = async (user, displayName, publicAddress, encryptedPrivateKey) => {
-        await setDoc(doc(db, "users", user.uid), {
-            displayName: displayName || user.displayName,
-            email: user.email,
-            publicAddress: publicAddress,
-            profileImageUrl: user.photoURL || "undefined",
-            encryptedPrivateKey: encryptedPrivateKey,
-        })
+        try {
+            await setDoc(doc(db, "users", user.uid), {
+                displayName: displayName || user.displayName,
+                email: user.email,
+                publicAddress: publicAddress,
+                profileImageUrl: user.photoURL || "undefined",
+                encryptedPrivateKey: encryptedPrivateKey,
+            })
+        } catch (error) {
+            console.log(e.code)
+            console.log(e.message)
+        }
+    }
+
+    // Funcion para obtener una snapshot de todos los usuarios de la plataforma
+    const getAllUsersSnapshot = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "users"))
+
+            let allUsersSnapshot = querySnapshot.docs.map((doc) => {
+                return {
+                    uid: doc.id,
+                    data: {
+                        ...doc.data(),
+                    },
+                }
+            })
+
+            return allUsersSnapshot
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+        }
+    }
+
+    // Funcion para obtener la data de un usuario en concreto dado su userId
+    const getUserData = async (uid) => {
+        try {
+            let allUsersSnapshot = await getAllUsersSnapshot()
+
+            const userData = allUsersSnapshot?.filter((docData) => {
+                return docData.uid == uid
+            })
+
+            return userData
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+        }
     }
 
     return (
@@ -199,6 +249,11 @@ export const FirebaseProvider = ({ children }) => {
                 handleUserSignUp,
                 handleUserSignIn,
                 handleSignOut,
+                getAllUsersSnapshot,
+                getUserData,
+                userFirebaseData,
+                loadingFirebaseData,
+                errorFirebaseData,
             }}
         >
             {children}
