@@ -5,10 +5,10 @@ import { Navbar } from "../components"
 const Profile = () => {
     return (
         <div class="flex">
-            <div class="w-1/6 h-full">
+            <div className="w-1/6 h-full">
                 <Navbar />
             </div>
-            <div class="w-4/6 h-full">ola</div>
+            <div className="w-4/6 h-full">ola</div>
         </div>
     )
 }
