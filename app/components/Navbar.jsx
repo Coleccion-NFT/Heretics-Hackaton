@@ -1,30 +1,30 @@
 import Link from "next/link"
 import React from "react"
 
-import NavItems from "./NavItems"
+import NavItems from "../public/Navitems"
 
 export const Navbar = () => {
     return (
         <nav>
             <div class="flex flex-col flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex flex-shrink-0 items-center justify-center">
+                <div class="flex items-center justify-center">
                     <img
-                        class="hidden h-20 w-auto lg:block"
+                        class="h-20 w-auto block"
                         src="https://t9h7n3i5.stackpathcdn.com/wp-content/uploads/2020/10/HERETICS.png"
                         alt="Heretics Logo"
                     />
                 </div>
-                <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex flex-col justify-content-between">
-                        {NavItems.navitems.map((navitem) => (
+                <div class="flex flex-col justify-between">
+                    {NavItems.navitems.map((navitem) => (
+                        <div class="my-2 w-full focus:border-2 border-solid border-black sm:pl-6">
                             <Link
                                 href="#"
-                                class="text-black focus:bg-black focus:outline-none focus:text-white hover:border-2 border-solid hover:border-yellow-600 focus:hover:border-none px-3 py-3 rounded-md text-sm font-medium"
+                                class="block w-full focus:border-2 text-black focus:bg-black outline-none focus:text-white hover:border-2 hover:border-solid hover:border-amber-500 focus:hover:border-none px-3 py-3 rounded-md text-sm font-medium"
                             >
                                 {navitem.name}
                             </Link>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </nav>

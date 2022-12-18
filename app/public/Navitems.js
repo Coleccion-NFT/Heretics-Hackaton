@@ -6,34 +6,38 @@ const NavItems = {
         },
         {
             id: 2,
-            name: "Ficha personal",
-        },
-        {
-            id: 3,
             name: "Sponsors",
         },
         {
+            id: 3,
+            name: "Sugerencias y valoraciones",
+        },
+        {
             id: 4,
-            name: "Analíticas",
+            name: "Sorteos",
         },
         {
             id: 5,
-            name: "Reportes",
+            name: "Analíticas",
         },
         {
             id: 6,
-            name: "Mensajes",
+            name: "Reportes",
         },
         {
             id: 7,
-            name: "Agenda",
+            name: "Mensajes",
         },
         {
             id: 8,
-            name: "FAQ",
+            name: "Agenda",
         },
         {
             id: 9,
+            name: "FAQ",
+        },
+        {
+            id: 10,
             name: "Soporte",
         },
     ],
