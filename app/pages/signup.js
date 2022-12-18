@@ -4,7 +4,7 @@ import { FirebaseContext } from "../context/FirebaseContext"
 import { Web3Context } from "../context/Web3Context"
 import { toast } from "react-toastify"
 
-const Logo = "./FAVICON.svg"
+const Logo = "./HERETICS_LOGO_NAME.png"
 
 export default function SignUp() {
     const { handleUserSignUp } = useContext(FirebaseContext)
@@ -60,7 +60,7 @@ export default function SignUp() {
             <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="w-full max-w-md space-y-8">
                     <div>
-                        <img className="mx-auto h-12 w-auto" src={Logo} alt="HERETICS" />
+                        <img className="mx-auto h-24 w-auto" src={Logo} alt="HERETICS" />
                         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-black">
                             Registra una nueva cuenta
                         </h2>
