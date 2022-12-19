@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }) {
                 <title>Heretics Hackaton</title>
                 <meta name="description" content="Heretics Blockchain dApp for the hackaton" />
                 <link rel="icon" href="/favicon.svg" />
+                <link href="../styles/global.css" rel="stylesheet" />
             </Head>
             <Web3Provider>
                 <FirebaseProvider>
