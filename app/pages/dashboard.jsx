@@ -16,6 +16,9 @@ const dashboard = () => {
                 <div className="text-black font-bold text-2xl mb-8">DASHBOARD</div>
                 <div className="flex flex-col justify-start h-full">
                     <div className="bg-gray-100 rounded-lg mt-3 px-5 py-4">
+                        <div className="text-black font-bold text-xl mb-8">
+                            Ingresos Por patrocinador
+                        </div>
                         <SponsorsEarnings className="w-full h-auto" />
                     </div>
                     <div className="flex flex-col bg-gray-100 rounded-lg mt-3 px-5 py-4">
