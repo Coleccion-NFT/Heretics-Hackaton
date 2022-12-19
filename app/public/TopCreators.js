@@ -1,49 +1,49 @@
 const TopCreators = {
     topCreators: [
         {
-            id: 1,
+            id: 0,
             name: "nilOjeda",
-            img: "https://pbs.twimg.com/media/EyJwvwUXMAEN45T?format=jpg&name=4096x4096",
+            img: "https://pbs.twimg.com/profile_images/1570840867698622470/vHKRrCg1_400x400.jpg",
         },
         {
             id: 1,
             name: "werlyb",
-            img: "https://esports.as.com/2021/12/20/league-of-legends/Werlyb-Team-Heretics_1530456981_869293_667x386.jpg",
+            img: "https://pbs.twimg.com/profile_images/1523656570898370560/p3fSXolW_400x400.jpg",
         },
         {
-            id: 1,
+            id: 2,
             name: "mixwell",
-            img: "https://e00-marca.uecdn.es/assets/multimedia/imagenes/2022/10/18/16661184294341.jpg",
+            img: "https://pbs.twimg.com/profile_images/1603836635111735296/8zH0P7-g_400x400.jpg",
         },
         {
-            id: 1,
+            id: 3,
             name: "calitos",
-            img: "https://cdn.25gramos.com/wp-content/uploads/2020/10/121713834_646180276057267_2618211459429503278_n.jpg",
+            img: "https://pbs.twimg.com/profile_images/1603118161460600832/eO-qb-yB_400x400.jpg",
         },
         {
-            id: 1,
+            id: 4,
             name: "espe",
-            img: "https://pbs.twimg.com/media/EcvErvsWsAAFK1g.jpg:large",
+            img: "https://pbs.twimg.com/profile_images/1597583738392698880/j-Pj_6Mn_400x400.jpg",
         },
         {
-            id: 1,
+            id: 5,
             name: "grefg",
-            img: "https://pbs.twimg.com/media/Ererln7WMAQwYtG.jpg",
+            img: "https://pbs.twimg.com/profile_images/1595860510544633856/9BPE_iz__400x400.jpg",
         },
         {
-            id: 1,
+            id: 6,
             name: "liaSikora",
-            img: "https://pbs.twimg.com/media/E8OT4QRWUAAIPHK.jpg",
+            img: "https://pbs.twimg.com/profile_images/1604040333221847043/c7z6fwob_400x400.jpg",
         },
         {
-            id: 1,
+            id: 7,
             name: "guanyar",
-            img: "https://pbs.twimg.com/media/FOuBTAzXIAoroLM?format=jpg&name=4096x4096",
+            img: "https://pbs.twimg.com/profile_images/1602419157563310080/sqC9CK0I_400x400.jpg",
         },
         {
-            id: 1,
+            id: 8,
             name: "jcorko",
-            img: "https://pbs.twimg.com/ad_img/1423350927273168898/T5bC2CIr?format=png&name=900x900",
+            img: "https://pbs.twimg.com/profile_images/1533482911726505984/-PyH_sd5_400x400.jpg",
         },
     ],
 }
