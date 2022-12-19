@@ -1,64 +1,54 @@
-import {
-    houseLogo,
-    walletLogo,
-    ticketLogo,
-    analiticsLogo,
-    reportLogo,
-    chatLogo,
-    settingsLogo,
-} from "./logoSvg"
-
 const NavItems = {
     navitems: [
         {
             id: 1,
             name: "Dashboard",
-            logo: "HouseLogo",
+            logo: "HomeIcon",
         },
         {
             id: 2,
             name: "Sponsors",
-            logo: houseLogo,
+            logo: "HomeIcon",
         },
         {
             id: 3,
             name: "Sugerencias y valoraciones",
-            logo: walletLogo,
+            logo: "WalletIcon",
         },
         {
             id: 4,
             name: "Sorteos",
-            logo: ticketLogo,
+            logo: "TicketIcon",
         },
         {
             id: 5,
             name: "Analíticas",
-            logo: analiticsLogo,
+            logo: "ChartBarIcon",
         },
         {
             id: 6,
             name: "Reportes",
-            logo: reportLogo,
+            logo: "FlagIcon",
         },
         {
             id: 7,
             name: "Mensajes",
-            logo: chatLogo,
+            logo: "ChatBubbleLeftEllipsisIcon",
         },
         {
             id: 8,
             name: "Agenda",
-            logo: settingsLogo,
+            logo: "Cog6ToothIcon",
         },
         {
             id: 9,
             name: "FAQ",
-            logo: settingsLogo,
+            logo: "Cog6ToothIcon",
         },
         {
             id: 10,
             name: "Soporte",
-            logo: settingsLogo,
+            logo: "Cog6ToothIcon",
         },
     ],
 }

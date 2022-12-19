@@ -1,7 +1,7 @@
-import * as SolidIcons from "@heroicons/react/solid"
-import * as OutlineIcons from "@heroicons/react/outline"
+import * as SolidIcons from "@heroicons/react/24/solid"
+import * as OutlineIcons from "@heroicons/react/24/outline"
 
-export const HeroIcon = ({ icon, color, size, outline }) => {
+export const HeroIcon = ({ icon, color, size, outline = false }) => {
     const { ...icons } = outline ? OutlineIcons : SolidIcons
 
     const Icon = icons[icon]
@@ -12,5 +12,7 @@ export const HeroIcon = ({ icon, color, size, outline }) => {
         `w-${size ? size : 6}`,
     ]
 
-    return <Icon className={classes.join(" ")} />
+    return <Icon className={className.join(" ")} />
 }
+
+export default HeroIcon
