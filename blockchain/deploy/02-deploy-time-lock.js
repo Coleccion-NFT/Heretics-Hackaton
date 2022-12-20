@@ -27,6 +27,8 @@ const deployTimeLock = async ({ getNamedAccounts, deployments }) => {
         await verify(timeLock.address, args)
         log("Verified")
     }
+
+    log("--------------------------------------")
 }
 
 module.exports = deployTimeLock

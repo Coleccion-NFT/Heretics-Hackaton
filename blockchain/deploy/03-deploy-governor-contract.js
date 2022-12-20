@@ -41,6 +41,8 @@ const deployGovernorContract = async ({ getNamedAccounts, deployments }) => {
         await verify(governorContract.address, args)
         log("Verified")
     }
+
+    log("--------------------------------------")
 }
 
 module.exports = deployGovernorContract

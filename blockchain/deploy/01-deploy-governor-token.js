@@ -40,6 +40,8 @@ const delegate = async (governanceTokenAddress, delegatedAccount) => {
     await transactionResponse.wait(1)
 
     console.log(`Checkpoints: ${await governanceToken.numCheckpoints(delegatedAccount)}`)
+
+    log("--------------------------------------")
 }
 
 module.exports = deployGovernanceToken

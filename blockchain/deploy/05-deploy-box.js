@@ -34,6 +34,8 @@ const deployBox = async ({ getNamedAccounts, deployments }) => {
     await transferTx.wait(1)
 
     log(`Ownership transfered`)
+
+    log("--------------------------------------")
 }
 
 module.exports = deployBox

@@ -29,6 +29,8 @@ const setupContracts = async ({ getNamedAccounts, deployments }) => {
     await revokeTx.wait(1)
 
     log(`Contracts set up done`)
+
+    log("--------------------------------------")
 }
 
 module.exports = setupContracts
