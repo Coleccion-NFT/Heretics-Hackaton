@@ -1,11 +1,12 @@
 import { useContext, useState, useEffect } from "react"
 import { useRouter } from "next/router"
+import Image from "next/image"
 
 import { FirebaseContext } from "../context/FirebaseContext"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-import { Navbar, Loader } from "../components"
+import { Navbar, Loader, Sidebar } from "../components"
 import { LockClosedIcon } from "@heroicons/react/20/solid"
 
 import DefaultPfp from "../public/defaultPfp.svg"
@@ -60,7 +61,7 @@ const Profile = () => {
     }, [userFirebaseData])
 
     return (
-        <div className="flex">
+        <div className="flex h-screen w-full">
             <div className="w-1/6 h-screen">
                 <Navbar />
             </div>
@@ -71,52 +72,52 @@ const Profile = () => {
                     </div>
                 </div>
             ) : userFirebaseData ? (
-                <>
-                    <div className="w-4/6 h-screen flex flex-col justify-between py-14">
-                        <div className="text-black font-bold text-2xl mb-8">FICHA PERSONAL</div>
-                        <div className="flex flex-row w-full h-full items-center bg-gray-100 rounded-lg mt-3 px-5 py-4">
-                            {profileData.profileImageUrl === "undefined" ? (
-                                <DefaultPfp className="w-30 h-auto rounded-3xl" />
-                            ) : (
-                                <img
-                                    src={profileData.profileImageUrl}
-                                    className="w-30 h-auto rounded-3xl mx-4"
-                                    alt="Pfp Img"
-                                />
-                            )}
-                            <div className="flex flex-col">
-                                <div className="text-black font-bold">Username</div>
-                                <div className="pl-2">{profileData.displayName}</div>
-                                <div className="text-black font-bold">Email Adress</div>
-                                <div className="pl-2">{profileData.email}</div>
-                                <div className="text-black font-bold">Public Adress</div>
-                                <div className="pl-2">{profileData.publicAddress}</div>
-                            </div>
+                <div className="w-full lg:w-4/6 h-screen flex flex-col justify-start pl-8 pr-4 py-14">
+                    <div className="text-black font-bold text-2xl mb-8">FICHA PERSONAL</div>
+                    <div className="flex flex-row w-full h-full items-center bg-gray-100 rounded-lg mt-3 px-5 py-4">
+                        {profileData.profileImageUrl === "undefined" ? (
+                            <DefaultPfp className="w-30 h-auto rounded-3xl" />
+                        ) : (
+                            <img
+                                src={profileData.profileImageUrl}
+                                className="w-30 h-auto rounded-3xl mx-4"
+                                alt="Pfp Img"
+                            />
+                        )}
+                        <div className="flex flex-col">
+                            <div className="text-black font-bold">Username</div>
+                            <div className="pl-2">{profileData.displayName}</div>
+                            <div className="text-black font-bold">Email Adress</div>
+                            <div className="pl-2">{profileData.email}</div>
+                            <div className="text-black font-bold">Public Adress</div>
+                            <div className="pl-2">{profileData.publicAddress}</div>
                         </div>
-                        <div className="flex flex-col h-full bg-gray-100 rounded-lg mt-3 px-5 py-4">
-                            <div className="text-black font-bold text-xl mb-6">
-                                Marcas con las que he colaborado
-                            </div>
-                            <div className="flex flex-row justify-between items-center px-4">
-                                {Sponsors.sponsors.map((sponsor) => (
-                                    <img
-                                        className="block h-20 w-auto rounded-md"
+                    </div>
+                    <div className="flex flex-col bg-gray-100 rounded-lg mt-3 px-5 py-4">
+                        <div className="text-black font-bold text-xl mb-6">
+                            Marcas con las que he colaborado
+                        </div>
+                        <div className="flex flex-row justify-between items-center px-4">
+                            {Sponsors.sponsors.map((sponsor) => (
+                                <div className="w-16 h-auto rounded-lg bg-gray-200 p-2">
+                                    <Image
                                         src={sponsor.img}
                                         alt={sponsor.name}
                                         key={sponsor.id}
+                                        className="w-full h-full"
                                     />
-                                ))}
-                            </div>
-                        </div>
-                        <div className="flex flex-row justify-around h-full bg-gray-100 rounded-lg mt-3 px-5 py-4">
-                            <YoutubeViewsGraph className="w-68 h-68" />
-                            <ColaborationGraph className="w-68 h-68" />
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </>
+                    <div className="flex flex-row justify-around h-full bg-gray-100 rounded-lg mt-3 px-5 pb-4">
+                        <YoutubeViewsGraph className="w-72 h-auto" />
+                        <ColaborationGraph className="w-72 h-auto" />
+                    </div>
+                </div>
             ) : (
                 <>
-                    <div className="w-4/6 h-screen flex flex-col items-center py-32">
+                    <div className="w-full lg:w-4/6 h-screen flex flex-col justify-center pl-8 pr-4 py-32">
                         <div className="w-2/5 flex flex-col">
                             <h2 className="mb-6 text-center text-3xl font-bold tracking-tight text-black">
                                 Ups... Parece que no tienes cuenta
@@ -157,6 +158,9 @@ const Profile = () => {
                     </div>
                 </>
             )}
+            <div className="hidden lg:block lg:w-1/6 h-screen">
+                <Sidebar />
+            </div>
         </div>
     )
 }

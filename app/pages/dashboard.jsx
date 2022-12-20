@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Navbar } from "../components"
+import { Navbar, Sidebar } from "../components"
 
 import SponsorsEarnings from "../public/sponsorsEarnings.svg"
 
@@ -12,7 +12,7 @@ const dashboard = () => {
             <div className="w-1/6 h-full">
                 <Navbar />
             </div>
-            <div className="w-4/6 h-screen flex flex-col justify-start py-14">
+            <div className="w-full lg:w-4/6 h-screen flex flex-col justify-center pl-8 pr-4 py-14">
                 <div className="text-black font-bold text-2xl mb-8">DASHBOARD</div>
                 <div className="flex flex-col justify-start h-full">
                     <div className="bg-gray-100 rounded-lg mt-3 px-5 py-4">
@@ -35,6 +35,9 @@ const dashboard = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="hidden lg:block lg:w-1/6 h-screen">
+                <Sidebar />
             </div>
         </div>
     )
