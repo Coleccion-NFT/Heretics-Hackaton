@@ -19,7 +19,7 @@ const networkConfig = {
     },
 }
 
-const developmentChains = ["hardhat", "localhost"]
+const developmentChains = ["hardhat", "localhost", "ganache"]
 
 // Governor Values
 const QUORUM_PERCENTAGE = 50 // Need 50% of voters to pass

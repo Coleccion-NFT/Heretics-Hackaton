@@ -34,6 +34,13 @@ module.exports = {
             gas: 12000000,
             blockGasLimit: 0x1fffffffffffff,
         },
+        ganache: {
+            url: "HTTP://127.0.0.1:7545",
+            accounts: ["016ebbc96fe5c84af02247bcbbc1f6214851db797590b32f856ca843cec4f4b2"],
+            chainId: 1337,
+            gas: 6721975,
+            gasPrice: 20000000000,
+        },
         goerli: {
             url: GOERLI_TESTNET_RPC_URL,
             accounts: [PRIVATE_KEY],

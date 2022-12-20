@@ -2,6 +2,8 @@ import { createContext, useState } from "react"
 import { web3 } from "../backend/web3"
 import { toast } from "react-toastify"
 
+import "react-toastify/dist/ReactToastify.css"
+
 export const Web3Context = createContext()
 
 export const Web3Provider = ({ children }) => {
