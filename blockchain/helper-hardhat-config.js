@@ -19,13 +19,33 @@ const networkConfig = {
     },
 }
 
-const DECIMALS = "18"
-const INITIAL_PRICE = "200000000000000000000"
-const developmentChains = ["hardhat", "localhost"]
+const developmentChains = ["hardhat", "localhost", "ganache"]
+
+// Governor Values
+const QUORUM_PERCENTAGE = 10 // Need 50% of voters to pass
+const MIN_DELAY = 300 // 5 min - after a vote passes, you have 1 hour before you can enact
+// const VOTING_PERIOD = 45818 // 1 week - how long the vote lasts. This is pretty long even for local tests
+const VOTING_PERIOD = 300 // blocks
+const VOTING_DELAY = 1 // 1 Block - How many blocks till a proposal vote becomes active
+const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000"
+
+// Porpose values
+const NEW_STORE_VALUE = 77
+const FUNC = "store"
+const PROPOSAL_DESCRIPTION = "Proposal #1 77 in the Box! SUUUU"
+
+const proposalsFile = "proposals.json"
 
 module.exports = {
     networkConfig,
     developmentChains,
-    DECIMALS,
-    INITIAL_PRICE,
+    proposalsFile,
+    QUORUM_PERCENTAGE,
+    MIN_DELAY,
+    VOTING_PERIOD,
+    VOTING_DELAY,
+    ADDRESS_ZERO,
+    NEW_STORE_VALUE,
+    FUNC,
+    PROPOSAL_DESCRIPTION,
 }

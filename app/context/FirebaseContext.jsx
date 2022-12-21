@@ -1,21 +1,22 @@
 import { createContext, useContext } from "react"
 import { useRouter } from "next/router"
 
-import { Web3Context } from "../context/Web3Context"
+import { Web3Context } from "./Web3Context"
 
 import { auth, googleProvider, db } from "../backend/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { doc, setDoc, getDocs, collection } from "firebase/firestore"
 
 import { toast } from "react-toastify"
+import toastConfig from "../constants/toastConfig.json"
+import "react-toastify/dist/ReactToastify.css"
+
 import {
     signInWithPopup,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
 } from "firebase/auth"
-
-import "react-toastify/dist/ReactToastify.css"
 
 // Creamos el contexto
 export const FirebaseContext = createContext()
@@ -60,31 +61,13 @@ export const FirebaseProvider = ({ children }) => {
                 encryptedPrivateKey
             )
 
-            toast.success("Te has registrado correctamente", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
+            toast.success("Te has registrado correctamente", toastConfig)
             router.push("/")
         } catch (e) {
             console.log(e.code)
             console.log(e.message)
 
-            toast.error("Algo ha ido mal en tu registro", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
+            toast.error("Algo ha ido mal en tu registro", toastConfig)
         }
     }
 
@@ -109,16 +92,7 @@ export const FirebaseProvider = ({ children }) => {
                 ? await signInWithPopup(auth, provider)
                 : await signInWithEmailAndPassword(auth, formValues.email, formValues.password)
 
-            toast.success(`Has iniciado sesión correctamente`, {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
+            toast.success(`Has iniciado sesión correctamente`, toastConfig)
             router.push("/")
 
             // En caso de iniciar sesión con google, comprovamos que antes se haya registrado y le hayamos creado un pairKeys
@@ -140,16 +114,7 @@ export const FirebaseProvider = ({ children }) => {
             console.log(e.code)
             console.log(e.message)
 
-            toast.error("Ha habido un error en el inicio de sesión", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
+            toast.error("Ha habido un error en el inicio de sesión", toastConfig)
         }
     }
 
@@ -158,30 +123,12 @@ export const FirebaseProvider = ({ children }) => {
         try {
             await signOut(auth)
 
-            toast.info("Has cerrado sesión correctamente", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
+            toast.info("Has cerrado sesión correctamente", toastConfig)
         } catch (e) {
             console.log(e.code)
             console.log(e.message)
 
-            toast.warning("Ha habido un error y no has cerrado sesión", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
+            toast.warning("Ha habido un error y no has cerrado sesión", toastConfig)
         }
     }
 
@@ -254,6 +201,8 @@ export const FirebaseProvider = ({ children }) => {
                 userFirebaseData,
                 loadingFirebaseData,
                 errorFirebaseData,
+                db,
+                collection,
             }}
         >
             {children}
