@@ -1,7 +1,9 @@
 import { useContext, useState, useEffect } from "react"
 
 import { FirebaseContext } from "../context/FirebaseContext"
+
 import { toast } from "react-toastify"
+import toastConfig from "../constants/toastConfig.json"
 import "react-toastify/dist/ReactToastify.css"
 
 import { Navbar, Loader } from "../components"
@@ -36,16 +38,7 @@ const Profile = () => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error("Ha habido un error cargando el perfil", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
+            toast.error("Ha habido un error cargando el perfil", toastConfig)
         }
     }, [userFirebaseData])
 
