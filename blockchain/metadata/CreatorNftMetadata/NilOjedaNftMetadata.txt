@@ -1,0 +1,5 @@
+{name: "nilOjeda",
+description: "Nft para mensajear con NilOjeda",
+image: "ipfs://QmPpfZ9kcSCgrDoSsEtUk2Cj8wzox7PtwnAVfETg2MFA4L",
+attributes: [{messaging: "true"}]
+}

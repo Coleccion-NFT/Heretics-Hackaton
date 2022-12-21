@@ -1,0 +1,5 @@
+{name: "calitos",
+description: "Nft para mensajear con Calitos",
+image: "ipfs://QmWoVYXKLVDu7N6sapmEyLmRdcQcD61ugHsNchYcwPagQ3",
+attributes: [{messaging: "true"}]
+}

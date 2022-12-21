@@ -1,0 +1,5 @@
+{name: "werlyb",
+description: "Nft para mensajear con Werlyb",
+image: "ipfs://QmUuj2du15tNTXokyMnXn7fukErHBYRDPT2tyScieY1doX",
+attributes: [{messaging: "true"}]
+}
