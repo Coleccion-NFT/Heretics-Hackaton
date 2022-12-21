@@ -23,7 +23,7 @@ const developmentChains = ["hardhat", "localhost", "ganache"]
 
 // Governor Values
 const QUORUM_PERCENTAGE = 10 // Need 50% of voters to pass
-const MIN_DELAY = 3600 // 1 hour - after a vote passes, you have 1 hour before you can enact
+const MIN_DELAY = 300 // 5 min - after a vote passes, you have 1 hour before you can enact
 // const VOTING_PERIOD = 45818 // 1 week - how long the vote lasts. This is pretty long even for local tests
 const VOTING_PERIOD = 300 // blocks
 const VOTING_DELAY = 1 // 1 Block - How many blocks till a proposal vote becomes active

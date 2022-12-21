@@ -14,6 +14,7 @@ module.exports = async function () {
 
 async function updateContractAddresses() {
     const governor = await ethers.getContract("GovernorContract")
+    const governanceToken = await ethers.getContract("GovernanceToken")
     const box = await ethers.getContract("Box")
 
     const chainId = network.config.chainId.toString()
@@ -21,17 +22,32 @@ async function updateContractAddresses() {
     const contractAddresses = JSON.parse(fs.readFileSync(frontEndContractsFile, "utf8"))
 
     if (chainId in contractAddresses) {
-        if (!contractAddresses[chainId]["GovernorContract"].includes(governor.address)) {
-            contractAddresses[chainId]["GovernorContract"].push(governor.address)
+        if (contractAddresses[chainId]["GovernorContract"]) {
+            if (!contractAddresses[chainId]["GovernorContract"].includes(governor.address)) {
+                contractAddresses[chainId]["GovernorContract"].push(governor.address)
+            }
         } else {
-            contractAddresses[chainId] = { GovernorContract: [governor.address] }
+            contractAddresses[chainId] = {
+                ...contractAddresses[chainId],
+                GovernorContract: [governor.address],
+            }
         }
         if (contractAddresses[chainId]["Box"]) {
             if (!contractAddresses[chainId]["Box"].includes(box.address)) {
                 contractAddresses[chainId]["Box"].push(box.address)
             }
         } else {
-            contractAddresses[chainId] = { Box: [box.address] }
+            contractAddresses[chainId] = { ...contractAddresses[chainId], Box: [box.address] }
+        }
+        if (contractAddresses[chainId]["GovernanceToken"]) {
+            if (!contractAddresses[chainId]["GovernanceToken"].includes(governanceToken.address)) {
+                contractAddresses[chainId]["GovernanceToken"].push(governanceToken.address)
+            }
+        } else {
+            contractAddresses[chainId] = {
+                ...contractAddresses[chainId],
+                GovernanceToken: [governanceToken.address],
+            }
         }
 
         fs.writeFileSync(frontEndContractsFile, JSON.stringify(contractAddresses))
@@ -40,11 +56,16 @@ async function updateContractAddresses() {
 
 async function updateAbi() {
     const governor = await ethers.getContract("GovernorContract")
+    const governanceToken = await ethers.getContract("GovernanceToken")
     const box = await ethers.getContract("Box")
 
     fs.writeFileSync(
         `${frontEndAbiLocation}GovernorContract.json`,
         governor.interface.format(ethers.utils.FormatTypes.json)
+    )
+    fs.writeFileSync(
+        `${frontEndAbiLocation}GovernanceToken.json`,
+        governanceToken.interface.format(ethers.utils.FormatTypes.json)
     )
     fs.writeFileSync(
         `${frontEndAbiLocation}Box.json`,
