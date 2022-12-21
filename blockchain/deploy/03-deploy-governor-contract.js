@@ -22,6 +22,7 @@ const deployGovernorContract = async ({ getNamedAccounts, deployments }) => {
         VOTING_PERIOD,
         QUORUM_PERCENTAGE,
     ]
+    // Threshold is hardcoded to the contract to 1 vote https://docs.openzeppelin.com/contracts/4.x/governance
 
     log("----------------------------------------------------")
     log("Deploying GovernorContract and waiting for confirmations...")

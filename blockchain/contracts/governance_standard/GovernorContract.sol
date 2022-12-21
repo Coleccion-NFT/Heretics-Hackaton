@@ -24,7 +24,7 @@ contract GovernorContract is
         uint256 _quorumPercentage
     )
         Governor("GovernorContract")
-        GovernorSettings(_votingDelay, _votingPeriod, 0)
+        GovernorSettings(_votingDelay, _votingPeriod, 1e18)
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(_quorumPercentage)
         GovernorTimelockControl(_timelock)
