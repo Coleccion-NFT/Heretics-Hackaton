@@ -12,7 +12,7 @@ import contractAddressJSON from "../constants/networkMapping.json"
 
 const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
-const creatorNftContractAddress = contractAddressJSON[chainId].CreatorNft[0]
+const creatorNftContractAddress = contractAddressJSON["31337"].CreatorNft[0]
 
 export const CreatorNftContext = createContext()
 

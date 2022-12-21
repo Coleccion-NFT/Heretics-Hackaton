@@ -218,7 +218,7 @@ export const DAOProvider = ({ children }) => {
             console.log(error.message)
 
             toast.error(
-                `Ha habido un error actualizando la información de la propuesta ${proposalId}`,
+                `Ha habido un error actualizando la información de la propuesta ${proposalFirebaseId}`,
                 toastConfig
             )
         }

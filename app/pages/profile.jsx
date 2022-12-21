@@ -73,7 +73,7 @@ const Profile = () => {
                         ) : (
                             <img
                                 src={profileData.profileImageUrl}
-                                className="w-30 h-auto rounded-3xl mx-4"
+                                className="w-32 h-auto rounded-3xl mx-4"
                                 alt="Pfp Img"
                             />
                         )}

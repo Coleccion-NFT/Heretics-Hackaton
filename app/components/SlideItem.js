@@ -3,12 +3,19 @@ import { Slide } from "pure-react-carousel"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "../backend/firebase"
 import "pure-react-carousel/dist/react-carousel.es.css"
+import { useRouter } from "next/router"
 
-const SlideItem = ({ index, src, alt, h3 }) => {
+const SlideItem = ({ index, src, alt, h3, name }) => {
+    const router = useRouter()
     return (
         <>
             <Slide index={index || 0}>
-                <div className="flex flex-shrink-0 relative w-full sm:w-auto">
+                <button
+                    onClick={() => {
+                        router.push(`/contentCreators/${name}`)
+                    }}
+                    className="flex flex-shrink-0 relative w-full sm:w-auto"
+                >
                     <img
                         src={src || "undefined"}
                         alt={alt || "Slide image for the slider carousel"}
@@ -21,7 +28,7 @@ const SlideItem = ({ index, src, alt, h3 }) => {
                             </h3>
                         </div>
                     </div>
-                </div>
+                </button>
             </Slide>
         </>
     )

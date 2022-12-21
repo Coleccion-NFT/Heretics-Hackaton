@@ -13,8 +13,8 @@ module.exports = async function () {
 }
 
 async function updateContractAddresses() {
-    const governor = await ethers.getContract("GovernorContract")
-    const box = await ethers.getContract("Box")
+    // const governor = await ethers.getContract("GovernorContract")
+    // const box = await ethers.getContract("Box")
     const creatorNft = await ethers.getContract("CreatorNft")
 
     const chainId = network.config.chainId.toString()
@@ -22,18 +22,18 @@ async function updateContractAddresses() {
     const contractAddresses = JSON.parse(fs.readFileSync(frontEndContractsFile, "utf8"))
 
     if (chainId in contractAddresses) {
-        if (!contractAddresses[chainId]["GovernorContract"].includes(governor.address)) {
-            contractAddresses[chainId]["GovernorContract"].push(governor.address)
-        } else {
-            contractAddresses[chainId] = { GovernorContract: [governor.address] }
-        }
-        if (contractAddresses[chainId]["Box"]) {
-            if (!contractAddresses[chainId]["Box"].includes(box.address)) {
-                contractAddresses[chainId]["Box"].push(box.address)
-            }
-        } else {
-            contractAddresses[chainId] = { Box: [box.address] }
-        }
+        // if (!contractAddresses[chainId]["GovernorContract"].includes(governor.address)) {
+        //     contractAddresses[chainId]["GovernorContract"].push(governor.address)
+        // } else {
+        //     contractAddresses[chainId] = { GovernorContract: [governor.address] }
+        // }
+        // if (contractAddresses[chainId]["Box"]) {
+        //     if (!contractAddresses[chainId]["Box"].includes(box.address)) {
+        //         contractAddresses[chainId]["Box"].push(box.address)
+        //     }
+        // } else {
+        //     contractAddresses[chainId] = { Box: [box.address] }
+        // }
         if (contractAddresses[chainId]["CreatorNft"]) {
             if (!contractAddresses[chainId]["CreatorNft"].includes(creatorNft.address)) {
                 contractAddresses[chainId]["CreatorNft"].push(creatorNft.address)
@@ -47,18 +47,18 @@ async function updateContractAddresses() {
 }
 
 async function updateAbi() {
-    const governor = await ethers.getContract("GovernorContract")
-    const box = await ethers.getContract("Box")
+    // const governor = await ethers.getContract("GovernorContract")
+    // const box = await ethers.getContract("Box")
     const creatorNft = await ethers.getContract("CreatorNft")
 
-    fs.writeFileSync(
-        `${frontEndAbiLocation}GovernorContract.json`,
-        governor.interface.format(ethers.utils.FormatTypes.json)
-    )
-    fs.writeFileSync(
-        `${frontEndAbiLocation}Box.json`,
-        box.interface.format(ethers.utils.FormatTypes.json)
-    )
+    // fs.writeFileSync(
+    //     `${frontEndAbiLocation}GovernorContract.json`,
+    //     governor.interface.format(ethers.utils.FormatTypes.json)
+    // )
+    // fs.writeFileSync(
+    //     `${frontEndAbiLocation}Box.json`,
+    //     box.interface.format(ethers.utils.FormatTypes.json)
+    // )
     fs.writeFileSync(
         `${frontEndAbiLocation}CreatorNft.json`,
         creatorNft.interface.format(ethers.utils.FormatTypes.json)
