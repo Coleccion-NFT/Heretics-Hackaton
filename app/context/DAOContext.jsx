@@ -1,6 +1,8 @@
 import { useState, useEffect, createContext } from "react"
 import { ethers } from "ethers"
 import { toast } from "react-toastify"
+import fs from "fs"
+// TODO: Cambiar el voting period a 300 o algo asi para que sea una horita 12 sec = 1 block
 
 import toastConfig from "../constants/toastConfig.json"
 import "react-toastify/dist/ReactToastify.css"
@@ -99,10 +101,31 @@ export const DAOProvider = ({ children }) => {
 
         console.log("--------------------------------------")
     }
+    // STATUS --------------------------------------------------------------------------------------
+
+    const checkStatus = async (proposalId) => {
+        const governor = createEthereumContract(
+            governorContractAddress,
+            governorContractABI,
+            currentAccount
+        )
+
+        const stateTx = await governor.state(proposalId)
+
+        console.log(stateTx)
+
+        console.log("--------------------------------------")
+    }
 
     return (
         <DAOContext.Provider
-            value={{ checkIfWalletIsConnected, connectWallet, createPropose, currentAccount }}
+            value={{
+                checkIfWalletIsConnected,
+                connectWallet,
+                createPropose,
+                checkStatus,
+                currentAccount,
+            }}
         >
             {children}
         </DAOContext.Provider>

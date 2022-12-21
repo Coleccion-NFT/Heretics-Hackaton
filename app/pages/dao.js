@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 export default function DAO() {
-    const { checkIfWalletIsConnected, connectWallet, createPropose, currentAccount } =
+    const { checkIfWalletIsConnected, connectWallet, createPropose, checkStatus, currentAccount } =
         useContext(DAOContext)
 
     const [formData, setFormData] = useState({
@@ -39,6 +39,18 @@ export default function DAO() {
                         Conéctate
                     </button>
                 )}
+                <button
+                    className="bg-black text-white w-fit px-9 py-1.5 my-5"
+                    type="button"
+                    onClick={(e) => {
+                        e.preventDefault()
+                        checkStatus(
+                            "4034088889013808038317512677791978950697937677124685461705902910453827480919"
+                        )
+                    }}
+                >
+                    Status
+                </button>
                 <form className="mt-5 flex flex-col items-center">
                     <div className="flex items-center justify-center my-5">
                         <label htmlFor="newValue" className="w-48 font-bold text-base mr-5">

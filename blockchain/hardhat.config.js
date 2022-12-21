@@ -12,9 +12,15 @@ require("solidity-coverage")
  */
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ""
+
 const GOERLI_TESTNET_RPC_URL =
     process.env.GOERLI_TESTNET_RPC_URL || "https://eth-rinkeby.alchemyapi.io/v2/your-api-key"
+
+const BINANCE_TESTNET_RPC_URL =
+    process.env.BINANCE_TESTNET_RPC_URL || "https://data-seed-prebsc-1-s1.binance.org:8545/"
+
 const PRIVATE_KEY = process.env.PRIVATE_KEY || ""
+
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
 
 module.exports = {
@@ -46,16 +52,29 @@ module.exports = {
             accounts: [PRIVATE_KEY],
             chainId: 5,
             blockConfirmations: 6,
-            gas: 2100000,
-            gasPrice: 8000000000,
+            // gas: 2100000,
+            // gasPrice: 8000000000,
+        },
+        binanceTest: {
+            url: BINANCE_TESTNET_RPC_URL,
+            accounts: [PRIVATE_KEY],
+            chainId: 97,
+            blockConfirmations: 6,
         },
     },
     solidity: {
-        compilers: [
-            {
-                version: "0.8.8",
+        version: "0.8.8",
+        settings: {
+            optimizer: {
+                enabled: true,
+                runs: 200,
             },
-        ],
+        },
+        contractSizer: {
+            alphaSort: true,
+            runOnCompile: true,
+            disambiguatePaths: false,
+        },
     },
     etherscan: {
         apiKey: ETHERSCAN_API_KEY,
