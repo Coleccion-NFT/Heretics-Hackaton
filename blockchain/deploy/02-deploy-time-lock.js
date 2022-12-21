@@ -32,4 +32,4 @@ const deployTimeLock = async ({ getNamedAccounts, deployments }) => {
 }
 
 module.exports = deployTimeLock
-deployTimeLock.tags = ["all", "timelock", "DAO"]
+deployTimeLock.tags = ["all", "timeLock", "DAO"]

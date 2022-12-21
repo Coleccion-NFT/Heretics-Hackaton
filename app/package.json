@@ -15,6 +15,7 @@
         "axios": "^1.2.1",
         "ethers": "^5.7.2",
         "firebase": "^9.15.0",
+        "fs": "^0.0.1-security",
         "mysql2": "^2.3.3",
         "next": "13.0.7",
         "pure-react-carousel": "^1.30.1",

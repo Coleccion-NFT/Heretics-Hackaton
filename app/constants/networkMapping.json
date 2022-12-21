@@ -1,0 +1,13 @@
+{
+    "5": {
+        "GovernorContract": ["0x26Da0D00DE38aBA9b21E79650c28d0C2008510d6"],
+        "Box": ["0x7F503b1BE969c69370EBC0Aed80A7d51E5Dd8e34"]
+    },
+    "31337": {
+        "GovernorContract": [
+            "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853",
+            "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+        ],
+        "Box": ["0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"]
+    }
+}

@@ -18,9 +18,9 @@ const deployGovernorContract = async ({ getNamedAccounts, deployments }) => {
     const args = [
         governanceToken.address,
         timeLock.address,
-        QUORUM_PERCENTAGE,
-        VOTING_PERIOD,
         VOTING_DELAY,
+        VOTING_PERIOD,
+        QUORUM_PERCENTAGE,
     ]
 
     log("----------------------------------------------------")

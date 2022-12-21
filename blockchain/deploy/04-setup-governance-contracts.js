@@ -10,9 +10,9 @@ const setupContracts = async ({ getNamedAccounts, deployments }) => {
     const timeLockAddress = (await get("TimeLock")).address
     const governorAddress = (await get("GovernorContract")).address
 
-    const governanceToken = await ethers.getContractAt("GovernanceToken", governanceTokenAddress)
-    const timeLock = await ethers.getContractAt("TimeLock", timeLockAddress)
-    const governor = await ethers.getContractAt("GovernorContract", governorAddress)
+    const governanceToken = await ethers.getContract("GovernanceToken")
+    const timeLock = await ethers.getContract("TimeLock")
+    const governor = await ethers.getContract("GovernorContract")
 
     log("----------------------------------------------------")
     log("Setting up contracts for roles...")

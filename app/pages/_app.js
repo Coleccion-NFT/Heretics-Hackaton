@@ -1,5 +1,6 @@
 import { FirebaseProvider } from "../context/FirebaseContext"
 import { Web3Provider } from "../context/Web3Context"
+import { DAOProvider } from "../context/DAOContext"
 import { ToastContainer } from "react-toastify"
 
 import Head from "next/head"
@@ -18,8 +19,10 @@ export default function App({ Component, pageProps }) {
             </Head>
             <Web3Provider>
                 <FirebaseProvider>
-                    <Component {...pageProps} />
-                    <ToastContainer />
+                    <DAOProvider>
+                        <Component {...pageProps} />
+                        <ToastContainer />
+                    </DAOProvider>
                 </FirebaseProvider>
             </Web3Provider>
         </>
