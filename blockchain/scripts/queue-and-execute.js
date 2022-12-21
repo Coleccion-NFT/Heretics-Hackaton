@@ -22,11 +22,12 @@ async function queueAndExecute() {
     const queueTx = await governor.queue([box.address], [0], [encodedFunctionCall], descriptionHash)
     await queueTx.wait(1)
 
+    console.log("Queued")
+
     if (developmentChains.includes(network.name)) {
         await moveTime(MIN_DELAY + 1)
         await moveBlocks(1)
     }
-    console.log("Queued")
 
     console.log("Executing...")
     // this will fail on a testnet because you need to wait for the MIN_DELAY!

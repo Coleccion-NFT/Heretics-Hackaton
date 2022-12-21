@@ -12,6 +12,19 @@ export const Web3Provider = ({ children }) => {
     const [encryptedPrivateKey, setEncryptedPrivateKey] = useState("")
     const [currentAccount, setCurrentAccount] = useState("")
 
+    const proposalState = [
+        "Pending",
+        "Active",
+        "Canceled",
+        "Defeated",
+        "Succeeded",
+        "Queued",
+        "Expired",
+        "Executed",
+    ]
+
+    const voteWay = ["Against", "In favor", "Null"]
+
     const generateEntropy = () => {
         return web3.utils.sha3(Math.random(0, 1000000).toString(16) + web3.utils.randomHex(32))
     }
@@ -39,6 +52,21 @@ export const Web3Provider = ({ children }) => {
         // })
 
         return [account.address, encryptedPrivateKey]
+    }
+
+    const truncateStr = (fullStr, strLen) => {
+        if (fullStr.length <= strLen) return fullStr
+
+        const separator = "..."
+        const separatorLength = separator.length
+        const charToShow = strLen - separatorLength
+        const frontChars = Math.ceil(charToShow / 2)
+        const backChars = Math.floor(charToShow / 2)
+        return (
+            fullStr.substring(0, frontChars) +
+            separator +
+            fullStr.substring(fullStr.length - backChars)
+        )
     }
 
     // WALLET --------------------------------------------------------------------------------------
@@ -84,9 +112,12 @@ export const Web3Provider = ({ children }) => {
                 createPairKeys,
                 checkIfWalletIsConnected,
                 connectWallet,
+                truncateStr,
                 publicAddress,
                 encryptedPrivateKey,
                 currentAccount,
+                proposalState,
+                voteWay,
             }}
         >
             {children}

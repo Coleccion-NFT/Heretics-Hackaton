@@ -201,6 +201,8 @@ export const FirebaseProvider = ({ children }) => {
                 userFirebaseData,
                 loadingFirebaseData,
                 errorFirebaseData,
+                db,
+                collection,
             }}
         >
             {children}

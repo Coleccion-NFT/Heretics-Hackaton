@@ -2,7 +2,7 @@
 import { useState, useEffect, createContext, useContext } from "react"
 import { ethers } from "ethers"
 import { db } from "../backend/firebase"
-import { doc, setDoc, getDocs, collection } from "firebase/firestore"
+import { doc, setDoc, getDoc, collection, updateDoc } from "firebase/firestore"
 
 import { Web3Context } from "./Web3Context"
 
@@ -15,16 +15,6 @@ import boxContractABI from "../constants/Box.json"
 import contractAddressJSON from "../constants/networkMapping.json"
 
 const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
-const proposalState = [
-    "Pending",
-    "Active",
-    "Canceled",
-    "Defeated",
-    "Succeeded",
-    "Queued",
-    "Expired",
-    "Executed",
-]
 
 const governorContractAddress = contractAddressJSON[chainId].GovernorContract[0]
 const boxContractAddress = contractAddressJSON[chainId].Box[0]
@@ -32,7 +22,7 @@ const boxContractAddress = contractAddressJSON[chainId].Box[0]
 export const DAOContext = createContext()
 
 export const DAOProvider = ({ children }) => {
-    const { currentAccount } = useContext(Web3Context)
+    const { currentAccount, proposalState, voteWay } = useContext(Web3Context)
 
     // PROPOSE --------------------------------------------------------------------------------------
 
@@ -69,10 +59,10 @@ export const DAOProvider = ({ children }) => {
 
             // Save the proposal
             await storeProposal(
-                proposalId,
+                proposalId.toString(),
                 proposalStateId,
-                proposalSnapShot,
-                proposalDeadline,
+                proposalSnapShot.toString(),
+                proposalDeadline.toString(),
                 currentAccount,
                 proposalDescription,
                 functionToCall,
@@ -95,18 +85,111 @@ export const DAOProvider = ({ children }) => {
         }
     }
 
+    // VOTE --------------------------------------------------------------------------------------
+
+    const votePropose = async (proposalIdVoting, vote, reason) => {
+        try {
+            console.log(`Voting ${voteWay[vote]} on ${proposalIdVoting} with reason ${reason}`)
+
+            const governor = createEthereumContract(governorContractAddress, governorContractABI)
+
+            const voteTx = await governor.castVoteWithReason(proposalIdVoting, vote, reason)
+
+            const voteTxReceipt = await voteTx.wait(1)
+            console.log(`Voted with reason: \n ${voteTxReceipt.events[0].args.reason}`)
+
+            toast.success("Has votado!", toastConfig)
+
+            console.log("--------------------------------------")
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+
+            toast.error("Algo ha ido mal en la realización de tu voto", toastConfig)
+        }
+    }
+
+    // QUEUE --------------------------------------------------------------------------------------
+
+    const queuePropose = async (args, functionToCall, description) => {
+        try {
+            const governor = createEthereumContract(governorContractAddress, governorContractABI)
+            const box = createEthereumContract(boxContractAddress, boxContractABI)
+
+            const encodedFunctionCall = box.interface.encodeFunctionData(functionToCall, args)
+
+            const descriptionHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(description))
+
+            console.log("Queueing...")
+
+            const queueTx = await governor.queue(
+                [box.address],
+                [0],
+                [encodedFunctionCall],
+                descriptionHash
+            )
+            await queueTx.wait(1)
+
+            console.log("Queued")
+            toast.success("La propuesta se ha puesto en cola", toastConfig)
+
+            console.log("--------------------------------------")
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+
+            toast.error("Algo ha ido al poner en cola la propuesta", toastConfig)
+        }
+    }
+
+    // EXECUTE --------------------------------------------------------------------------------------
+
+    const executePropose = async (args, functionToCall, description) => {
+        try {
+            const governor = createEthereumContract(governorContractAddress, governorContractABI)
+            const box = createEthereumContract(boxContractAddress, boxContractABI)
+
+            const encodedFunctionCall = box.interface.encodeFunctionData(functionToCall, args)
+
+            const descriptionHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(description))
+
+            console.log("Executing...")
+
+            const executeTx = await governor.execute(
+                [box.address],
+                [0],
+                [encodedFunctionCall],
+                descriptionHash
+            )
+            await executeTx.wait(1)
+
+            console.log("Executed")
+            toast.success("La propuesta se ha ejecutado", toastConfig)
+
+            console.log("--------------------------------------")
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+
+            toast.error("Algo ha ido al poner en cola la propuesta", toastConfig)
+        }
+    }
+
     // STATUS --------------------------------------------------------------------------------------
 
-    const checkStatus = async (proposalId) => {
+    const checkProposalStatus = async (proposalId, logs = false) => {
         try {
             const governor = createEthereumContract(governorContractAddress, governorContractABI)
 
             const stateTx = await governor.state(proposalId)
 
-            console.log(`Current state is ${proposalState[stateTx]}`)
-            toast.info(`Current state is ${proposalState[stateTx]}`, toastConfig)
+            if (logs) {
+                console.log(`Current state is ${proposalState[stateTx]}`)
+                toast.info(`Current state is ${proposalState[stateTx]}`, toastConfig)
+                console.log("--------------------------------------")
+            }
 
-            console.log("--------------------------------------")
+            return stateTx
         } catch (error) {
             console.log(error.code)
             console.log(error.message)
@@ -115,12 +198,51 @@ export const DAOProvider = ({ children }) => {
         }
     }
 
+    const updateProposalStatus = async (proposalFirebaseId) => {
+        try {
+            const proposalSnapshotData = (
+                await getDoc(doc(db, "proposals", proposalFirebaseId))
+            ).data()
+
+            const { snapshot, state, proposalId } = proposalSnapshotData
+
+            const actualState = await checkProposalStatus(proposalId)
+
+            if (actualState != state) {
+                await updateDoc(doc(db, "proposals", snapshot), {
+                    state: actualState,
+                })
+            }
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+
+            toast.error(
+                `Ha habido un error actualizando la información de la propuesta ${proposalId}`,
+                toastConfig
+            )
+        }
+    }
+
+    const updateStoreValue = async () => {
+        const box = createEthereumContract(boxContractAddress, boxContractABI)
+
+        const retrieveTx = await box.retrieve()
+        console.log(`El valor de la store es: ${retrieveTx.toString()}`)
+        return retrieveTx.toString()
+    }
+
     // RETURN --------------------------------------------------------------------------------------
     return (
         <DAOContext.Provider
             value={{
                 createPropose,
-                checkStatus,
+                votePropose,
+                queuePropose,
+                executePropose,
+                checkProposalStatus,
+                updateProposalStatus,
+                updateStoreValue,
             }}
         >
             {children}
@@ -147,7 +269,7 @@ const storeProposal = async (
     args
 ) => {
     try {
-        await setDoc(doc(db, "proposals", proposalId), {
+        await setDoc(doc(db, "proposals", snapshot), {
             proposalId,
             state,
             snapshot,
@@ -157,6 +279,7 @@ const storeProposal = async (
             functionToCall,
             args,
         })
+
         toast.success(`Your proposal has been registered`, toastConfig)
     } catch (error) {
         console.log(error.code)

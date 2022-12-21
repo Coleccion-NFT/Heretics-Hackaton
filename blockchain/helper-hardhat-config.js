@@ -32,7 +32,7 @@ const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000"
 // Porpose values
 const NEW_STORE_VALUE = 77
 const FUNC = "store"
-const PROPOSAL_DESCRIPTION = "Proposal #1 77 in the Box!"
+const PROPOSAL_DESCRIPTION = "Proposal #1 77 in the Box! SUUUU"
 
 const proposalsFile = "proposals.json"
 
