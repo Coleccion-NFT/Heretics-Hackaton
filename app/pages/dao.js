@@ -1,18 +1,20 @@
 import { useContext, useEffect, useState } from "react"
 import { DAOContext } from "../context/DAOContext"
+import { Web3Context } from "../context/Web3Context"
 import { toast } from "react-toastify"
 
 import "react-toastify/dist/ReactToastify.css"
 
 export default function DAO() {
-    const { checkIfWalletIsConnected, connectWallet, createPropose, checkStatus, currentAccount } =
-        useContext(DAOContext)
+    const { createPropose, checkStatus } = useContext(DAOContext)
+    const { checkIfWalletIsConnected, connectWallet, currentAccount } = useContext(Web3Context)
 
     const [formData, setFormData] = useState({
         newValue: "",
         functionToCall: "",
         proposalDescription: "",
     })
+    const [proposalId, setProposalId] = useState("")
 
     useEffect(() => {
         checkIfWalletIsConnected()
@@ -39,14 +41,28 @@ export default function DAO() {
                         Conéctate
                     </button>
                 )}
+                <div className="flex items-center justify-center my-5">
+                    <label htmlFor="proposalId" className="w-48 font-bold text-base mr-5">
+                        Proposal Id
+                    </label>
+                    <input
+                        id="proposalId"
+                        name="proposalId"
+                        type="text"
+                        required
+                        className="w-full border px-2 py-0.5"
+                        value={proposalId}
+                        onChange={(e) => {
+                            setProposalId(e.target.value)
+                        }}
+                    ></input>
+                </div>
                 <button
                     className="bg-black text-white w-fit px-9 py-1.5 my-5"
                     type="button"
                     onClick={(e) => {
                         e.preventDefault()
-                        checkStatus(
-                            "4034088889013808038317512677791978950697937677124685461705902910453827480919"
-                        )
+                        checkStatus(proposalId)
                     }}
                 >
                     Status
@@ -111,6 +127,7 @@ export default function DAO() {
                         }}
                     >
                         Enviar la propuesta
+                        {/* TODO: Make a loader while a proposal is being transacted */}
                     </button>
                 </form>
             </div>
