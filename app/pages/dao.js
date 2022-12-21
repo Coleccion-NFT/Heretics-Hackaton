@@ -1,24 +1,46 @@
 import { useContext, useEffect, useState } from "react"
+import { useCollection } from "react-firebase-hooks/firestore"
 import { DAOContext } from "../context/DAOContext"
 import { Web3Context } from "../context/Web3Context"
-import { toast } from "react-toastify"
+import { FirebaseContext } from "../context/FirebaseContext"
 
+import { Proposal, Loader } from "../components"
+
+import { toast } from "react-toastify"
+import toastConfig from "../constants/toastConfig.json"
 import "react-toastify/dist/ReactToastify.css"
 
 export default function DAO() {
-    const { createPropose, checkStatus } = useContext(DAOContext)
+    const { db, collection } = useContext(FirebaseContext)
     const { checkIfWalletIsConnected, connectWallet, currentAccount } = useContext(Web3Context)
+    const { createPropose, checkProposalStatus, updateProposalStatus, updateStoreValue } =
+        useContext(DAOContext)
+
+    const [allProposals, loadingAllProposals, errorAllProposals] = useCollection(
+        collection(db, "proposals"),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    )
 
     const [formData, setFormData] = useState({
         newValue: "",
         functionToCall: "",
         proposalDescription: "",
     })
-    const [proposalId, setProposalId] = useState("")
+    const [storeValue, setStoreValue] = useState(0)
 
     useEffect(() => {
         checkIfWalletIsConnected()
     }, [])
+
+    useEffect(() => {
+        if (allProposals) {
+            allProposals.docs.reverse().map(async (doc) => {
+                await updateProposalStatus(doc.data().snapshot)
+            })
+        }
+    }, [allProposals])
 
     const updateField = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -28,7 +50,7 @@ export default function DAO() {
         <>
             <div className="h-screen w-screen flex flex-col justify-start items-center p-10">
                 {currentAccount ? (
-                    <p>{currentAccount}</p>
+                    <p>Has iniciado sesión con: {currentAccount}</p>
                 ) : (
                     <button
                         className="bg-black text-white w-fit px-9 py-1.5"
@@ -42,30 +64,29 @@ export default function DAO() {
                     </button>
                 )}
                 <div className="flex items-center justify-center my-5">
-                    <label htmlFor="proposalId" className="w-48 font-bold text-base mr-5">
-                        Proposal Id
+                    <label htmlFor="storeValue" className="w-48 font-bold text-base mr-5">
+                        Store Value
                     </label>
                     <input
-                        id="proposalId"
-                        name="proposalId"
+                        id="storeValue"
+                        name="storeValue"
                         type="text"
                         required
                         className="w-full border px-2 py-0.5"
-                        value={proposalId}
-                        onChange={(e) => {
-                            setProposalId(e.target.value)
-                        }}
+                        value={storeValue}
+                        readOnly
                     ></input>
                 </div>
                 <button
                     className="bg-black text-white w-fit px-9 py-1.5 my-5"
                     type="button"
-                    onClick={(e) => {
+                    onClick={async (e) => {
                         e.preventDefault()
-                        checkStatus(proposalId)
+                        let newValue = await updateStoreValue()
+                        setStoreValue(newValue)
                     }}
                 >
-                    Status
+                    Update Store
                 </button>
                 <form className="mt-5 flex flex-col items-center">
                     <div className="flex items-center justify-center my-5">
@@ -130,6 +151,19 @@ export default function DAO() {
                         {/* TODO: Make a loader while a proposal is being transacted */}
                     </button>
                 </form>
+                <div className="w-full h-full flex flex-wrap">
+                    {loadingAllProposals ? (
+                        <div className="h-full w-full items-center justify-center">
+                            <Loader h={32} w={32} />
+                        </div>
+                    ) : (
+                        <>
+                            {allProposals.docs.reverse().map((doc) => (
+                                <Proposal key={doc.id} data={doc.data()} />
+                            ))}
+                        </>
+                    )}
+                </div>
             </div>
         </>
     )
