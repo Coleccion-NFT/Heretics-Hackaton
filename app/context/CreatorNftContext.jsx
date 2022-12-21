@@ -25,9 +25,9 @@ export const CreatorNftProvider = ({ children }) => {
             const creatorNft = createEthereumContract(creatorNftContractAddress, creatorNftABI)
 
             const creatorNftTx = await creatorNft.requestNft(creatorTokenIdType)
-            await CreatorMintTx.wait(1)
+            await creatorNftTx.wait(1)
 
-            toast.success(`Nft con id ${creatorTokenIdType} creado`, toastConfig)
+            toast.success(`Nft con id ${creatorTokenIdType} minteado`, toastConfig)
 
             console.log("--------------------------------------")
         } catch (error) {
