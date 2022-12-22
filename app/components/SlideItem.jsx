@@ -1,4 +1,5 @@
 import React, { useContext } from "react"
+import Link from "next/link"
 import { Slide } from "pure-react-carousel"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "../backend/firebase"
@@ -10,10 +11,8 @@ const SlideItem = ({ index, src, alt, h3, name }) => {
     return (
         <>
             <Slide index={index || 0}>
-                <button
-                    onClick={() => {
-                        router.push(`/contentCreators/${name}`)
-                    }}
+                <Link
+                    href={`/contentcreators/${name}`}
                     className="flex flex-shrink-0 relative w-full sm:w-auto"
                 >
                     <img
@@ -28,7 +27,7 @@ const SlideItem = ({ index, src, alt, h3, name }) => {
                             </h3>
                         </div>
                     </div>
-                </button>
+                </Link>
             </Slide>
         </>
     )

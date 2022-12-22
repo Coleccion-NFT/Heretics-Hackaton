@@ -4,7 +4,7 @@ const NavItems = {
             id: 1,
             name: "Dashboard",
             logo: "HomeIcon",
-            path: "dashboard",
+            path: "",
         },
         {
             id: 2,
@@ -16,7 +16,7 @@ const NavItems = {
             id: 3,
             name: "Credores de Contenido",
             logo: "WalletIcon",
-            path: "contentCreators",
+            path: "contentcreators",
         },
         {
             id: 4,
