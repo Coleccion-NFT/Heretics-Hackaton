@@ -1,7 +1,6 @@
 export const NFTCard = ({ nft }) => {
-    console.log(nft)
-
     const metadata = nft.metadata
+    console.log(metadata)
     const name = metadata.name
     const description = metadata.description
 
@@ -9,13 +8,9 @@ export const NFTCard = ({ nft }) => {
     const nftAddress = nft.contract.address
 
     const imageURI = metadata.image ? metadata.image : "nft.error"
-    console.log(imageURI)
     const imageURIURL = imageURI.startsWith("ipfs://")
         ? imageURI.replace("ipfs://", "https://ipfs.io/ipfs/")
         : imageURI
-
-    console.log(`imageURI: ` + imageURI)
-    console.log(`imageURIURL: ` + imageURIURL)
 
     return (
         <div className="w-1/4 flex flex-col ">
