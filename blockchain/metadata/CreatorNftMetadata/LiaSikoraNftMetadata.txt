@@ -1,0 +1,6 @@
+{
+"name": "liaSikora",
+"description": "Nft para mensajear con LiaSikora",
+"image": "ipfs://QmYMBSGWrSdXhZcJXijD6geDkRscXCtgXhzsJkvF24MqGR",
+"attributes": [{"messaging": "true"}]
+}

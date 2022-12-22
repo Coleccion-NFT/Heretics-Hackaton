@@ -13,6 +13,7 @@ module.exports = async function () {
 }
 
 async function updateContractAddresses() {
+    const creatorNft = await ethers.getContract("CreatorNft")
     const governor = await ethers.getContract("GovernorContract")
     const governanceToken = await ethers.getContract("GovernanceToken")
     const box = await ethers.getContract("Box")
@@ -32,6 +33,7 @@ async function updateContractAddresses() {
                 GovernorContract: [governor.address],
             }
         }
+        
         if (contractAddresses[chainId]["Box"]) {
             if (!contractAddresses[chainId]["Box"].includes(box.address)) {
                 contractAddresses[chainId]["Box"].push(box.address)
@@ -39,6 +41,7 @@ async function updateContractAddresses() {
         } else {
             contractAddresses[chainId] = { ...contractAddresses[chainId], Box: [box.address] }
         }
+        
         if (contractAddresses[chainId]["GovernanceToken"]) {
             if (!contractAddresses[chainId]["GovernanceToken"].includes(governanceToken.address)) {
                 contractAddresses[chainId]["GovernanceToken"].push(governanceToken.address)
@@ -47,6 +50,17 @@ async function updateContractAddresses() {
             contractAddresses[chainId] = {
                 ...contractAddresses[chainId],
                 GovernanceToken: [governanceToken.address],
+            }
+        }
+        
+        if (contractAddresses[chainId]["CreatorNft"]) {
+            if (!contractAddresses[chainId]["CreatorNft"].includes(creatorNft.address)) {
+                contractAddresses[chainId]["CreatorNft"].push(creatorNft.address)
+            }
+        } else {
+            contractAddresses[chainId] = {
+                ...contractAddresses[chainId],
+                CreatorNft: [creatorNft.address],
             }
         }
 
@@ -58,7 +72,12 @@ async function updateAbi() {
     const governor = await ethers.getContract("GovernorContract")
     const governanceToken = await ethers.getContract("GovernanceToken")
     const box = await ethers.getContract("Box")
+    const creatorNft = await ethers.getContract("CreatorNft")
 
+    fs.writeFileSync(
+        `${frontEndAbiLocation}CreatorNft.json`,
+        creatorNft.interface.format(ethers.utils.FormatTypes.json)
+    )
     fs.writeFileSync(
         `${frontEndAbiLocation}GovernorContract.json`,
         governor.interface.format(ethers.utils.FormatTypes.json)
@@ -73,4 +92,4 @@ async function updateAbi() {
     )
 }
 
-module.exports.tags = ["all", "frontend", "DAO"]
+module.exports.tags = ["all", "frontend", "DAO", "Nfts"]

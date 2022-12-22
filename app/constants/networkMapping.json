@@ -2,13 +2,17 @@
     "5": {
         "GovernanceToken": ["0x9C9a573c34218f57367DDA457eF467ed1C8cc780"],
         "GovernorContract": ["0x4a68B910A91048606F0340F1dadA5dBaf0B2Ac47"],
-        "Box": ["0x6A170a5eBEb9298B13F550158de85c4966eFAC14"]
+        "Box": ["0x6A170a5eBEb9298B13F550158de85c4966eFAC14"],
+        "CreatorNft": [
+            "0x011Abe06EB3D80bEa45b9697bD7119Cc48677D4F"
+        ]
     },
     "31337": {
         "GovernorContract": [
             "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853",
             "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
         ],
-        "Box": ["0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"]
+        "Box": ["0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"],
+        "CreatorNft": ["0x5FbDB2315678afecb367f032d93F642f64180aa3"]
     }
 }

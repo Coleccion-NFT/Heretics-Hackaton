@@ -1,0 +1,6 @@
+{
+"name": "mixwell",
+"description": "Nft para mensajear con Mixwell",
+"image": "ipfs://QmQxMNRqVFNmvXHTHjdHWp9H7EFuFrBkeSdsFs2FRJZPvX",
+"attributes": [{"messaging": "true"}]
+}

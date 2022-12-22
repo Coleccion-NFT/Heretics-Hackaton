@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    webpack: (config, { isServer }) => {
-        // If client-side, don't polyfill `fs`
-        if (!isServer) {
-            config.resolve.fallback = {
-                fs: false,
-            }
-        }
-
+    webpack(config) {
+        config.module.rules.push({
+            test: /\.svg$/,
+            use: "@svgr/webpack",
+        })
         return config
     },
 }

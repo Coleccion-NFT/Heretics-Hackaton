@@ -1,0 +1,6 @@
+{
+"name": "grefg",
+"description": "Nft para mensajear con grefg",
+"image": "ipfs://QmVSVezV6kwp72oMwYauuwsZ2x12e2hghyqBsh1BoSwQBa",
+"attributes": [{"messaging": "true"}]
+}
