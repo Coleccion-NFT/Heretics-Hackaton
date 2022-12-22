@@ -1,6 +1,6 @@
 import React from "react"
+import Link from "next/link"
 import { useContext, useState, useEffect } from "react"
-import { useRouter } from "next/router"
 
 import { FirebaseContext } from "../context/FirebaseContext"
 import { toast } from "react-toastify"
@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css"
 
 import Loader from "./Loader"
 import HeroIcon from "./HeroIcon"
-import { LockClosedIcon } from "@heroicons/react/20/solid"
+import ProfilePopover from "./ProfilePopover"
 
 import UpcomingMeetings from "../public/UpcomingMeetings"
 import LastColaborations from "../public/LastColaborations"
@@ -23,8 +23,6 @@ const Sidebar = () => {
         profileImageUrl: "",
         publicAddress: "",
     })
-
-    const router = useRouter()
 
     useEffect(() => {
         try {
@@ -72,11 +70,7 @@ const Sidebar = () => {
                         <div className="flex felx-col items-center justify-center bg-black w-10 h-10 rounded-lg">
                             <HeroIcon icon={"BellIcon"} color="text-white" size={5} />
                         </div>
-                        <img
-                            src={profileData.profileImageUrl}
-                            className="w-10 h-auto rounded-lg mx-4"
-                            alt="Pfp Img"
-                        />
+                        <ProfilePopover />
                         <div className="flex flex-col justify-center items-center">
                             <div className="flex felx-col items-center justify-center bg-amber-500 rounded-lg px-2">
                                 <div className="font-medium text-xs">Creador</div>
@@ -87,29 +81,25 @@ const Sidebar = () => {
                 ) : (
                     <div className="flex flex-row w-full text-center justify-end">
                         <div className="mx-2">
-                            <button
-                                onClick={() => {
-                                    router.push("/signin")
-                                }}
+                            <Link
+                                href="/signin"
                                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-200 py-1 px-2 text-xs font-medium text-black hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                             >
                                 Sign in
-                            </button>
+                            </Link>
                         </div>
                         <div>
-                            <button
-                                onClick={() => {
-                                    router.push("/signup")
-                                }}
+                            <Link
+                                href="/signup"
                                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-200 py-1 px-2 text-xs font-medium text-black hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                             >
                                 Sign up
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 )}
             </div>
-            <div className="flex flex-col h-full mt-10">
+            <div className="flex flex-col h-full mt-16">
                 <div className="flex flex-col bg-gray-100 rounded-lg px-5 py-4 mb-4">
                     <div className="text-black font-normal text-base">Proximas reuniones</div>
                     <div className="flex flex-col justify-evenly">

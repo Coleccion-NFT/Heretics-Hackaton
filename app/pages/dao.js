@@ -59,7 +59,7 @@ export default function DAO() {
 
     return (
         <>
-            <div className="h-screen w-screen flex flex-col justify-start items-center p-10">
+            <div className="w-full flex flex-col justify-between pl-8 pr-4 py-14">
                 <div className="w-full h-fit flex items-center">
                     <div className="flex-1 h-fit flex flex-col mx-5 justify-start items-center">
                         {currentAccount ? (
