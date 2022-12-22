@@ -4,8 +4,8 @@ import { useRouter } from "next/router"
 import { Web3Context } from "./Web3Context"
 
 import { auth, googleProvider, db } from "../backend/firebase"
-import { useAuthState } from "react-firebase-hooks/auth"
 import { doc, setDoc, getDocs, collection } from "firebase/firestore"
+import { useAuthState } from "react-firebase-hooks/auth"
 
 import { toast } from "react-toastify"
 import toastConfig from "../constants/toastConfig.json"
@@ -26,6 +26,9 @@ export const FirebaseProvider = ({ children }) => {
     const { createPairKeys } = useContext(Web3Context)
 
     const router = useRouter()
+
+    // Hook para obtener los datos del usuario del authentication
+    const [userFirebaseData, loadingFirebaseData, errorFirebaseData] = useAuthState(auth)
 
     // AUTH --------------------------------------------------------------------------------------
 
@@ -132,9 +135,6 @@ export const FirebaseProvider = ({ children }) => {
         }
     }
 
-    // Hook para obtener los datos del usuario del authentication
-    const [userFirebaseData, loadingFirebaseData, errorFirebaseData] = useAuthState(auth)
-
     // BASE DE DATOS --------------------------------------------------------------------------------------
 
     // Funcion para la creacion del usuario en la base de datos
@@ -201,8 +201,10 @@ export const FirebaseProvider = ({ children }) => {
                 userFirebaseData,
                 loadingFirebaseData,
                 errorFirebaseData,
+                auth,
                 db,
                 collection,
+                doc,
             }}
         >
             {children}
