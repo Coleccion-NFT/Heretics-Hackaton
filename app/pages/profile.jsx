@@ -54,10 +54,7 @@ const Profile = () => {
     }, [userFirebaseData])
 
     return (
-        <div className="flex h-screen w-full">
-            <div className="w-1/6 h-screen">
-                <Navbar />
-            </div>
+        <>
             {loadingFirebaseData ? (
                 <div className="w-4/6 h-screen">
                     <div className="h-1/3 w-full hidden items-center justify-center sm:flex">
@@ -65,34 +62,40 @@ const Profile = () => {
                     </div>
                 </div>
             ) : userFirebaseData ? (
-                <div className="w-full lg:w-4/6 h-screen flex flex-col justify-start pl-8 pr-4 py-14">
-                    <div className="text-black font-bold text-2xl mb-8">FICHA PERSONAL</div>
-                    <div className="flex flex-row w-full h-full items-center bg-gray-100 rounded-lg mt-3 px-5 py-4">
+                <div className="w-full h-screen flex flex-col justify-start pl-8 pr-8 py-14">
+                    <div className="text-black font-bold text-4xl mb-4">Ficha Personal</div>
+                    <div className="flex flex-col lg:flex-row w-full h-fit justify-between items-center bg-gray-100 rounded-lg mt-3 px-5 py-4">
                         {profileData.profileImageUrl === "undefined" ? (
-                            <DefaultPfp className="w-30 h-auto rounded-3xl" />
+                            <DefaultPfp className="w-auto h-40 lg:h-full lg:max-h-40 xl:max-h-56 rounded-xl mx-4" />
                         ) : (
                             <img
                                 src={profileData.profileImageUrl}
-                                className="w-32 h-auto rounded-3xl mx-4"
+                                className="w-auto h-40 lg:h-full lg:max-h-40 xl:max-h-56 rounded-xl mx-4"
                                 alt="Pfp Img"
                             />
                         )}
-                        <div className="flex flex-col">
-                            <div className="text-black font-bold">Username</div>
-                            <div className="pl-2">{profileData.displayName}</div>
-                            <div className="text-black font-bold">Email Adress</div>
-                            <div className="pl-2">{profileData.email}</div>
-                            <div className="text-black font-bold">Public Adress</div>
-                            <div className="pl-2">{profileData.publicAddress}</div>
+                        <div className="flex flex-col pl-2 py-8">
+                            <div className="text-black font-bold text-lg sm:text-2xl md:text-3xl">
+                                {profileData.displayName}
+                            </div>
+                            <div className="my-2 xl:my-6 text-black font-normal text-sm sm:text-lg md:text-xl">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting
+                                industry. Lorem Ipsum has been the industry's standard dummy text
+                                ever since the 1500s, when an unknown printer took a galley of type
+                                and scrambled it to make a type specimen book.
+                            </div>
+                            <div className="text-black font-normal text-sm sm:text-lg md:text-xl">
+                                {profileData.publicAddress}
+                            </div>
                         </div>
                     </div>
-                    <div className="flex flex-col bg-gray-100 rounded-lg mt-3 px-5 py-4">
-                        <div className="text-black font-bold text-xl mb-6">
+                    <div className="flex flex-col bg-gray-100 rounded-lg mt-4 px-5 py-4">
+                        <div className="text-black font-bold text-2xl mb-6">
                             Marcas con las que he colaborado
                         </div>
-                        <div className="flex flex-row justify-between items-center px-4">
+                        <div className="flex flex-wrap sm:flex-row sm:justify-between items-center px-4">
                             {Sponsors.sponsors.map((sponsor) => (
-                                <div className="w-16 h-auto rounded-lg bg-gray-200 p-2">
+                                <div className="w-16 h-auto rounded-lg bg-gray-200 m-1 sm:m-0 p-2">
                                     <Image
                                         src={sponsor.img}
                                         alt={sponsor.name}
@@ -103,14 +106,14 @@ const Profile = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="flex flex-row justify-around h-full bg-gray-100 rounded-lg mt-3 px-5 pb-4">
-                        <YoutubeViewsGraph className="w-72 h-auto" />
-                        <ColaborationGraph className="w-72 h-auto" />
+                    <div className="flex flex-wrap md:flex-row justify-around h-fit bg-gray-100 rounded-lg mt-4 px-5 pb-4">
+                        <YoutubeViewsGraph className="w-96 h-auto" />
+                        <ColaborationGraph className="w-96 h-auto" />
                     </div>
                 </div>
             ) : (
-                <div className="w-full lg:w-4/6 h-screen flex flex-col items-center justify-center pl-8 pr-4 py-32">
-                    <div className="w-2/5 flex flex-col justify-center">
+                <div className="w-full h-screen flex flex-col items-center justify-center pl-8 pr-4 py-32">
+                    <div className="w-4/5 md:w-2/5 flex flex-col justify-center">
                         <h2 className="mb-6 text-center text-3xl font-bold tracking-tight text-black">
                             Ups... Parece que no tienes cuenta
                         </h2>
@@ -149,10 +152,7 @@ const Profile = () => {
                     </div>
                 </div>
             )}
-            <div className="hidden lg:block lg:w-1/6 h-screen">
-                <Sidebar />
-            </div>
-        </div>
+        </>
     )
 }
 

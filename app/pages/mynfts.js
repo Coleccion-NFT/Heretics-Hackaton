@@ -49,7 +49,7 @@ const MyNfts = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center py-8 gap-y-3">
+        <div className="w-full h-screen flex flex-col items-center justify-start pl-8 pr-4 py-14">
             <div className="flex flex-col w-full justify-center items-center gap-y-2">
                 <input
                     type="text"

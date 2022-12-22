@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const { fontFamily } = require("tailwindcss/defaultTheme")
 module.exports = {
     content: [
         "./app/**/*.{js,ts,jsx,tsx}",
@@ -12,6 +13,9 @@ module.exports = {
                 "gray-100": "hsla(0, 0%, 0%, 0.02)",
                 "gray-200": "hsla(0, 0%, 0%, 0.2)",
                 "amber-500": "#E2B950",
+            },
+            fontFamily: {
+                sans: ["var(--font-poppins)", ...fontFamily.sans],
             },
         },
     },
