@@ -8,47 +8,8 @@ import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 const ProfilePopover = () => {
-    const { userFirebaseData, loadingFirebaseData, errorFirebaseData, getUserData } =
-        useContext(FirebaseContext)
+    const { userFirebaseData, loadingFirebaseData } = useContext(FirebaseContext)
 
-    const [profileData, setProfileData] = useState({
-        displayName: "",
-        email: "",
-        profileImageUrl: "",
-        publicAddress: "",
-    })
-
-    useEffect(() => {
-        try {
-            // Anonymus function
-            ;(async () => {
-                if (userFirebaseData) {
-                    // Get the data
-                    let userData = (await getUserData(userFirebaseData.uid))[0].data
-                    let newData = {}
-                    for (const key in profileData) {
-                        newData = { ...newData, [key]: userData[key] }
-                    }
-                    // Set the data
-                    setProfileData(newData)
-                }
-            })()
-        } catch (error) {
-            console.log(error.code)
-            console.log(error.message)
-
-            toast.error("Ha habido un error cargando el perfil", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
-        }
-    }, [userFirebaseData])
     return (
         <div>
             <Popover className="relative">
@@ -59,7 +20,7 @@ const ProfilePopover = () => {
                 ${open ? "" : "text-opacity-90"}`}
                         >
                             <img
-                                src={profileData.profileImageUrl}
+                                src={userFirebaseData.photoURL || "./Profile.png"}
                                 className="w-10 h-auto rounded-lg mx-4"
                                 alt="Pfp Img"
                             />
