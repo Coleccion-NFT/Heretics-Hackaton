@@ -17,45 +17,6 @@ const Sidebar = () => {
     const { userFirebaseData, loadingFirebaseData, errorFirebaseData, getUserData } =
         useContext(FirebaseContext)
 
-    const [profileData, setProfileData] = useState({
-        displayName: "",
-        email: "",
-        profileImageUrl: "",
-        publicAddress: "",
-    })
-
-    useEffect(() => {
-        try {
-            // Anonymus function
-            ;(async () => {
-                if (userFirebaseData) {
-                    // Get the data
-                    let userData = (await getUserData(userFirebaseData.uid))[0].data
-                    let newData = {}
-                    for (const key in profileData) {
-                        newData = { ...newData, [key]: userData[key] }
-                    }
-                    // Set the data
-                    setProfileData(newData)
-                }
-            })()
-        } catch (error) {
-            console.log(error.code)
-            console.log(error.message)
-
-            toast.error("Ha habido un error cargando el perfil", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            })
-        }
-    }, [userFirebaseData])
-
     return (
         <div className="h-screen flex flex-col pr-5">
             <div className="flex flex-row items-center pt-5">
@@ -75,7 +36,9 @@ const Sidebar = () => {
                             <div className="flex felx-col items-center justify-center bg-amber-500 rounded-lg px-2">
                                 <div className="font-medium text-xs">Creador</div>
                             </div>
-                            <div className="font-semibold text-sm">{profileData.displayName}</div>
+                            <div className="font-semibold text-sm">
+                                {userFirebaseData.displayName}
+                            </div>
                         </div>
                     </div>
                 ) : (
@@ -107,8 +70,11 @@ const Sidebar = () => {
                         <div className="text-black font-medium text-sm text-opacity-50">
                             Enero 10 2023
                         </div>
-                        {UpcomingMeetings.upcomingMeetings.map((meetings) => (
-                            <div className="flex flex-row w-full items-center justify-evenly my-1">
+                        {UpcomingMeetings.upcomingMeetings.map((meetings, index) => (
+                            <div
+                                key={index}
+                                className="flex flex-row w-full items-center justify-start my-1"
+                            >
                                 <div className="text-black font-medium text-base w-1/4">
                                     {meetings.time}
                                 </div>
@@ -128,8 +94,11 @@ const Sidebar = () => {
                 <div className="flex flex-col bg-gray-100 rounded-lg px-5 py-4">
                     <div className="text-black font-normal text-base">Últimas colaboraciones</div>
                     <div className="flex flex-col">
-                        {LastColaborations.lastColaborations.map((colaboration) => (
-                            <div className="flex flex-row w-full items-center justify-start my-1">
+                        {LastColaborations.lastColaborations.map((colaboration, index) => (
+                            <div
+                                key={index}
+                                className="flex flex-row w-full items-center justify-start my-1"
+                            >
                                 <div className="w-8 h-8 rounded-lg bg-gray-200 mr-2"></div>
                                 <div className="flex flex-col">
                                     <div className="text-black font-medium text-xs">

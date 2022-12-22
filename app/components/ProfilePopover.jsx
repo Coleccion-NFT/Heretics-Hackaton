@@ -32,6 +32,8 @@ const popoverItems = [
 ]
 
 const ProfilePopover = () => {
+    const { userFirebaseData, loadingFirebaseData } = useContext(FirebaseContext)
+
     return (
         <div>
             <Popover className="relative">
@@ -42,7 +44,7 @@ const ProfilePopover = () => {
                 ${open ? "" : "text-opacity-90"}`}
                         >
                             <img
-                                src={profileData.profileImageUrl}
+                                src={userFirebaseData.photoURL || "./Profile.png"}
                                 className="w-10 h-auto rounded-lg mx-4"
                                 alt="Pfp Img"
                             />

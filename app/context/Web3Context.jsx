@@ -103,6 +103,8 @@ export const Web3Provider = ({ children }) => {
             setCurrentAccount(accounts[0])
         } catch (error) {
             console.log(error)
+
+            toast.error(`Ha habido un error conectando tu wallet`, toastConfig)
         }
     }
 
