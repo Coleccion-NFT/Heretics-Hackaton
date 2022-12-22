@@ -1,16 +1,18 @@
 import Link from "next/link"
 import React from "react"
+import { useRouter } from "next/router"
 
 import NavItems from "../public/Navitems"
 import HeroIcon from "./HeroIcon"
 
-const logo = "https://t9h7n3i5.stackpathcdn.com/wp-content/uploads/2020/10/HERETICS.png"
+const logo = "./HereticsLogo.png"
 
 export const Navbar = () => {
+    const router = useRouter()
     return (
-        <div className="flex flex-col h-screen items-center justify-start py-4 pl-5 pr-4 shadow-2xl">
-            <div className="flex h-auto w-32 items-center justify-center">
-                <img className="w-8 h-8 sm:h-full sm:w-auto block" src={logo} alt="Heretics Logo" />
+        <div className="flex flex-col max-w-xs h-screen items-center justify-start py-4 pl-5 pr-4 shadow-2xl">
+            <div className="flex h-auto w-16 items-center justify-center">
+                <img className="sm:h-full sm:w-auto block" src={logo} alt="Heretics Logo" />
             </div>
             <div className="flex flex-col h-5/6 justify-evenly">
                 {NavItems.navitems.map((navitem) => (
@@ -24,6 +26,9 @@ export const Navbar = () => {
                             </span>
                         </Link>
                         <Link
+                            onClick={() => {
+                                router.push(`/${navitem.path}`)
+                            }}
                             href="#"
                             className="hidden group sm:block relative focus:border-2 focus:border-black text-xs tracking-wider hover:border-amber-500 text-black focus:font-semibold focus:bg-black focus:text-white border-2 border-white border-solid pl-10 pr-3 py-3 rounded-xl"
                         >

@@ -13,4 +13,4 @@ module.exports = async ({ getNamedAccounts }) => {
     await CreatorMintTx.wait(1)
     console.log(`Creator NFT index 1 tokenURI: ${await creatorNft1.tokenURI(2)}`)
 }
-module.exports.tags = ["all", "mint", "Nfts"]
+module.exports.tags = ["all", "mint"]

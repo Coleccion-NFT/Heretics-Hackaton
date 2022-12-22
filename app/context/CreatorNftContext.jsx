@@ -10,15 +10,16 @@ import "react-toastify/dist/ReactToastify.css"
 import creatorNftABI from "../constants/CreatorNft.json"
 import contractAddressJSON from "../constants/networkMapping.json"
 
+import ContentCreators from "../public/contentCreator"
+
 const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
-const creatorNftContractAddress = contractAddressJSON["31337"].CreatorNft[0]
+const creatorNftContractAddress = contractAddressJSON[chainId].CreatorNft[1]
 
 export const CreatorNftContext = createContext()
 
 export const CreatorNftProvider = ({ children }) => {
     const { currentAccount } = useContext(Web3Context)
-
     // mintCreatorNft
     const mintNft = async (creatorTokenIdType) => {
         try {
@@ -27,7 +28,14 @@ export const CreatorNftProvider = ({ children }) => {
             const creatorNftTx = await creatorNft.requestNft(creatorTokenIdType)
             await creatorNftTx.wait(1)
 
-            toast.success(`Nft con id ${creatorTokenIdType} minteado`, toastConfig)
+            let mintedCreator
+            ContentCreators.map((creator) => {
+                if (creator.index === creatorTokenIdType) {
+                    mintedCreator = creator
+                }
+            })
+
+            toast.success(`Nft de ${mintedCreator.name} minteado`, toastConfig)
 
             console.log("--------------------------------------")
         } catch (error) {

@@ -109,47 +109,45 @@ const Profile = () => {
                     </div>
                 </div>
             ) : (
-                <>
-                    <div className="w-full lg:w-4/6 h-screen flex flex-col justify-center pl-8 pr-4 py-32">
-                        <div className="w-2/5 flex flex-col">
-                            <h2 className="mb-6 text-center text-3xl font-bold tracking-tight text-black">
-                                Ups... Parece que no tienes cuenta
-                            </h2>
-                            <div>
-                                <button
-                                    onClick={() => {
-                                        router.push("/signin")
-                                    }}
-                                    className="mb-6 group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-gray-200 hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
-                                >
-                                    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                        <LockClosedIcon
-                                            className="h-5 w-5 text-gray-200 group-hover:text-white"
-                                            aria-hidden="true"
-                                        />
-                                    </span>
-                                    Sign in
-                                </button>
-                            </div>
-                            <div>
-                                <button
-                                    onClick={() => {
-                                        router.push("/signup")
-                                    }}
-                                    className="mb-6 group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-gray-200 hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
-                                >
-                                    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                        <LockClosedIcon
-                                            className="h-5 w-5 text-gray-200 group-hover:text-white"
-                                            aria-hidden="true"
-                                        />
-                                    </span>
-                                    Sign up
-                                </button>
-                            </div>
+                <div className="w-full lg:w-4/6 h-screen flex flex-col items-center justify-center pl-8 pr-4 py-32">
+                    <div className="w-2/5 flex flex-col justify-center">
+                        <h2 className="mb-6 text-center text-3xl font-bold tracking-tight text-black">
+                            Ups... Parece que no tienes cuenta
+                        </h2>
+                        <div>
+                            <button
+                                onClick={() => {
+                                    router.push("/signin")
+                                }}
+                                className="mb-6 group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                            >
+                                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <LockClosedIcon
+                                        className="h-5 w-5 text-white group-hover:text-white"
+                                        aria-hidden="true"
+                                    />
+                                </span>
+                                Sign in
+                            </button>
+                        </div>
+                        <div>
+                            <button
+                                onClick={() => {
+                                    router.push("/signup")
+                                }}
+                                className="mb-6 group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                            >
+                                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <LockClosedIcon
+                                        className="h-5 w-5 text-white group-hover:text-white"
+                                        aria-hidden="true"
+                                    />
+                                </span>
+                                Sign up
+                            </button>
                         </div>
                     </div>
-                </>
+                </div>
             )}
             <div className="hidden lg:block lg:w-1/6 h-screen">
                 <Sidebar />

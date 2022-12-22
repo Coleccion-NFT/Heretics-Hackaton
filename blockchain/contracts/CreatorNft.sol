@@ -67,7 +67,7 @@ contract CreatorNft is ERC721URIStorage, Ownable {
         }
     }
 
-    function setCreatorTokenUris(string[3] memory _creatorTokenUris) public onlyOwner {
+    function setCreatorTokenUris(string[9] memory _creatorTokenUris) public onlyOwner {
         s_creatorTokenUris = _creatorTokenUris;
     }
 

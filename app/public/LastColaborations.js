@@ -1,16 +1,16 @@
 const LastColaborations = {
     lastColaborations: [
         {
-            job: "UI Designer",
-            topic: "Overwiew",
+            brand: "Grefusa",
+            campaign: "Ver Campaña",
         },
         {
-            job: "UX Resercher",
-            topic: "UX Review",
+            brand: "Lion Cereales",
+            campaign: "Ver Campaña",
         },
         {
-            job: "UX Resercher",
-            topic: "UX Review",
+            brand: "Logitech",
+            campaign: "Ver Campaña",
         },
     ],
 }

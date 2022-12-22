@@ -142,11 +142,11 @@ const Sidebar = () => {
                             <div className="flex flex-row w-full items-center justify-start my-1">
                                 <div className="w-8 h-8 rounded-lg bg-gray-200 mr-2"></div>
                                 <div className="flex flex-col">
-                                    <div className="text-black md:font-medium text-xs text-opacity-50">
-                                        {colaboration.job}
-                                    </div>
                                     <div className="text-black font-medium text-xs">
-                                        {colaboration.topic}
+                                        {colaboration.brand}
+                                    </div>
+                                    <div className="text-black md:font-medium text-xs text-opacity-50">
+                                        {colaboration.campaign}
                                     </div>
                                 </div>
                             </div>

@@ -3,15 +3,15 @@ const { developmentChains } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
 
 const tokenUris = [
-    "ipfs://QmVY3rdgjrCcTfApLHZmGLpgNiV3FWkRdXM3crq6rHQT6w",
-    "ipfs://QmVFZKNGrUtwASkrAmWtUuKBM18xZQGC9hLic33QjkVjdP",
-    "ipfs://QmdoZZyGhqo3a1dQhjAfiu7VSxGJ1ipCLZQTZm66ddecWs",
-    "ipfs://QmcgRWxcGRjusDd4S67fjtzTVycTfqBjU71P6W31KJetSS",
-    "ipfs://QmerJNKNUKievT8GRV2THQxxNsCN8qd6Mni3Fge2YFNqnk",
-    "ipfs://QmXS8hpkyPTcogePFdKiZvC8afFrwUQbPVL3FVChsDskic",
-    "ipfs://Qmbk6KjyvX3eWxTShFkhDm329wLBGz5ZP7LV1j9XSUkh2c",
-    "ipfs://QmX1aszDMsJid88RYd8YA7LT6Td33r6ACqMHoUJKz7sZwt",
-    "ipfs://QmRCqAvSCUqLCSdBHsAC6iT5o2WyeVHXbAKPwfb4y6xSa6",
+    "ipfs://QmeoBxoSSoJG4X8vFrZsSRXFtp2bfhW2bZnqiNPKiefjrh",
+    "ipfs://QmXQKobHR79p3TYco31QGiqEE6NPtsaXcZWzsNWgRuadcS",
+    "ipfs://QmWhHtcLAN9SuzxXj4zjEMhuS8uQgNPQ5cWVBRtL2d6Rew",
+    "ipfs://QmXA7pt5ysG6VVWTstx5DmF2iiAmKmgXgCnFPfgw1vKGNn",
+    "ipfs://QmdbmyNpna3DHDuNqwf88nk7bHZAJgQ4jPTzBd6NaVxCVf",
+    "ipfs://Qmcyz1hqrCcznBhMeAiGCgRUX4vChbF9t3UVtW2qhCwvmo",
+    "ipfs://QmPda6TMHcQvB6XfWqoeJwH4v6ZcrmT7itcbi3hxjQ5zhi",
+    "ipfs://QmZZ6zvmPuSPNQTQGGi4n7biFCQndKdq1zmDR22iiruWEK",
+    "ipfs://QmSQWofL8jQn1LF2NAka2CrdiDYUpVi7xpBm6gzPkE9Pzd",
 ]
 
 module.exports = async function ({ getNamedAccounts, deployments }) {
@@ -26,6 +26,8 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
         log: true,
         waitConfirmations: network.config.blockConfirmations || 1,
     })
+
+    log(`creatorNft adress: ${creatorNft.address}`)
 
     log("----------------------------------------------")
 
