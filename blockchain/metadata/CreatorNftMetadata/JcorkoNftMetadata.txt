@@ -1,5 +1,6 @@
-{name: "jcorko",
-description: "Nft para mensajear con Jcorko",
-image: "ipfs://QmSgD2PvcCqoBE9fj7PwySge6ASBPYSYa5QVxUsmnnZ1oN",
-attributes: [{messaging: "true"}]
+{
+"name": "jcorko",
+"description": "Nft para mensajear con Jcorko",
+"image": "ipfs://QmSgD2PvcCqoBE9fj7PwySge6ASBPYSYa5QVxUsmnnZ1oN",
+"attributes": [{"messaging": "true"}]
 }

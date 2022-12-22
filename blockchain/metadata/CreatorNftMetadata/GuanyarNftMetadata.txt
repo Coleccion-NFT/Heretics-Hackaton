@@ -1,5 +1,6 @@
-{name: "guanyar",
-description: "Nft para mensajear con Guanyar",
-image: "ipfs://QmSCLq9SCmGyaaTYTKR3visRNT9N4M4wy3rqKqbseiExo2",
-attributes: [{messaging: "true"}]
+{
+"name": "guanyar",
+"description": "Nft para mensajear con Guanyar",
+"image": "ipfs://QmSCLq9SCmGyaaTYTKR3visRNT9N4M4wy3rqKqbseiExo2",
+"attributes": [{"messaging": "true"}]
 }

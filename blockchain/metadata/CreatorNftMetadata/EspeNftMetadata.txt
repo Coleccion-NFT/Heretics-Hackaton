@@ -1,5 +1,6 @@
-{name: "espe",
-description: "Nft para mensajear con Espe",
-image: "ipfs://QmWYnFMwePaeYYqJmsfqSRejegwEG38cGcyova57mHvP2s",
-attributes: [{messaging: "true"}]
+{
+"name": "espe",
+"description": "Nft para mensajear con Espe",
+"image": "ipfs://QmWYnFMwePaeYYqJmsfqSRejegwEG38cGcyova57mHvP2s",
+"attributes": [{"messaging": "true"}]
 }
