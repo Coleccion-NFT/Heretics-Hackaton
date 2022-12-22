@@ -14,7 +14,7 @@ import ContentCreators from "../public/contentCreator"
 
 const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
-const creatorNftContractAddress = contractAddressJSON[chainId].CreatorNft[1]
+const creatorNftContractAddress = contractAddressJSON[chainId].CreatorNft[0]
 
 export const CreatorNftContext = createContext()
 
