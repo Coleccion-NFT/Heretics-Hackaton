@@ -11,12 +11,14 @@ import toastConfig from "../constants/toastConfig.json"
 import "react-toastify/dist/ReactToastify.css"
 
 import governorContractABI from "../constants/GovernorContract.json"
+import governanceTokenABI from "../constants/GovernanceToken.json"
 import boxContractABI from "../constants/Box.json"
 import contractAddressJSON from "../constants/networkMapping.json"
 
 const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
 const governorContractAddress = contractAddressJSON[chainId].GovernorContract[0]
+const governanceTokenAddress = contractAddressJSON[chainId].GovernanceToken[0]
 const boxContractAddress = contractAddressJSON[chainId].Box[0]
 
 export const DAOContext = createContext()
@@ -225,11 +227,78 @@ export const DAOProvider = ({ children }) => {
     }
 
     const updateStoreValue = async () => {
-        const box = createEthereumContract(boxContractAddress, boxContractABI)
+        try {
+            const box = createEthereumContract(boxContractAddress, boxContractABI)
 
-        const retrieveTx = await box.retrieve()
-        console.log(`El valor de la store es: ${retrieveTx.toString()}`)
-        return retrieveTx.toString()
+            const retrieveTx = await box.retrieve()
+            console.log(`El valor de la store es: ${retrieveTx.toString()}`)
+            return retrieveTx.toString()
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+
+            toast.error(`Ha habido un error actualizando la información de la store`, toastConfig)
+        }
+    }
+
+    // GOVERNANCETOKENS --------------------------------------------------------------------------------------
+
+    const getVotingInfo = async (address) => {
+        try {
+            const governanceToken = createEthereumContract(
+                governanceTokenAddress,
+                governanceTokenABI
+            )
+
+            const delegates = await governanceToken.delegates(address)
+            const votesAmount = await governanceToken.getVotes(address)
+            const votesBalance = await governanceToken.balanceOf(address)
+
+            toast.info(`Se ha obtenido tu información de votación`, toastConfig)
+
+            return { delegates, votesAmount, votesBalance }
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+
+            toast.error(`Ha habido un error actualizando la información de los votos`, toastConfig)
+        }
+    }
+
+    const delegateTokensTo = async (address) => {
+        try {
+            const governanceToken = createEthereumContract(
+                governanceTokenAddress,
+                governanceTokenABI
+            )
+
+            const delegateTx = await governanceToken.delegate(address)
+            await delegateTx.wait(1)
+            toast.success(`Se han delegado tus votos`, toastConfig)
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+
+            toast.error(`Ha habido un error delegando tus votos`, toastConfig)
+        }
+    }
+
+    const transferTokensTo = async (address, amount) => {
+        try {
+            const governanceToken = createEthereumContract(
+                governanceTokenAddress,
+                governanceTokenABI
+            )
+
+            const transferTx = await governanceToken.transfer(address, amount)
+            await transferTx.wait(1)
+            toast.success(`Se han transferido tus tokens`, toastConfig)
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+
+            toast.error(`Ha habido un error transfiriendo tus tokens`, toastConfig)
+        }
     }
 
     // RETURN --------------------------------------------------------------------------------------
@@ -243,6 +312,9 @@ export const DAOProvider = ({ children }) => {
                 checkProposalStatus,
                 updateProposalStatus,
                 updateStoreValue,
+                getVotingInfo,
+                delegateTokensTo,
+                transferTokensTo,
             }}
         >
             {children}
