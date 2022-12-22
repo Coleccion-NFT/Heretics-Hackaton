@@ -108,7 +108,7 @@ const Sidebar = () => {
                             Enero 10 2023
                         </div>
                         {UpcomingMeetings.upcomingMeetings.map((meetings) => (
-                            <div className="flex flex-row w-full items-center justify-start my-1">
+                            <div className="flex flex-row w-full items-center justify-evenly my-1">
                                 <div className="text-black font-medium text-base w-1/4">
                                     {meetings.time}
                                 </div>

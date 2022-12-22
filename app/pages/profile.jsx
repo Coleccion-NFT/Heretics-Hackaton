@@ -78,13 +78,13 @@ const Profile = () => {
                             <div className="text-black font-bold text-lg sm:text-2xl md:text-3xl">
                                 {profileData.displayName}
                             </div>
-                            <div className="my-2 xl:my-6 text-black font-normal text-sm sm:text-lg md:text-xl">
+                            <div className="my-2 xl:my-6 text-black font-normal text-sm sm:text-base md:text-base">
                                 Lorem Ipsum is simply dummy text of the printing and typesetting
                                 industry. Lorem Ipsum has been the industry's standard dummy text
                                 ever since the 1500s, when an unknown printer took a galley of type
                                 and scrambled it to make a type specimen book.
                             </div>
-                            <div className="text-black font-normal text-sm sm:text-lg md:text-xl">
+                            <div className="text-black font-normal text-sm sm:text-base md:text-base">
                                 {profileData.publicAddress}
                             </div>
                         </div>
