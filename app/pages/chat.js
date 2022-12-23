@@ -1263,7 +1263,7 @@ export default function Chat() {
 
                                         <div
                                             id="messages"
-                                            className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+                                            className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar"
                                         >
                                             {!loadingMessages &&
                                                 currentChat == "messages" &&
@@ -1399,52 +1399,51 @@ export default function Chat() {
                                             {/* MESSAGES END */}
 
                                             {/* MESSAGES SEND START */}
-
-                                            <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2">
-                                                <div className="relative flex">
-                                                    <span className="absolute inset-y-0 flex items-center">
-                                                        <button className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300">
-                                                            <svg
-                                                                className="h-6 w-6 text-gray-600"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                viewBox="0 0 24 24"
-                                                                stroke="currentColor"
-                                                                fill="none"
-                                                            >
-                                                                <path
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    strokeWidth={2}
-                                                                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                                                                />
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <form
-                                                        className="flex focus:ring-red-500 focus:border-red-500 w-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 pl-12 bg-gray-100 rounded-full border-gray-200"
-                                                        onSubmit={sendMessage}
-                                                    >
-                                                        <input
-                                                            id="messageToSend"
-                                                            name="messageToSend"
-                                                            type="text"
-                                                            required
-                                                            placeholder="Write your message"
-                                                            value={messageToSend}
-                                                            onChange={(e) => {
-                                                                e.preventDefault()
-                                                                setMessageToSend(e.target.value)
-                                                            }}
-                                                            className="px-3 py-3 focus:ring-red-500 focus:border-red-500 w-full h-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 rounded-full border-gray-200"
-                                                        />
-                                                        <button
-                                                            type="submit"
-                                                            className="rounded-full bg-green-300 px-7 py-1 font-semibold"
+                                        </div>
+                                        <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2">
+                                            <div className="relative flex">
+                                                <span className="absolute inset-y-0 flex items-center">
+                                                    <button className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300">
+                                                        <svg
+                                                            className="h-6 w-6 text-gray-600"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                            fill="none"
                                                         >
-                                                            Send
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={2}
+                                                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </span>
+                                                <form
+                                                    className="flex focus:ring-red-500 focus:border-red-500 w-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 pl-12 bg-gray-100 rounded-full border-gray-200"
+                                                    onSubmit={sendMessage}
+                                                >
+                                                    <input
+                                                        id="messageToSend"
+                                                        name="messageToSend"
+                                                        type="text"
+                                                        required
+                                                        placeholder="Write your message"
+                                                        value={messageToSend}
+                                                        onChange={(e) => {
+                                                            e.preventDefault()
+                                                            setMessageToSend(e.target.value)
+                                                        }}
+                                                        className="px-3 py-3 focus:ring-red-500 focus:border-red-500 w-full h-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 rounded-full border-gray-200"
+                                                    />
+                                                    <button
+                                                        type="submit"
+                                                        className="rounded-full bg-green-300 px-7 py-1 font-semibold"
+                                                    >
+                                                        Send
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
