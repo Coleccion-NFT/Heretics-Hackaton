@@ -127,9 +127,15 @@ const DaoSidebar = () => {
                                 Sobre 1.000.000
                             </div>
                         </div>
-                        <div className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg">
-                            jkgdnbv5v4d5v5
-                        </div>
+                        <input
+                            id="delegates"
+                            name="delegates"
+                            type="text"
+                            required
+                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            value={voteData.votesBalance / 1e18}
+                            readOnly
+                        ></input>
                     </div>
                     <div className="my-1">
                         <div className="text-black font-medium text-sm mb-1">Delegar votos a</div>
