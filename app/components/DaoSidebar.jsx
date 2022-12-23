@@ -85,7 +85,7 @@ const DaoSidebar = () => {
             </div>
             <div className={`flex flex-col ${currentAccount ? "block" : "hidden"} h-full mt-5`}>
                 <div className="flex flex-col justify-evenly bg-gray-100 rounded-lg px-5 py-3 mb-4">
-                    <div className="text-white font-semibold text-sm bg-amber-500 hover:bg-black rounded-xl py-1 my-2 text-center">
+                    <div className="text-white font-semibold text-sm bg-amber-500 rounded-xl py-1 my-2 text-center">
                         Tu información de voto
                     </div>
                     <div className="my-1">
