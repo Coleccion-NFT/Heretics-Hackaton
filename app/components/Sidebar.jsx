@@ -1,6 +1,7 @@
+import { useContext, useState, useEffect } from "react"
 import React from "react"
 import Link from "next/link"
-import { useContext, useState, useEffect } from "react"
+import Image from "next/image"
 
 import { FirebaseContext } from "../context/FirebaseContext"
 import { toast } from "react-toastify"
@@ -13,12 +14,14 @@ import ProfilePopover from "./ProfilePopover"
 import UpcomingMeetings from "../public/UpcomingMeetings"
 import LastColaborations from "../public/LastColaborations"
 
+const logo = "./HereticsLogo.png"
+
 const Sidebar = () => {
     const { userFirebaseData, loadingFirebaseData, errorFirebaseData, getUserData } =
         useContext(FirebaseContext)
 
     return (
-        <div className="h-screen flex flex-col pr-5">
+        <div className="h-screen flex flex-col pr-2">
             <div className="flex flex-row items-center pt-5">
                 {loadingFirebaseData ? (
                     <div className="w-full">
@@ -92,14 +95,16 @@ const Sidebar = () => {
                     </div>
                 </div>
                 <div className="flex flex-col bg-gray-100 rounded-lg px-5 py-4">
-                    <div className="text-black font-normal text-base">Últimas colaboraciones</div>
+                    <div className="text-black font-normal text-base">Colaboraciones</div>
                     <div className="flex flex-col">
                         {LastColaborations.lastColaborations.map((colaboration, index) => (
                             <div
                                 key={index}
                                 className="flex flex-row w-full items-center justify-start my-1"
                             >
-                                <div className="w-8 h-8 rounded-lg bg-gray-200 mr-2"></div>
+                                <div className="w-8 h-8 rounded-lg bg-gray-200 mr-2 flex items-center justify-center">
+                                    <Image src={colaboration.img} alt="Colab" />
+                                </div>
                                 <div className="flex flex-col">
                                     <div className="text-black font-medium text-xs">
                                         {colaboration.brand}

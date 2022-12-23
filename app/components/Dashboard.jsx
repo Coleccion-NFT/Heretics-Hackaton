@@ -6,7 +6,7 @@ import TopCreators from "../public/TopCreators"
 
 export default function Dashboard() {
     return (
-        <div className="w-full h-screen flex flex-col pr-4 py-1">
+        <div className="w-full h-screen flex flex-col">
             <div className="text-black font-bold text-2xl sm:text-4xl mb-6">Dashboard</div>
             <div className="flex flex-col justify-start h-full">
                 <div className="bg-gray-100 rounded-lg mt-3 px-5 py-4">

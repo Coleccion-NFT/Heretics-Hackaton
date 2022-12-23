@@ -62,29 +62,29 @@ const Profile = () => {
                     </div>
                 </div>
             ) : userFirebaseData ? (
-                <div className="w-full h-screen flex flex-col justify-start pl-8 pr-8 py-14">
+                <div className="w-full h-screen flex flex-col justify-start pl-8 pr-10 2xl:pr-8 pt-10 pb-4">
                     <div className="text-black font-bold text-4xl mb-4">Ficha Personal</div>
-                    <div className="flex flex-col lg:flex-row w-full h-fit justify-between items-center bg-gray-100 rounded-lg mt-3 px-5 py-4">
+                    <div className="flex flex-col lg:flex-row w-full h-fit justify-between items-center bg-gray-100 rounded-lg mt-3 px-5">
                         {profileData.profileImageUrl === "undefined" ? (
                             <DefaultPfp className="w-auto h-40 lg:h-full lg:max-h-40 xl:max-h-56 rounded-xl mx-4" />
                         ) : (
                             <img
                                 src={profileData.profileImageUrl}
-                                className="w-auto h-40 lg:h-full lg:max-h-40 xl:max-h-56 rounded-xl mx-4"
+                                className="w-auto h-40 lg:h-full lg:max-h-32 xl:max-h-40 rounded-xl mx-4"
                                 alt="Pfp Img"
                             />
                         )}
-                        <div className="flex flex-col pl-2 py-8">
+                        <div className="flex flex-col pl-2 py-4">
                             <div className="text-black font-bold text-lg sm:text-2xl md:text-3xl">
                                 {profileData.displayName}
                             </div>
-                            <div className="my-2 xl:my-6 text-black font-normal text-sm sm:text-lg md:text-xl">
+                            <div className="my-2 xl:my-6 text-black font-normal text-sm sm:text-base md:text-base">
                                 Lorem Ipsum is simply dummy text of the printing and typesetting
                                 industry. Lorem Ipsum has been the industry's standard dummy text
                                 ever since the 1500s, when an unknown printer took a galley of type
                                 and scrambled it to make a type specimen book.
                             </div>
-                            <div className="text-black font-normal text-sm sm:text-lg md:text-xl">
+                            <div className="text-black font-normal text-sm sm:text-base md:text-base">
                                 {profileData.publicAddress}
                             </div>
                         </div>

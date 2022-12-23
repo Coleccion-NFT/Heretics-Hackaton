@@ -6,8 +6,8 @@ const UpcomingMeetings = {
             day: "10",
             year: "2023",
             time: "10pm",
-            job: "Senior UI Designer",
-            topic: "Overwiew",
+            job: "Reunión 1",
+            topic: "Ver Agenda",
         },
         {
             id: 1,
@@ -15,8 +15,8 @@ const UpcomingMeetings = {
             day: "10",
             year: "2023",
             time: "11pm",
-            job: "UX Resercher",
-            topic: "UX Review",
+            job: "Reunión 2",
+            topic: "Ver Agenda",
         },
         {
             id: 2,
@@ -24,8 +24,8 @@ const UpcomingMeetings = {
             day: "10",
             year: "2023",
             time: "12pm",
-            job: "UX Resercher",
-            topic: "UX Review",
+            job: "Reunión 3",
+            topic: "Ver Agenda",
         },
     ],
 }
