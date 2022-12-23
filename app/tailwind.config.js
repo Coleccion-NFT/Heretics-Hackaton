@@ -12,6 +12,7 @@ module.exports = {
             colors: {
                 "gray-100": "hsla(0, 0%, 0%, 0.02)",
                 "gray-200": "hsla(0, 0%, 0%, 0.2)",
+                "gray-300": "hsla(0, 0%, 0%, 0.1)",
                 "amber-500": "#E2B950",
                 "orange-100": "hsla(43, 72%, 60%, 0.4)",
                 "green-100": "hsla(94, 72%, 60%, 1)",

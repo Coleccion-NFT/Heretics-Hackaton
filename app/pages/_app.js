@@ -42,7 +42,7 @@ export default function App({ Component, pageProps }) {
                                     <Component {...pageProps} />
                                 </div>
                                 {router.pathname === "/dao" ? (
-                                    <div className="hidden xl:block lg:max-w-sm h-fit fixed right-0">
+                                    <div className="hidden xl:block w-1/6 lg:max-w-sm h-fit fixed right-0">
                                         <DaoSidebar />
                                     </div>
                                 ) : (
