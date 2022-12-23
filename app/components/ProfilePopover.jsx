@@ -3,7 +3,6 @@ import Link from "next/link"
 import { Popover, Transition } from "@headlessui/react"
 import { useContext, useState, useEffect } from "react"
 import { Fragment } from "react"
-import { useRouter } from "next/router"
 
 import { FirebaseContext } from "../context/FirebaseContext"
 import { toast } from "react-toastify"
@@ -34,8 +33,6 @@ const popoverItems = [
 
 const ProfilePopover = () => {
     const { userFirebaseData, loadingFirebaseData, handleSignOut } = useContext(FirebaseContext)
-
-    const router = useRouter()
 
     return (
         <div>

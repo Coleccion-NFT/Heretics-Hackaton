@@ -26,7 +26,14 @@ const DaoSidebar = () => {
     } = useContext(DAOContext)
     const { checkIfWalletIsConnected, connectWallet, currentAccount } = useContext(Web3Context)
 
+    useEffect(() => {
+        checkIfWalletIsConnected()
+    }, [currentAccount])
+
     const [voteData, setVoteData] = useState({ delegates: "", votesAmount: "", votesBalance: "" })
+    const [delegateTo, setDelegateTo] = useState("")
+    const [transferTo, setTransferTo] = useState("")
+    const [transferAmount, setTransferAmount] = useState(0)
 
     return (
         <div className="h-screen flex flex-col pr-2">
@@ -73,7 +80,7 @@ const DaoSidebar = () => {
                     </div>
                 )}
             </div>
-            <div className="flex flex-col h-full mt-4">
+            <div className={`flex flex-col ${currentAccount ? "block" : "hidden"} h-full mt-4`}>
                 <div className="flex flex-col bg-gray-100 rounded-lg px-5 py-3 mb-4">
                     <button
                         className="text-white font-semibold text-base bg-amber-500 rounded-xl py-1 my-2"
@@ -139,31 +146,83 @@ const DaoSidebar = () => {
                     </div>
                     <div className="my-1">
                         <div className="text-black font-medium text-sm mb-1">Delegar votos a</div>
-                        <div className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg">
-                            jkgdnbv5v4d5v5
-                        </div>
+                        <input
+                            id="delegateTo"
+                            name="delegateTo"
+                            type="text"
+                            required
+                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            value={delegateTo}
+                            onChange={(e) => {
+                                setDelegateTo(e.target.value)
+                            }}
+                        ></input>
                     </div>
-                    <button className="text-white font-semibold text-base bg-amber-500 rounded-xl py-1 my-2">
+                    <button
+                        className="text-white font-semibold text-base bg-amber-500 rounded-xl py-1 my-2"
+                        type="button"
+                        onClick={async (e) => {
+                            e.preventDefault()
+                            if (
+                                confirm(
+                                    `Estás seguro de que quieres delegar tus ${
+                                        voteData.votesBalance / 1e18
+                                    } votos a ${delegateTo}?`
+                                )
+                            ) {
+                                await delegateTokensTo(delegateTo)
+                            }
+                        }}
+                    >
                         Delegar votos
                     </button>
                     <div className="my-1">
                         <div className="text-black font-medium text-sm mb-1">
                             Transferir tokens a
                         </div>
-                        <div className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg">
-                            jkgdnbv5v4d5v5
-                        </div>
+                        <input
+                            id="transferTo"
+                            name="transferTo"
+                            type="text"
+                            required
+                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            value={transferTo}
+                            onChange={(e) => {
+                                setTransferTo(e.target.value)
+                            }}
+                        ></input>
                     </div>
                     <div className="my-1">
                         <div className="text-black font-medium text-sm mb-1">
                             Cantidad de tokens a transferir
                         </div>
-                        <div className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg">
-                            jkgdnbv5v4d5v5
-                        </div>
+                        <input
+                            id="transferAmount"
+                            name="transferAmount"
+                            type="number"
+                            required
+                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            value={transferAmount}
+                            onChange={(e) => {
+                                setTransferAmount(e.target.value)
+                            }}
+                        ></input>
                     </div>
-                    <button className="text-white font-semibold text-base bg-amber-500 rounded-xl py-1 my-2">
-                        Delegar votos
+                    <button
+                        className="text-white font-semibold text-base bg-amber-500 rounded-xl py-1 my-2"
+                        type="button"
+                        onClick={async (e) => {
+                            e.preventDefault()
+                            if (
+                                confirm(
+                                    `Estás seguro de que quieres transferir tus ${transferAmount} tokens a ${transferTo}`
+                                )
+                            ) {
+                                await transferTokensTo(transferTo, transferAmount * 1e18)
+                            }
+                        }}
+                    >
+                        Transferir tokens
                     </button>
                 </div>
             </div>

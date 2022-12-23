@@ -1,10 +1,21 @@
-import { React, Fragment, useState } from "react"
+import { React, Fragment, useState, useContext } from "react"
 import { Dialog, Transition } from "@headlessui/react"
+import { DAOContext } from "../context/DAOContext"
 
 import HeroIcon from "../components/HeroIcon"
 
+import { Poppins } from "@next/font/google"
+
+const poppins = Poppins({
+    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+    // weight: ["400", "700"],
+    subsets: ["latin"],
+    variable: "--font-poppins",
+})
+
 const SuggestionModal = () => {
-    let [isOpen, setIsOpen] = useState(true)
+    const { createPropose } = useContext(DAOContext)
+    let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
         setIsOpen(false)
@@ -14,6 +25,16 @@ const SuggestionModal = () => {
         setIsOpen(true)
     }
 
+    const [formData, setFormData] = useState({
+        newValue: "",
+        functionToCall: "",
+        proposalDescription: "",
+    })
+
+    const updateField = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+
     return (
         <>
             <button className="bg-white rounded-lg p-4" onClick={openModal}>
@@ -21,7 +42,11 @@ const SuggestionModal = () => {
             </button>
 
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                <Dialog
+                    as="div"
+                    className={`${poppins.variable} font-sans relative z-10`}
+                    onClose={closeModal}
+                >
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -50,24 +75,77 @@ const SuggestionModal = () => {
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-gray-900"
                                     >
-                                        Payment successful
+                                        Fill the form
                                     </Dialog.Title>
-                                    <div className="mt-2">
-                                        <p className="text-sm text-gray-500">
-                                            Your payment has been successfully submitted. We’ve sent
-                                            you an email with all of the details of your order.
-                                        </p>
-                                    </div>
+                                    <form className="mt-5 flex flex-col items-center">
+                                        <div className="flex items-center justify-center my-5">
+                                            <label
+                                                htmlFor="newValue"
+                                                className="w-48 font-bold text-base mr-5"
+                                            >
+                                                New Value
+                                            </label>
+                                            <input
+                                                id="newValue"
+                                                name="newValue"
+                                                type="text"
+                                                required
+                                                className="w-full border px-2 py-0.5"
+                                                value={formData.newValue}
+                                                onChange={updateField}
+                                            ></input>
+                                        </div>
+                                        <div className="flex items-center justify-center my-5">
+                                            <label
+                                                htmlFor="functionToCall"
+                                                className="w-48 font-bold text-base mr-5"
+                                            >
+                                                Function
+                                            </label>
+                                            <input
+                                                id="functionToCall"
+                                                name="functionToCall"
+                                                type="text"
+                                                required
+                                                className="w-full border px-2 py-0.5"
+                                                value={formData.functionToCall}
+                                                onChange={updateField}
+                                            ></input>
+                                        </div>
+                                        <div className="flex items-center justify-center my-5">
+                                            <label
+                                                htmlFor="proposalDescription"
+                                                className="w-48 font-bold text-base mr-5"
+                                            >
+                                                Description
+                                            </label>
+                                            <input
+                                                id="proposalDescription"
+                                                name="proposalDescription"
+                                                type="text"
+                                                required
+                                                className="w-full border px-2 py-0.5"
+                                                value={formData.proposalDescription}
+                                                onChange={updateField}
+                                            ></input>
+                                        </div>
 
-                                    <div className="mt-4">
                                         <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
+                                            className="bg-black text-white w-fit my-5 px-9 py-1.5"
+                                            type="submit"
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                createPropose(
+                                                    [formData.newValue],
+                                                    formData.functionToCall,
+                                                    formData.proposalDescription
+                                                )
+                                                closeModal()
+                                            }}
                                         >
-                                            Got it, thanks!
+                                            Enviar la propuesta
                                         </button>
-                                    </div>
+                                    </form>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
