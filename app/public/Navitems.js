@@ -40,7 +40,7 @@ const NavItems = {
             id: 7,
             name: "Agenda",
             logo: "Cog6ToothIcon",
-            path: "Agenda",
+            path: "agenda",
         },
         {
             id: 8,
@@ -52,7 +52,7 @@ const NavItems = {
             id: 9,
             name: "Soporte",
             logo: "Cog6ToothIcon",
-            path: "sporte",
+            path: "soporte",
         },
     ],
 }
