@@ -22,7 +22,7 @@ const Proposal = ({ data }) => {
             <div className="flex flex-row w-5/12 items-center justify-between">
                 <img className="w-1/12 h-auto block" src={logo} alt="Heretics Logo" />
                 <button
-                    className="rounded-lg font-bold text-xs w-5/12 h-full text-white text-center bg-green-100"
+                    className="rounded-lg font-bold text-xs w-5/12 h-full text-white text-center bg-green-100 hover:bg-green-200"
                     onClick={() => {
                         votePropose(proposalId, 1, "none yet")
                     }}
@@ -31,7 +31,7 @@ const Proposal = ({ data }) => {
                     A FAVOR
                 </button>
                 <button
-                    className="rounded-lg font-bold text-xs w-5/12 h-full text-white text-center bg-red-100"
+                    className="rounded-lg font-bold text-xs w-5/12 h-full text-white text-center bg-red-100 hover:bg-red-200"
                     onClick={() => {
                         votePropose(proposalId, 0, "none yet")
                     }}

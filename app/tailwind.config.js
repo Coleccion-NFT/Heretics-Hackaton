@@ -16,7 +16,9 @@ module.exports = {
                 "amber-500": "#E2B950",
                 "orange-100": "hsla(43, 72%, 60%, 0.4)",
                 "green-100": "hsla(94, 72%, 60%, 1)",
+                "green-200": "#73e01f",
                 "red-100": "hsla(0, 72%, 60%, 1)",
+                "red-200": "#de2c2c",
             },
             fontFamily: {
                 sans: ["var(--font-poppins)", ...fontFamily.sans],
