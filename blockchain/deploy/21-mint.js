@@ -9,8 +9,8 @@ module.exports = async ({ getNamedAccounts }) => {
     console.log(`Creator NFT index 0 tokenURI: ${await creatorNft.tokenURI(1)}`)
 
     const creatorNft1 = await ethers.getContract("CreatorNft", deployer)
-    const CreatorMintTx1 = await creatorNft.requestNft(1)
-    await CreatorMintTx.wait(1)
+    const CreatorMintTx1 = await creatorNft1.requestNft(1)
+    await CreatorMintTx1.wait(1)
     console.log(`Creator NFT index 1 tokenURI: ${await creatorNft1.tokenURI(2)}`)
 }
 module.exports.tags = ["all", "mint"]

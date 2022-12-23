@@ -75,6 +75,7 @@ export default function Chat() {
     const creatorNftContractAddress =
         contractAddressJSON[process.env.NEXT_PUBLIC_CHAIN_ID].CreatorNft[0]
     const apiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
+    const apiKeyMoralis = process.env.NEXT_PUBLIC_MORALIS_API_KEY
 
     const sendMessage = async (e) => {
         e.preventDefault()
@@ -109,49 +110,60 @@ export default function Chat() {
     }, [currentAccount])
 
     const fetchNFTs = async () => {
-        if (currentAccount) {
-            console.log("Fetching nfts...")
+        try {
+            if (currentAccount) {
+                console.log("Fetching nfts...")
 
-            var requestOptions = {
-                method: "GET",
-                redirect: "follow",
+                var requestOptions = {
+                    method: "GET",
+                    headers: { accept: "application/json", "X-API-Key": `${apiKeyMoralis}` },
+                }
+
+                let baseURL
+                switch (process.env.NEXT_PUBLIC_CHAIN_ID) {
+                    case "1":
+                        baseURL = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTs/`
+                        break
+                    case "137":
+                        baseURL = `https://polygon-mainnet.g.alchemy.com/v2/${apiKey}/getNFTs/`
+                        break
+                    case "5":
+                        baseURL = `https://eth-goerli.g.alchemy.com/v2/${apiKey}/getNFTs/`
+                        break
+                    case "97":
+                        baseURL = `https://deep-index.moralis.io/api/v2`
+                        break
+                    default:
+                        baseURL = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTs/`
+                        break
+                }
+
+                let nfts
+                let fetchURL = `${baseURL}?owner=${currentAccount}&contractAddresses%5B%5D=${creatorNftContractAddress}`
+                if (process.env.NEXT_PUBLIC_CHAIN_ID == "97") {
+                    fetchURL = `${baseURL}/${currentAccount}/nft?chain=bsc%20testnet&format=decimal&token_addresses=0x171b14a6505923e29ba195d7bc1a31a546fecd0b&normalizeMetadata=true`
+                }
+
+                nfts = await fetch(fetchURL, requestOptions)
+                    .then((data) => data.json())
+                    .catch((error) => console.error({ error }))
+
+                if (nfts) {
+                    console.log(nfts.result)
+                    setOwnedNFTs(
+                        nfts.result.map((nft) => {
+                            return nft.normalized_metadata.name
+                        })
+                    )
+                    setOwnedNFTsMetadata(
+                        nfts.result.map((nft) => {
+                            return nft.normalized_metadata
+                        })
+                    )
+                }
             }
-
-            let baseURL
-            switch (process.env.NEXT_PUBLIC_CHAIN_ID) {
-                case "1":
-                    baseURL = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTs/`
-                    break
-                case "137":
-                    baseURL = `https://polygon-mainnet.g.alchemy.com/v2/${apiKey}/getNFTs/`
-                    break
-                case "5":
-                    baseURL = `https://eth-goerli.g.alchemy.com/v2/${apiKey}/getNFTs/`
-                    break
-                default:
-                    baseURL = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTs/`
-                    break
-            }
-
-            let nfts
-            const fetchURL = `${baseURL}?owner=${currentAccount}&contractAddresses%5B%5D=${creatorNftContractAddress}`
-
-            nfts = await fetch(fetchURL, requestOptions)
-                .then((data) => data.json())
-                .catch((error) => console.error({ error }))
-
-            if (nfts) {
-                setOwnedNFTs(
-                    nfts.ownedNfts.map((nft) => {
-                        return nft.metadata.name
-                    })
-                )
-                setOwnedNFTsMetadata(
-                    nfts.ownedNfts.map((nft) => {
-                        return nft.metadata
-                    })
-                )
-            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
