@@ -1,6 +1,7 @@
+import { useContext, useState, useEffect } from "react"
 import React from "react"
 import Link from "next/link"
-import { useContext, useState, useEffect } from "react"
+import Image from "next/image"
 
 import { FirebaseContext } from "../context/FirebaseContext"
 import { toast } from "react-toastify"
@@ -12,6 +13,8 @@ import ProfilePopover from "./ProfilePopover"
 
 import UpcomingMeetings from "../public/UpcomingMeetings"
 import LastColaborations from "../public/LastColaborations"
+
+const logo = "./HereticsLogo.png"
 
 const Sidebar = () => {
     const { userFirebaseData, loadingFirebaseData, errorFirebaseData, getUserData } =
@@ -99,7 +102,9 @@ const Sidebar = () => {
                                 key={index}
                                 className="flex flex-row w-full items-center justify-start my-1"
                             >
-                                <div className="w-8 h-8 rounded-lg bg-gray-200 mr-2"></div>
+                                <div className="w-8 h-8 rounded-lg bg-gray-200 mr-2 flex items-center justify-center">
+                                    <Image src={colaboration.img} alt="Colab" />
+                                </div>
                                 <div className="flex flex-col">
                                     <div className="text-black font-medium text-xs">
                                         {colaboration.brand}
