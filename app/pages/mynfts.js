@@ -36,6 +36,7 @@ const MyNfts = () => {
 
                 if (nfts) {
                     setNFTs(nfts.result)
+                    console.log(nfts.result)
                 }
             }
         } catch (error) {

@@ -57,6 +57,8 @@ export default function DAO() {
         }
     }, [allProposals])
 
+    console.log(allProposals)
+
     const updateField = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
@@ -89,12 +91,14 @@ export default function DAO() {
                                 <div className="h-full w-full items-center justify-center">
                                     <Loader h={32} w={32} />
                                 </div>
-                            ) : (
+                            ) : !allProposals === "undefined" ? (
                                 <>
                                     {allProposals.docs.reverse().map((doc) => (
                                         <Proposal key={doc.id} data={doc.data()} />
                                     ))}
                                 </>
+                            ) : (
+                                <div></div>
                             )}
                         </div>
                     </div>
