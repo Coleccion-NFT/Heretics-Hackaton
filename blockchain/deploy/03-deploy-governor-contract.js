@@ -6,7 +6,6 @@ const {
     VOTING_DELAY,
 } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
-// TODO: Change to BSC
 
 const deployGovernorContract = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log, get } = deployments

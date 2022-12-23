@@ -18,7 +18,6 @@ const Carousel = ({ content }) => {
                     infinite={true}
                 >
                     <div className="w-full relative flex items-center justify-center">
-                        {/* TODO: Añadir un pequeño movimiento de la flecha haria que quedara muy bien el onclick */}
                         <ButtonBack
                             role="button"
                             aria-label="slide backward"

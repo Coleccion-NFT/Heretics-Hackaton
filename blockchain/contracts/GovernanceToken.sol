@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 contract GovernanceToken is ERC20Votes {
     uint256 public s_maxSupply = 1000000000000000000000000;
 
-    // TODO: Decir que si ya se ha minteado el max supply no se pueda mintear mas o hacer el mint onlyowner
     constructor() ERC20("HereticsToken", "HTT") ERC20Permit("HereticsToken") {
         _mint(msg.sender, s_maxSupply);
     }

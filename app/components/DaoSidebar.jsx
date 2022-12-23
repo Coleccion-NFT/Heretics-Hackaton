@@ -220,7 +220,7 @@ const DaoSidebar = () => {
                                     `Estás seguro de que quieres transferir ${transferAmount} tokens a ${transferTo}`
                                 )
                             ) {
-                                await transferTokensTo(transferTo, transferAmount * 1e18)
+                                await transferTokensTo(transferTo, transferAmount)
                             }
                         }}
                     >

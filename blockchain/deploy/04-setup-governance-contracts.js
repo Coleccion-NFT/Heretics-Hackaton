@@ -1,6 +1,5 @@
 const { ethers } = require("hardhat")
 const { ADDRESS_ZERO } = require("../helper-hardhat-config")
-// TODO: Change to BSC
 
 const setupContracts = async ({ getNamedAccounts, deployments }) => {
     const { log, get } = deployments

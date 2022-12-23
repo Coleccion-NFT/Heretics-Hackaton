@@ -11,7 +11,6 @@ import {
 } from "../../helper-hardhat-config"
 import { moveBlocks } from "../../utils/move-blocks"
 import { moveTime } from "../../utils/move-time"
-// TODO: Turn tests to javascript and try them
 
 describe("Governor Flow", async () => {
     let governor: GovernorContract

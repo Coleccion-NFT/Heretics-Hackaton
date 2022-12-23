@@ -1,7 +1,6 @@
 const { network, ethers } = require("hardhat")
 const { developmentChains } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
-// TODO: Change to BSC
 
 const deployGovernanceToken = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log } = deployments

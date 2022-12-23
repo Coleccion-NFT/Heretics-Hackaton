@@ -1,6 +1,5 @@
-// TODO: Cambiar el voting period a 300 o algo asi para que sea una horita 12 sec = 1 block
 import { useState, useEffect, createContext, useContext } from "react"
-import { ethers } from "ethers"
+import { ethers, BigNumber } from "ethers"
 import { db } from "../backend/firebase"
 import { doc, setDoc, getDoc, collection, updateDoc } from "firebase/firestore"
 
@@ -14,6 +13,7 @@ import governorContractABI from "../constants/GovernorContract.json"
 import governanceTokenABI from "../constants/GovernanceToken.json"
 import boxContractABI from "../constants/Box.json"
 import contractAddressJSON from "../constants/networkMapping.json"
+import { parseEther } from "ethers/lib/utils"
 
 const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
@@ -329,7 +329,7 @@ export const DAOProvider = ({ children }) => {
                 governanceTokenABI
             )
 
-            const transferTx = await governanceToken.transfer(address, amount)
+            const transferTx = await governanceToken.transfer(address, parseEther(amount))
             await transferTx.wait(1)
             toast.success(`Se han transferido tus tokens`, toastConfig)
         } catch (error) {

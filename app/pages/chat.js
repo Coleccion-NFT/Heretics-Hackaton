@@ -1,7 +1,6 @@
 import { useEffect, useContext, useState, useRef } from "react"
 import Link from "next/link"
 import { Loader, ChatMessage, NoAccount, NoMetamask } from "../components"
-// TODO: Que vaya el fetching de nfts en la binance smartchain
 
 import { useCollection } from "react-firebase-hooks/firestore"
 import { setDoc } from "firebase/firestore"

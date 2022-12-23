@@ -1,7 +1,6 @@
 const { network } = require("hardhat")
 const { developmentChains, MIN_DELAY } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
-// TODO: Change to BSC
 
 const deployTimeLock = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log } = deployments
