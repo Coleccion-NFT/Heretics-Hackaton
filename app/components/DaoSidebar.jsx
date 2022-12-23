@@ -60,11 +60,11 @@ const DaoSidebar = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex flex-row w-full text-center justify-end">
+                    <div className="flex flex-row w-full items-center text-center justify-end pr-8">
                         <div className="mx-2">
                             <Link
                                 href="/signin"
-                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-200 py-1 px-2 text-xs font-medium text-black hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                                className="group relative flex w-full justify-center rounded-md border border-transparent text-white bg-amber-500 py-1 px-2 text-sm font-medium hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                             >
                                 Sign in
                             </Link>
@@ -72,7 +72,7 @@ const DaoSidebar = () => {
                         <div>
                             <Link
                                 href="/signup"
-                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-200 py-1 px-2 text-xs font-medium text-black hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                                className="group relative flex w-full justify-center rounded-md border border-transparent text-white bg-amber-500 py-1 px-2 text-sm font-medium hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                             >
                                 Sign up
                             </Link>
@@ -80,10 +80,10 @@ const DaoSidebar = () => {
                     </div>
                 )}
             </div>
-            <div className={`flex flex-col ${currentAccount ? "block" : "hidden"} h-full mt-4`}>
-                <div className="flex flex-col bg-gray-100 rounded-lg px-5 py-3 mb-4">
+            <div className={`flex flex-col ${currentAccount ? "block" : "hidden"} h-full mt-5`}>
+                <div className="flex flex-col justify-evenly bg-gray-100 rounded-lg px-5 py-3 mb-4">
                     <button
-                        className="text-white font-semibold text-base bg-amber-500 rounded-xl py-1 my-2"
+                        className="text-white font-semibold text-sm bg-amber-500 hover:bg-black rounded-xl py-1 my-2"
                         type="button"
                         onClick={async (e) => {
                             e.preventDefault()
@@ -95,23 +95,23 @@ const DaoSidebar = () => {
                         Obtener tu vote data
                     </button>
                     <div className="my-1">
-                        <div className="text-black font-medium text-sm mb-1">Delegado</div>
+                        <div className="text-black font-medium text-xs mb-1">Delegado</div>
                         <input
                             id="delegates"
                             name="delegates"
                             type="text"
                             required
-                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            className="text-black w-full px-3 py-1 font-light text-xs bg-gray-300 rounded-lg"
                             value={voteData.delegates}
                             readOnly
                         ></input>
                     </div>
                     <div className="my-1">
-                        <div className="flex flex-row mb-1 items-end">
-                            <div className="text-black font-medium text-sm">
+                        <div className="flex flex-row mb-1 items-end justify-between">
+                            <div className="text-black font-medium text-xs w-7/12">
                                 Cantidad de votos delegeados en ti
                             </div>
-                            <div className="text-black font-extralight text-xs">
+                            <div className="text-black font-extralight text-xs w-3/12">
                                 Sobre 1.000.000
                             </div>
                         </div>
@@ -120,17 +120,17 @@ const DaoSidebar = () => {
                             name="delegates"
                             type="text"
                             required
-                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            className="text-black w-full px-3 py-1 font-light text-xs bg-gray-300 rounded-lg"
                             value={voteData.votesAmount / 1e18}
                             readOnly
                         ></input>
                     </div>
                     <div className="my-1">
-                        <div className="flex flex-row mb-1 items-end">
-                            <div className="text-black font-medium text-sm">
+                        <div className="flex flex-row mb-1 items-end justify-between">
+                            <div className="text-black font-medium text-xs w-7/12">
                                 Cantidad de votos que posees
                             </div>
-                            <div className="text-black font-extralight text-xs">
+                            <div className="text-black font-extralight text-xs w-3/12">
                                 Sobre 1.000.000
                             </div>
                         </div>
@@ -139,19 +139,19 @@ const DaoSidebar = () => {
                             name="delegates"
                             type="text"
                             required
-                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            className="text-black w-full px-3 py-1 font-light text-xs bg-gray-300 rounded-lg"
                             value={voteData.votesBalance / 1e18}
                             readOnly
                         ></input>
                     </div>
                     <div className="my-1">
-                        <div className="text-black font-medium text-sm mb-1">Delegar votos a</div>
+                        <div className="text-black font-medium text-xs mb-1">Delegar votos a</div>
                         <input
                             id="delegateTo"
                             name="delegateTo"
                             type="text"
                             required
-                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            className="text-black w-full px-3 py-1 font-light text-xs bg-gray-300 rounded-lg"
                             value={delegateTo}
                             onChange={(e) => {
                                 setDelegateTo(e.target.value)
@@ -159,7 +159,7 @@ const DaoSidebar = () => {
                         ></input>
                     </div>
                     <button
-                        className="text-white font-semibold text-base bg-amber-500 rounded-xl py-1 my-2"
+                        className="text-white font-semibold text-sm bg-amber-500 hover:bg-black rounded-xl py-1 my-2"
                         type="button"
                         onClick={async (e) => {
                             e.preventDefault()
@@ -177,7 +177,7 @@ const DaoSidebar = () => {
                         Delegar votos
                     </button>
                     <div className="my-1">
-                        <div className="text-black font-medium text-sm mb-1">
+                        <div className="text-black w-full font-medium text-xs mb-1">
                             Transferir tokens a
                         </div>
                         <input
@@ -185,7 +185,7 @@ const DaoSidebar = () => {
                             name="transferTo"
                             type="text"
                             required
-                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            className="text-black w-full px-3 py-1 font-light text-xs bg-gray-300 rounded-lg"
                             value={transferTo}
                             onChange={(e) => {
                                 setTransferTo(e.target.value)
@@ -193,7 +193,7 @@ const DaoSidebar = () => {
                         ></input>
                     </div>
                     <div className="my-1">
-                        <div className="text-black font-medium text-sm mb-1">
+                        <div className="text-black font-medium text-xs mb-1">
                             Cantidad de tokens a transferir
                         </div>
                         <input
@@ -201,7 +201,7 @@ const DaoSidebar = () => {
                             name="transferAmount"
                             type="number"
                             required
-                            className="text-black px-3 py-1 font-light text-sm bg-gray-300 rounded-lg"
+                            className="text-black w-full px-3 py-1 font-light text-xs bg-gray-300 rounded-lg"
                             value={transferAmount}
                             onChange={(e) => {
                                 setTransferAmount(e.target.value)
@@ -209,7 +209,7 @@ const DaoSidebar = () => {
                         ></input>
                     </div>
                     <button
-                        className="text-white font-semibold text-base bg-amber-500 rounded-xl py-1 my-2"
+                        className="text-white font-semibold text-sm bg-amber-500 hover:bg-black rounded-xl py-1 my-2"
                         type="button"
                         onClick={async (e) => {
                             e.preventDefault()

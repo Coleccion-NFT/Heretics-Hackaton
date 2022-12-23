@@ -140,11 +140,11 @@ export default function SignUp() {
                                 onClick={() => {
                                     handleSignUp("email&password")
                                 }}
-                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-gray-200 hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                             >
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                                     <LockClosedIcon
-                                        className="h-5 w-5 text-gray-200 group-hover:text-white"
+                                        className="h-5 w-5 group-hover:text-white"
                                         aria-hidden="true"
                                     />
                                 </span>

@@ -1,6 +1,6 @@
 import { useEffect, useContext, useState, useRef } from "react"
 import Link from "next/link"
-import { Loader, ChatMessage } from "../components"
+import { Loader, ChatMessage, NoAccount, NoMetamask } from "../components"
 // TODO: Que vaya el fetching de nfts en la binance smartchain
 
 import { useCollection } from "react-firebase-hooks/firestore"
@@ -14,6 +14,7 @@ import contractAddressJSON from "../constants/networkMapping.json"
 import { toast } from "react-toastify"
 import toastConfig from "../constants/toastConfig.json"
 import "react-toastify/dist/ReactToastify.css"
+import { LockClosedIcon } from "@heroicons/react/20/solid"
 const logo = "./HereticsLogo.png"
 
 export default function Chat() {
@@ -183,32 +184,9 @@ export default function Chat() {
                     <Loader />
                 </div>
             ) : !userFirebaseData ? (
-                <div className="h-screen flex flex-col items-center justify-center">
-                    <Link
-                        href="/signin"
-                        className="bg-black text-white px-9 py-1.5 my-5 w-80 text-center"
-                    >
-                        Log In
-                    </Link>
-                    <Link
-                        href="/signup"
-                        className="bg-black text-white px-9 py-1.5 my-5 w-80 text-center"
-                    >
-                        Sign Up
-                    </Link>
-                </div>
+                <NoAccount />
             ) : !currentAccount ? (
-                <div className="h-screen flex flex-col items-center justify-center">
-                    <button
-                        className="bg-black text-white px-9 py-1.5 my-5 w-80 text-center"
-                        type="button"
-                        onClick={async (e) => {
-                            await connectWallet()
-                        }}
-                    >
-                        Conéctate a Metamask
-                    </button>
-                </div>
+                <NoMetamask />
             ) : (
                 <div>
                     <div>

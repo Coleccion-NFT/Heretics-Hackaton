@@ -45,11 +45,11 @@ const Sidebar = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex flex-row w-full text-center justify-end">
+                    <div className="flex flex-row w-full items-center text-center justify-end pr-8">
                         <div className="mx-2">
                             <Link
                                 href="/signin"
-                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-200 py-1 px-2 text-xs font-medium text-black hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                                className="group relative flex w-full justify-center rounded-md border border-transparent text-white bg-amber-500 py-1 px-2 text-sm font-medium hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                             >
                                 Sign in
                             </Link>
@@ -57,7 +57,7 @@ const Sidebar = () => {
                         <div>
                             <Link
                                 href="/signup"
-                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-200 py-1 px-2 text-xs font-medium text-black hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                                className="group relative flex w-full justify-center rounded-md border border-transparent text-white bg-amber-500 py-1 px-2 text-sm font-medium hover:text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                             >
                                 Sign up
                             </Link>

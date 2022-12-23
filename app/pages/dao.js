@@ -4,7 +4,7 @@ import { DAOContext } from "../context/DAOContext"
 import { Web3Context } from "../context/Web3Context"
 import { FirebaseContext } from "../context/FirebaseContext"
 
-import { Proposal, Loader, SuggestionModal } from "../components"
+import { Proposal, Loader, SuggestionModal, NoMetamask } from "../components"
 // TODO: Status de la votaciones
 // TODO: LOG IN y SIngn up hacer mejor
 // TODO: Space evenly en las proposals
@@ -104,17 +104,7 @@ export default function DAO() {
                     </div>
                 </div>
             ) : (
-                <div className="h-screen flex flex-col items-center justify-center">
-                    <button
-                        className="bg-black text-white px-9 py-1.5 my-5 w-80 text-center"
-                        type="button"
-                        onClick={async (e) => {
-                            await connectWallet()
-                        }}
-                    >
-                        Conéctate a Metamask
-                    </button>
-                </div>
+                <NoMetamask />
             )}
         </>
     )

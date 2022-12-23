@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from "react"
-import { NFTCard } from "../components"
+import { NFTCard, NoMetamask } from "../components"
 
 import { Web3Context } from "../context/Web3Context"
 
 import contractAddressJSON from "../constants/networkMapping.json"
+import HeroIcon from "../components/HeroIcon"
 
 const MyNfts = () => {
     const { checkIfWalletIsConnected, connectWallet, currentAccount } = useContext(Web3Context)
@@ -55,17 +56,7 @@ const MyNfts = () => {
     return (
         <>
             {!currentAccount ? (
-                <div className="h-screen flex flex-col items-center justify-center">
-                    <button
-                        className="bg-black text-white px-9 py-1.5 my-5 w-80 text-center"
-                        type="button"
-                        onClick={async (e) => {
-                            await connectWallet()
-                        }}
-                    >
-                        Conéctate a Metamask
-                    </button>
-                </div>
+                <NoMetamask />
             ) : (
                 <>
                     <div className="w-full h-screen flex flex-col items-center justify-start pl-8 pr-4 py-14">
