@@ -10,7 +10,7 @@ const tokenUris = [
     "ipfs://QmdbmyNpna3DHDuNqwf88nk7bHZAJgQ4jPTzBd6NaVxCVf",
     "ipfs://Qmcyz1hqrCcznBhMeAiGCgRUX4vChbF9t3UVtW2qhCwvmo",
     "ipfs://QmPda6TMHcQvB6XfWqoeJwH4v6ZcrmT7itcbi3hxjQ5zhi",
-    "ipfs://QmZZ6zvmPuSPNQTQGGi4n7biFCQndKdq1zmDR22iiruWEK",
+    "ipfs://QmQECjkqMcHmzGmDyyq1TyXpQurf3v7Mk6xBfr2bgGQPKM",
     "ipfs://QmSQWofL8jQn1LF2NAka2CrdiDYUpVi7xpBm6gzPkE9Pzd",
 ]
 
