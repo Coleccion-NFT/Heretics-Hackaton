@@ -4,7 +4,8 @@ import { DAOContext } from "../context/DAOContext"
 import { Web3Context } from "../context/Web3Context"
 import { FirebaseContext } from "../context/FirebaseContext"
 
-import { Proposal, Loader } from "../components"
+import { Proposal, Loader, SuggestionModal } from "../components"
+import HeroIcon from "../components/HeroIcon"
 
 import { toast } from "react-toastify"
 import toastConfig from "../constants/toastConfig.json"
@@ -58,8 +59,40 @@ export default function DAO() {
     }
 
     return (
-        <>
-            <div className="w-full flex flex-col justify-between pl-8 pr-4 py-14">
+        <div className="w-full h-screen flex flex-col pl-8 pr-10 2xl:pr-8 pt-10 pb-4">
+            <div className="text-black font-bold text-4xl mb-8">Sugerencias y votaciones</div>
+            <div className="flex flex-row items-center justify-between bg-orange-100 rounded-lg w-full h-fit px-5 py-4">
+                <div className="flex flex-col w-1/2">
+                    <div className="text-black font-bold text-xl">¿Tienes alguna sugerencia?</div>
+                    <div className="text-black text-sm">
+                        No te olvides de rellenar todos los datos para poder realizar correctamente
+                        tu sugerencia.
+                    </div>
+                </div>
+                <SuggestionModal />
+            </div>
+            <div className="flex flex-col justify-start items-start bg-gray-100 rounded-lg w-full h-fit px-5 py-4 mt-4">
+                <div className="text-black font-bold text-xl">Lista de Sorteos activos</div>
+                <div className="flex flex-col justify-start items-center w-full h-fit">
+                    {loadingAllProposals ? (
+                        <div className="h-full w-full items-center justify-center">
+                            <Loader h={32} w={32} />
+                        </div>
+                    ) : (
+                        <>
+                            {allProposals.docs.reverse().map((doc) => (
+                                <Proposal key={doc.id} data={doc.data()} />
+                            ))}
+                        </>
+                    )}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+{
+    /* <div className="w-full flex flex-col justify-between pl-8 pr-4 py-14">
                 <div className="w-full h-fit flex items-center">
                     <div className="flex-1 h-fit flex flex-col mx-5 justify-start items-center">
                         {currentAccount ? (
@@ -164,8 +197,10 @@ export default function DAO() {
                                 }}
                             >
                                 Enviar la propuesta
-                                {/* TODO: Make a loader while a proposal is being transacted */}
-                            </button>
+                                {/* TODO: Make a loader while a proposal is being transacted */
+}
+{
+    /*                            </button>
                         </form>
                     </div>
                     <div className="flex-1 h-fit flex flex-col mx-5 justify-start items-center">
@@ -319,7 +354,5 @@ export default function DAO() {
                         </>
                     )}
                 </div>
-            </div>
-        </>
-    )
+            </div> */
 }

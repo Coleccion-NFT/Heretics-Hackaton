@@ -18,7 +18,7 @@ const Sidebar = () => {
         useContext(FirebaseContext)
 
     return (
-        <div className="h-screen flex flex-col pr-5">
+        <div className="h-screen flex flex-col pr-2">
             <div className="flex flex-row items-center pt-5">
                 {loadingFirebaseData ? (
                     <div className="w-full">
@@ -92,7 +92,7 @@ const Sidebar = () => {
                     </div>
                 </div>
                 <div className="flex flex-col bg-gray-100 rounded-lg px-5 py-4">
-                    <div className="text-black font-normal text-base">Últimas colaboraciones</div>
+                    <div className="text-black font-normal text-base">Colaboraciones</div>
                     <div className="flex flex-col">
                         {LastColaborations.lastColaborations.map((colaboration, index) => (
                             <div

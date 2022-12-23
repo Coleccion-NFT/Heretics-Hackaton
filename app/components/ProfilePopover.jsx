@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Popover, Transition } from "@headlessui/react"
 import { useContext, useState, useEffect } from "react"
 import { Fragment } from "react"
+import { useRouter } from "next/router"
 
 import { FirebaseContext } from "../context/FirebaseContext"
 import { toast } from "react-toastify"
@@ -26,13 +27,15 @@ const popoverItems = [
     {
         id: 2,
         name: "Log out",
-        href: "#",
+        href: "undefined",
         icon: "ArrowRightOnRectangleIcon",
     },
 ]
 
 const ProfilePopover = () => {
-    const { userFirebaseData, loadingFirebaseData } = useContext(FirebaseContext)
+    const { userFirebaseData, loadingFirebaseData, handleSignOut } = useContext(FirebaseContext)
+
+    const router = useRouter()
 
     return (
         <div>
@@ -61,26 +64,49 @@ const ProfilePopover = () => {
                             <Popover.Panel className="absolute w-fit z-10 mt-1 -translate-x-1/2 transform px-4 sm:px-0">
                                 <div className="overflow-hidden w-full rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                     <div className="relative flex flex-col justify-start items-start bg-white py-2 px-4">
-                                        {popoverItems.map((item) => (
-                                            <Link
-                                                key={item.id}
-                                                href={item.href}
-                                                className="flex w-full justify-start items-center rounded-lg transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                                            >
-                                                <div className="flex h-10 w-10 shrink-0 items-center justify-center text-black sm:h-12 sm:w-12">
-                                                    <HeroIcon
-                                                        icon={item.icon}
-                                                        color="text-black-700"
-                                                        size={5}
-                                                    />
-                                                </div>
-                                                <div className="pr-3 w-max">
-                                                    <p className="text-sm font-medium text-black">
-                                                        {item.name}
-                                                    </p>
-                                                </div>
-                                            </Link>
-                                        ))}
+                                        {popoverItems.map((item) =>
+                                            item.href === "undefined" ? (
+                                                <button
+                                                    key={item.id}
+                                                    onClick={() => {
+                                                        handleSignOut()
+                                                    }}
+                                                    className="flex w-full justify-start items-center rounded-lg transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                                >
+                                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-black sm:h-12 sm:w-12">
+                                                        <HeroIcon
+                                                            icon={item.icon}
+                                                            color="text-black-700"
+                                                            size={5}
+                                                        />
+                                                    </div>
+                                                    <div className="pr-3 w-max">
+                                                        <p className="text-sm font-medium text-black">
+                                                            {item.name}
+                                                        </p>
+                                                    </div>
+                                                </button>
+                                            ) : (
+                                                <Link
+                                                    key={item.id}
+                                                    href={item.href}
+                                                    className="flex w-full justify-start items-center rounded-lg transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                                >
+                                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-black sm:h-12 sm:w-12">
+                                                        <HeroIcon
+                                                            icon={item.icon}
+                                                            color="text-black-700"
+                                                            size={5}
+                                                        />
+                                                    </div>
+                                                    <div className="pr-3 w-max">
+                                                        <p className="text-sm font-medium text-black">
+                                                            {item.name}
+                                                        </p>
+                                                    </div>
+                                                </Link>
+                                            )
+                                        )}
                                     </div>
                                 </div>
                             </Popover.Panel>
