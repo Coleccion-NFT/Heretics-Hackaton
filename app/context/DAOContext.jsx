@@ -259,7 +259,7 @@ export const DAOProvider = ({ children }) => {
         }
     }
 
-    // GOVERNANCETOKENS --------------------------------------------------------------------------------------
+    // GOVERNANCE TOKENS --------------------------------------------------------------------------------------
 
     const getVotingInfo = async (address) => {
         try {
@@ -272,7 +272,7 @@ export const DAOProvider = ({ children }) => {
             const votesAmount = await governanceToken.getVotes(address)
             const votesBalance = await governanceToken.balanceOf(address)
 
-            toast.info(`Se ha obtenido tu información de votación`, toastConfig)
+            // toast.info(`Se ha obtenido tu información de votación`, toastConfig)
 
             return { delegates, votesAmount, votesBalance }
         } catch (error) {

@@ -15,25 +15,28 @@ import ProfilePopover from "./ProfilePopover"
 const DaoSidebar = () => {
     const { userFirebaseData, loadingFirebaseData, errorFirebaseData, getUserData } =
         useContext(FirebaseContext)
-    const {
-        createPropose,
-        checkProposalStatus,
-        updateProposalStatus,
-        updateStoreValue,
-        getVotingInfo,
-        delegateTokensTo,
-        transferTokensTo,
-    } = useContext(DAOContext)
+    const { updateStoreValue, getVotingInfo, delegateTokensTo, transferTokensTo } =
+        useContext(DAOContext)
     const { checkIfWalletIsConnected, connectWallet, currentAccount } = useContext(Web3Context)
 
     useEffect(() => {
         checkIfWalletIsConnected()
+
+        if (currentAccount) {
+            ;(async () => {
+                let votingData = await getVotingInfo(currentAccount)
+                setVoteData(votingData)
+                let newValue = await updateStoreValue()
+                setStoreValue(newValue)
+            })()
+        }
     }, [currentAccount])
 
     const [voteData, setVoteData] = useState({ delegates: "", votesAmount: "", votesBalance: "" })
     const [delegateTo, setDelegateTo] = useState("")
     const [transferTo, setTransferTo] = useState("")
     const [transferAmount, setTransferAmount] = useState(0)
+    const [storeValue, setStoreValue] = useState(0)
 
     return (
         <div className="h-screen flex flex-col pr-2">
@@ -82,20 +85,11 @@ const DaoSidebar = () => {
             </div>
             <div className={`flex flex-col ${currentAccount ? "block" : "hidden"} h-full mt-5`}>
                 <div className="flex flex-col justify-evenly bg-gray-100 rounded-lg px-5 py-3 mb-4">
-                    <button
-                        className="text-white font-semibold text-sm bg-amber-500 hover:bg-black rounded-xl py-1 my-2"
-                        type="button"
-                        onClick={async (e) => {
-                            e.preventDefault()
-                            let votingData = await getVotingInfo(currentAccount)
-                            setVoteData(votingData)
-                            console.log(votingData)
-                        }}
-                    >
-                        Obtener tu vote data
-                    </button>
+                    <div className="text-white font-semibold text-sm bg-amber-500 hover:bg-black rounded-xl py-1 my-2 text-center">
+                        Tu información de voto
+                    </div>
                     <div className="my-1">
-                        <div className="text-black font-medium text-xs mb-1">Delegado</div>
+                        <div className="text-black font-medium text-xs mb-1">Tu delegado</div>
                         <input
                             id="delegates"
                             name="delegates"
@@ -112,7 +106,7 @@ const DaoSidebar = () => {
                                 Cantidad de votos delegeados en ti
                             </div>
                             <div className="text-black font-extralight text-xs w-3/12">
-                                Sobre 1.000.000
+                                {(voteData.votesAmount / 1e18 / 1e6) * 100}% de los votos
                             </div>
                         </div>
                         <input
@@ -131,7 +125,7 @@ const DaoSidebar = () => {
                                 Cantidad de votos que posees
                             </div>
                             <div className="text-black font-extralight text-xs w-3/12">
-                                Sobre 1.000.000
+                                {(voteData.votesBalance / 1e18 / 1e6) * 100}% de los votos
                             </div>
                         </div>
                         <input
@@ -144,8 +138,13 @@ const DaoSidebar = () => {
                             readOnly
                         ></input>
                     </div>
+
+                    <hr className="mt-3 mb-2"></hr>
+
                     <div className="my-1">
-                        <div className="text-black font-medium text-xs mb-1">Delegar votos a</div>
+                        <div className="text-black font-medium text-xs mb-1">
+                            Delegar tus votos a
+                        </div>
                         <input
                             id="delegateTo"
                             name="delegateTo"
@@ -176,9 +175,12 @@ const DaoSidebar = () => {
                     >
                         Delegar votos
                     </button>
+
+                    <hr className="mt-3 mb-2"></hr>
+
                     <div className="my-1">
                         <div className="text-black w-full font-medium text-xs mb-1">
-                            Transferir tokens a
+                            Transferir tus tokens a
                         </div>
                         <input
                             id="transferTo"
@@ -215,7 +217,7 @@ const DaoSidebar = () => {
                             e.preventDefault()
                             if (
                                 confirm(
-                                    `Estás seguro de que quieres transferir tus ${transferAmount} tokens a ${transferTo}`
+                                    `Estás seguro de que quieres transferir ${transferAmount} tokens a ${transferTo}`
                                 )
                             ) {
                                 await transferTokensTo(transferTo, transferAmount * 1e18)
@@ -224,6 +226,20 @@ const DaoSidebar = () => {
                     >
                         Transferir tokens
                     </button>
+
+                    <hr className="mt-3 mb-2"></hr>
+                    <div className="my-1">
+                        <div className="text-black font-medium text-xs mb-1">Valor de la store</div>
+                        <input
+                            id="delegates"
+                            name="delegates"
+                            type="text"
+                            required
+                            className="text-black w-full px-3 py-1 font-light text-xs bg-gray-300 rounded-lg"
+                            value={storeValue}
+                            readOnly
+                        ></input>
+                    </div>
                 </div>
             </div>
         </div>
