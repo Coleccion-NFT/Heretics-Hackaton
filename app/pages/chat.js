@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react"
+import { useEffect, useContext, useState, useRef } from "react"
 import Link from "next/link"
 import { Loader, ChatMessage } from "../components"
 // TODO: Que vaya el fetching de nfts en la binance smartchain
@@ -20,6 +20,8 @@ export default function Chat() {
     const { handleSignOut, userFirebaseData, loadingFirebaseData, auth, db, collection, doc } =
         useContext(FirebaseContext)
     const { checkIfWalletIsConnected, connectWallet, currentAccount } = useContext(Web3Context)
+
+    const messagesEndRef = useRef(null)
 
     const [messages, loadingMessages, errorMessages] = useCollection(collection(db, "messages"), {
         snapshotListenOptions: { includeMetadataChanges: true },
@@ -108,6 +110,14 @@ export default function Chat() {
             await fetchNFTs()
         })()
     }, [currentAccount])
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [currentChat])
 
     const fetchNFTs = async () => {
         try {
@@ -1263,7 +1273,7 @@ export default function Chat() {
 
                                         <div
                                             id="messages"
-                                            className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar"
+                                            className="flex flex-col space-y-4 p-3 overflow-y-auto h-full justify-start scrollbar"
                                         >
                                             {!loadingMessages &&
                                                 currentChat == "messages" &&
@@ -1395,6 +1405,7 @@ export default function Chat() {
                                                         />
                                                     )
                                                 })}
+                                            <div ref={messagesEndRef} className="w-100" />
 
                                             {/* MESSAGES END */}
 
