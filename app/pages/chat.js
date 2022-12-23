@@ -341,19 +341,33 @@ export default function Chat() {
                                                                 <div className="flex-shrink-0">
                                                                     <img
                                                                         className="h-10 w-10 rounded-full"
-                                                                        src={ownedNFTsMetadata
-                                                                            .filter((nftM) => {
-                                                                                if (
-                                                                                    nftM.name == nft
-                                                                                ) {
-                                                                                    return nftM.image
-                                                                                } else {
+                                                                        src={
+                                                                            ownedNFTsMetadata.filter(
+                                                                                (nftM) => {
+                                                                                    if (
+                                                                                        nftM.name ==
+                                                                                        nft
+                                                                                    ) {
+                                                                                        return nftM.image
+                                                                                    } else {
+                                                                                    }
                                                                                 }
-                                                                            })[0]
-                                                                            .image.replace(
-                                                                                "ipfs://",
-                                                                                "https://ipfs.io/ipfs/"
-                                                                            )}
+                                                                            ).length != 0 &&
+                                                                            ownedNFTsMetadata
+                                                                                .filter((nftM) => {
+                                                                                    if (
+                                                                                        nftM.name ==
+                                                                                        nft
+                                                                                    ) {
+                                                                                        return nftM.image
+                                                                                    } else {
+                                                                                    }
+                                                                                })[0]
+                                                                                .image.replace(
+                                                                                    "ipfs://",
+                                                                                    "https://ipfs.io/ipfs/"
+                                                                                )
+                                                                        }
                                                                     />
                                                                 </div>
                                                                 <div className="flex-1 min-w-0">
