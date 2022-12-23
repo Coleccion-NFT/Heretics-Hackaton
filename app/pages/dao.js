@@ -17,15 +17,7 @@ import "react-toastify/dist/ReactToastify.css"
 export default function DAO() {
     const { db, collection } = useContext(FirebaseContext)
     const { checkIfWalletIsConnected, connectWallet, currentAccount } = useContext(Web3Context)
-    const {
-        createPropose,
-        checkProposalStatus,
-        updateProposalStatus,
-        updateStoreValue,
-        getVotingInfo,
-        delegateTokensTo,
-        transferTokensTo,
-    } = useContext(DAOContext)
+    const { createPropose, updateProposalStatus, updateStoreValue } = useContext(DAOContext)
 
     const [allProposals, loadingAllProposals, errorAllProposals] = useCollection(
         collection(db, "proposals"),
@@ -39,11 +31,6 @@ export default function DAO() {
         functionToCall: "",
         proposalDescription: "",
     })
-    const [voteData, setVoteData] = useState({ delegates: "", votesAmount: "", votesBalance: "" })
-    const [delegateTo, setDelegateTo] = useState("")
-    const [transferTo, setTransferTo] = useState("")
-    const [transferAmount, setTransferAmount] = useState(0)
-    const [storeValue, setStoreValue] = useState(0)
 
     useEffect(() => {
         checkIfWalletIsConnected()
@@ -56,8 +43,6 @@ export default function DAO() {
             })
         }
     }, [allProposals])
-
-    console.log(allProposals)
 
     const updateField = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -91,14 +76,10 @@ export default function DAO() {
                                 <div className="h-full w-full items-center justify-center">
                                     <Loader h={32} w={32} />
                                 </div>
-                            ) : !allProposals === "undefined" ? (
-                                <>
-                                    {allProposals.docs.reverse().map((doc) => (
-                                        <Proposal key={doc.id} data={doc.data()} />
-                                    ))}
-                                </>
                             ) : (
-                                <div></div>
+                                allProposals?.docs
+                                    .reverse()
+                                    .map((doc) => <Proposal key={doc.id} data={doc.data()} />)
                             )}
                         </div>
                     </div>

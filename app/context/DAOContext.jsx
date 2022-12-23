@@ -241,7 +241,7 @@ export const DAOProvider = ({ children }) => {
         }
     }
 
-    // GOVERNANCETOKENS --------------------------------------------------------------------------------------
+    // GOVERNANCE TOKENS --------------------------------------------------------------------------------------
 
     const getVotingInfo = async (address) => {
         try {
@@ -254,14 +254,17 @@ export const DAOProvider = ({ children }) => {
             const votesAmount = await governanceToken.getVotes(address)
             const votesBalance = await governanceToken.balanceOf(address)
 
-            toast.info(`Se ha obtenido tu información de votación`, toastConfig)
+            // toast.info(`Se ha obtenido tu información de votación`, toastConfig)
 
             return { delegates, votesAmount, votesBalance }
         } catch (error) {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error(`Ha habido un error actualizando la información de los votos`, toastConfig)
+            toast.error(
+                `Ha habido un error actualizando la información de los votos, contacta con soporte`,
+                toastConfig
+            )
         }
     }
 
@@ -279,7 +282,7 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error(`Ha habido un error delegando tus votos`, toastConfig)
+            toast.error(`Ha habido un error delegando tus votos, contacta con soporte`, toastConfig)
         }
     }
 
@@ -297,7 +300,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error(`Ha habido un error transfiriendo tus tokens`, toastConfig)
+            toast.error(
+                `Ha habido un error transfiriendo tus tokens, contacta con soporte`,
+                toastConfig
+            )
         }
     }
 
