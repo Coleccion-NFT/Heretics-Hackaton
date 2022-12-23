@@ -5,7 +5,6 @@ import { Web3Context } from "../context/Web3Context"
 import { FirebaseContext } from "../context/FirebaseContext"
 
 import { Proposal, Loader, SuggestionModal } from "../components"
-import HeroIcon from "../components/HeroIcon"
 
 import { toast } from "react-toastify"
 import toastConfig from "../constants/toastConfig.json"
@@ -72,7 +71,7 @@ export default function DAO() {
                 <SuggestionModal />
             </div>
             <div className="flex flex-col justify-start items-start bg-gray-100 rounded-lg w-full h-fit px-5 py-4 mt-4">
-                <div className="text-black font-bold text-xl">Lista de Sorteos activos</div>
+                <div className="text-black font-bold text-xl">Lista de votaciones activas</div>
                 <div className="flex flex-col justify-start items-center w-full h-fit">
                     {loadingAllProposals ? (
                         <div className="h-full w-full items-center justify-center">

@@ -4,10 +4,11 @@ import { DAOProvider } from "../context/DAOContext"
 import { CreatorNftProvider } from "../context/CreatorNftContext"
 import { ToastContainer } from "react-toastify"
 import { Poppins } from "@next/font/google"
+import { useRouter } from "next/router"
 
 import Head from "next/head"
 
-import { Navbar, Sidebar, Dashboard } from "../components"
+import { Navbar, Sidebar, DaoSidebar } from "../components"
 
 import "react-toastify/dist/ReactToastify.css"
 import "../styles/globals.css"
@@ -20,6 +21,7 @@ const poppins = Poppins({
 })
 
 export default function App({ Component, pageProps }) {
+    const router = useRouter()
     return (
         <main className={`${poppins.variable} font-sans`}>
             <Head>
@@ -39,9 +41,15 @@ export default function App({ Component, pageProps }) {
                                 <div className="fixed right-0 w-5/6 lg:mr-10 lg:w-9/12 xl:static xl:w-4/6 h-fit xl:mx-auto">
                                     <Component {...pageProps} />
                                 </div>
-                                <div className="hidden xl:block lg:max-w-sm h-fit fixed right-0">
-                                    <Sidebar />
-                                </div>
+                                {router.pathname === "/dao" ? (
+                                    <div className="hidden xl:block lg:max-w-sm h-fit fixed right-0">
+                                        <DaoSidebar />
+                                    </div>
+                                ) : (
+                                    <div className="hidden xl:block lg:max-w-sm h-fit fixed right-0">
+                                        <Sidebar />
+                                    </div>
+                                )}
                                 <ToastContainer />
                             </div>
                         </CreatorNftProvider>
