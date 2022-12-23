@@ -75,7 +75,7 @@ export const Web3Provider = ({ children }) => {
         try {
             let { ethereum } = window
             if (!ethereum) {
-                toast.error(`Please install Metamask`, toastConfig)
+                toast.error(`Please install Metamask, contacta con soprte`, toastConfig)
             }
 
             const accounts = await ethereum.request({ method: "eth_accounts" })
@@ -95,7 +95,7 @@ export const Web3Provider = ({ children }) => {
         try {
             let { ethereum } = window
             if (!ethereum) {
-                toast.error(`Install Metamask`, toastConfig)
+                toast.error(`Install Metamask, contacta con soprte`, toastConfig)
             }
 
             const accounts = await ethereum.request({ method: "eth_requestAccounts" })
@@ -104,7 +104,7 @@ export const Web3Provider = ({ children }) => {
         } catch (error) {
             console.log(error)
 
-            toast.error(`Ha habido un error conectando tu wallet`, toastConfig)
+            toast.error(`Ha habido un error conectando tu wallet, contacta con soprte`, toastConfig)
         }
     }
 

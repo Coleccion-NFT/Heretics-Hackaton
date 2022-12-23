@@ -42,7 +42,7 @@ export const CreatorNftProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error("Ha habido un error en el minteo", toastConfig)
+            toast.error("Ha habido un error en el minteo, contacta con soprte", toastConfig)
         }
     }
 

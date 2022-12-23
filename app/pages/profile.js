@@ -50,7 +50,7 @@ const Profile = () => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error("Ha habido un error cargando el perfil", toastConfig)
+            toast.error("Ha habido un error cargando el perfil, contacta con soprte", toastConfig)
         }
     }, [userFirebaseData])
 

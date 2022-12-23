@@ -83,7 +83,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error("Algo ha ido mal en la realización de la propuesta", toastConfig)
+            toast.error(
+                "Algo ha ido mal en la realización de la propuesta, contacta con soprte",
+                toastConfig
+            )
         }
     }
 
@@ -107,7 +110,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error("Algo ha ido mal en la realización de tu voto", toastConfig)
+            toast.error(
+                "Algo ha ido mal en la realización de tu voto, contacta con soprte",
+                toastConfig
+            )
         }
     }
 
@@ -140,7 +146,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error("Algo ha ido al poner en cola la propuesta", toastConfig)
+            toast.error(
+                "Algo ha ido al poner en cola la propuesta, contacta con soprte",
+                toastConfig
+            )
         }
     }
 
@@ -173,7 +182,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error("Algo ha ido al poner en cola la propuesta", toastConfig)
+            toast.error(
+                "Algo ha ido al poner en cola la propuesta, contacta con soprte",
+                toastConfig
+            )
         }
     }
 
@@ -196,7 +208,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error("Algo ha ido mal en la comprovación del status", toastConfig)
+            toast.error(
+                "Algo ha ido mal en la comprovación del status, contacta con soprte",
+                toastConfig
+            )
         }
     }
 
@@ -220,7 +235,7 @@ export const DAOProvider = ({ children }) => {
             console.log(error.message)
 
             toast.error(
-                `Ha habido un error actualizando la información de la propuesta ${proposalFirebaseId}`,
+                `Ha habido un error actualizando la información de la propuesta ${proposalFirebaseId}, contacta con soprte`,
                 toastConfig
             )
         }
@@ -237,7 +252,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error(`Ha habido un error actualizando la información de la store`, toastConfig)
+            toast.error(
+                `Ha habido un error actualizando la información de la store, contacta con soprte`,
+                toastConfig
+            )
         }
     }
 
@@ -261,7 +279,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error(`Ha habido un error actualizando la información de los votos`, toastConfig)
+            toast.error(
+                `Ha habido un error actualizando la información de los votos, contacta con soprte`,
+                toastConfig
+            )
         }
     }
 
@@ -279,7 +300,7 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error(`Ha habido un error delegando tus votos`, toastConfig)
+            toast.error(`Ha habido un error delegando tus votos, contacta con soprte`, toastConfig)
         }
     }
 
@@ -297,7 +318,10 @@ export const DAOProvider = ({ children }) => {
             console.log(error.code)
             console.log(error.message)
 
-            toast.error(`Ha habido un error transfiriendo tus tokens`, toastConfig)
+            toast.error(
+                `Ha habido un error transfiriendo tus tokens, contacta con soprte`,
+                toastConfig
+            )
         }
     }
 
@@ -357,6 +381,6 @@ const storeProposal = async (
         console.log(error.code)
         console.log(error.message)
 
-        toast.error(`There's been an error storing your proposal, contact support`, toastConfig)
+        toast.error(`There's been an error storing your proposal, contacta con soprte`, toastConfig)
     }
 }
