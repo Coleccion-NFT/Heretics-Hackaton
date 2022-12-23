@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react"
 import Link from "next/link"
 import { Loader, ChatMessage } from "../components"
+// TODO: Que vaya el fetching de nfts en la binance smartchain
 
 import { useCollection } from "react-firebase-hooks/firestore"
 import { setDoc } from "firebase/firestore"
@@ -13,6 +14,7 @@ import contractAddressJSON from "../constants/networkMapping.json"
 import { toast } from "react-toastify"
 import toastConfig from "../constants/toastConfig.json"
 import "react-toastify/dist/ReactToastify.css"
+const logo = "./HereticsLogo.png"
 
 export default function Chat() {
     const { handleSignOut, userFirebaseData, loadingFirebaseData, auth, db, collection, doc } =
@@ -22,22 +24,69 @@ export default function Chat() {
     const [messages, loadingMessages, errorMessages] = useCollection(collection(db, "messages"), {
         snapshotListenOptions: { includeMetadataChanges: true },
     })
+    const [nilOjedaMsg, loadingNilOjedaMsg, errorNilOjedaMsg] = useCollection(
+        collection(db, "nilOjeda"),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    )
+    const [werlybMsg, loadingWerlybMsg, errorWerlybMsg] = useCollection(collection(db, "werlyb"), {
+        snapshotListenOptions: { includeMetadataChanges: true },
+    })
+    const [calitosMsg, loadingCalitosMsg, errorCalitosMsg] = useCollection(
+        collection(db, "calitos"),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    )
+    const [espeMsg, loadingEspeMsg, errorEspeMsg] = useCollection(collection(db, "espe"), {
+        snapshotListenOptions: { includeMetadataChanges: true },
+    })
+    const [grefgMsg, loadingGrefgMsg, errorGrefgMsg] = useCollection(collection(db, "grefg"), {
+        snapshotListenOptions: { includeMetadataChanges: true },
+    })
+    const [guanyarMsg, loadingGuanyarMsg, errorGuanyarMsg] = useCollection(
+        collection(db, "guanyar"),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    )
+    const [jcorkoMsg, loadingJcorkoMsg, errorJcorkoMsg] = useCollection(collection(db, "jcorko"), {
+        snapshotListenOptions: { includeMetadataChanges: true },
+    })
+    const [liaSikoraMsg, loadingLiaSikoraMsg, errorLiaSikoraMsg] = useCollection(
+        collection(db, "liaSikora"),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    )
+    const [mixwellMsg, loadingMixwellMsg, errorMixwellMsg] = useCollection(
+        collection(db, "mixwell"),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    )
 
+    const [currentChat, setCurrentChat] = useState("messages")
     const [messageToSend, setMessageToSend] = useState("")
+    const [ownedNFTs, setOwnedNFTs] = useState([])
+    const [ownedNFTsMetadata, setOwnedNFTsMetadata] = useState([])
 
     const creatorNftContractAddress =
         contractAddressJSON[process.env.NEXT_PUBLIC_CHAIN_ID].CreatorNft[0]
+    const apiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
 
     const sendMessage = async (e) => {
         e.preventDefault()
 
         const { uid, photoURL } = userFirebaseData
-        const date = new Date().getTime()
+        const date = new Date()
+        const h_m_s_d_mth_y = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}_${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 
         try {
-            await setDoc(doc(db, "messages", date.toString()), {
+            await setDoc(doc(db, currentChat, date.getTime().toString()), {
                 message: messageToSend,
-                sendAt: date,
+                sendAt: h_m_s_d_mth_y,
                 uid,
                 photoURL,
             })
@@ -55,8 +104,56 @@ export default function Chat() {
         // Anonymus function
         ;(async () => {
             await checkIfWalletIsConnected()
+            await fetchNFTs()
         })()
     }, [currentAccount])
+
+    const fetchNFTs = async () => {
+        if (currentAccount) {
+            console.log("Fetching nfts...")
+
+            var requestOptions = {
+                method: "GET",
+                redirect: "follow",
+            }
+
+            let baseURL
+            switch (process.env.NEXT_PUBLIC_CHAIN_ID) {
+                case "1":
+                    baseURL = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTs/`
+                    break
+                case "137":
+                    baseURL = `https://polygon-mainnet.g.alchemy.com/v2/${apiKey}/getNFTs/`
+                    break
+                case "5":
+                    baseURL = `https://eth-goerli.g.alchemy.com/v2/${apiKey}/getNFTs/`
+                    break
+                default:
+                    baseURL = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTs/`
+                    break
+            }
+
+            let nfts
+            const fetchURL = `${baseURL}?owner=${currentAccount}&contractAddresses%5B%5D=${creatorNftContractAddress}`
+
+            nfts = await fetch(fetchURL, requestOptions)
+                .then((data) => data.json())
+                .catch((error) => console.error({ error }))
+
+            if (nfts) {
+                setOwnedNFTs(
+                    nfts.ownedNfts.map((nft) => {
+                        return nft.metadata.name
+                    })
+                )
+                setOwnedNFTsMetadata(
+                    nfts.ownedNfts.map((nft) => {
+                        return nft.metadata
+                    })
+                )
+            }
+        }
+    }
 
     return (
         <>
@@ -103,24 +200,23 @@ export default function Chat() {
                                         <div className="h-full pl-4 pr-2 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
                                             <div className="h-full relative">
                                                 <div className="relative rounded-lg px-2 py-2 mb-4 flex flex-col items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500">
-                                                    <div className="flex-shrink-0">
+                                                    <div className="flex flex-col items-center justify-center">
                                                         <img
                                                             className="h-12 w-12 rounded-full"
-                                                            src="https://pps.whatsapp.net/v/t61.24694-24/229176898_144793694445495_5905855527830909530_n.jpg?ccb=11-4&oh=01_AdTTSS9SkGbIdjrbnvaNupEQeND1jYtWWnyj3Ih926GYTg&oe=63B1E2A1"
+                                                            src={userFirebaseData.photoURL}
                                                         />
                                                         <div className="flex-1 min-w-0">
-                                                            <a
-                                                                href="#"
-                                                                className="focus:outline-none"
-                                                            >
-                                                                <span className="absolute inset-0" />
-                                                                <p className="text-sm font-bold text-red-600">
-                                                                    Caca Culo
-                                                                </p>
-                                                                <p className="text-sm text-gray-500 truncate">
-                                                                    Pedo Pis
-                                                                </p>
-                                                            </a>
+                                                            <span className="absolute inset-0" />
+                                                            <p className="text-sm font-bold text-red-600 text-center">
+                                                                {userFirebaseData.displayName}
+                                                            </p>
+                                                            <p className="text-sm text-gray-500 truncate text-center">
+                                                                {
+                                                                    userFirebaseData.metadata.lastSignInTime.split(
+                                                                        "202"
+                                                                    )[0]
+                                                                }
+                                                            </p>
                                                         </div>
                                                     </div>
 
@@ -152,107 +248,785 @@ export default function Chat() {
 
                                                     {/* NOTIFY BOX START */}
 
-                                                    {/* USER 1 */}
-                                                    <div className="relative rounded-lg px-2 py-2 flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 mb-3 hover:bg-gray-200">
+                                                    {/* ALL */}
+                                                    <div className="relative rounded-lg px-2 py-2 flex w-full items-center space-x-5 hover:border-gray-400 focus-within:ring-2 mb-3 hover:bg-gray-200">
                                                         <div className="flex-shrink-0">
                                                             <img
                                                                 className="h-10 w-10 rounded-full"
-                                                                src="https://pps.whatsapp.net/v/t61.24694-24/229176898_144793694445495_5905855527830909530_n.jpg?ccb=11-4&oh=01_AdTTSS9SkGbIdjrbnvaNupEQeND1jYtWWnyj3Ih926GYTg&oe=63B1E2A1"
+                                                                src={logo}
                                                             />
                                                         </div>
                                                         <div className="flex-1 min-w-0">
-                                                            <a
-                                                                href="#"
-                                                                className="focus:outline-none"
+                                                            <button
+                                                                type="button"
+                                                                className="focus:outline-none w-full"
+                                                                onClick={() => {
+                                                                    setCurrentChat("messages")
+                                                                }}
                                                             >
                                                                 <div className="flex items-center justify-between">
                                                                     <p className="text-sm font-bold text-red-600">
-                                                                        Misco Jones
+                                                                        Heretics Chat
                                                                     </p>
                                                                     <div className="text-gray-400 text-xs">
-                                                                        12:35 AM
+                                                                        {!loadingMessages &&
+                                                                            messages.docs.map(
+                                                                                (msg) => {
+                                                                                    return msg.data()
+                                                                                }
+                                                                            ).length != 0 &&
+                                                                            `${
+                                                                                messages.docs
+                                                                                    .map((msg) => {
+                                                                                        return msg.data()
+                                                                                    })
+                                                                                    .at(-1)
+                                                                                    ?.sendAt.split(
+                                                                                        ":"
+                                                                                    )[0]
+                                                                            }:${
+                                                                                messages.docs
+                                                                                    .map((msg) => {
+                                                                                        return msg.data()
+                                                                                    })
+                                                                                    .at(-1)
+                                                                                    ?.sendAt.split(
+                                                                                        ":"
+                                                                                    )[1]
+                                                                            }
+                                                                            `}
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex items-center justify-between">
                                                                     <p className="text-sm text-gray-500 truncate">
-                                                                        Hellouda
+                                                                        {!loadingMessages &&
+                                                                            messages.docs.map(
+                                                                                (msg) => {
+                                                                                    return msg.data()
+                                                                                }
+                                                                            ).length != 0 &&
+                                                                            messages.docs
+                                                                                .map((msg) => {
+                                                                                    return msg.data()
+                                                                                })
+                                                                                .at(-1)?.message}
                                                                     </p>
                                                                     <div className="text-white text-xs bg-red-400 rounded-full px-1 py-0">
-                                                                        2
+                                                                        {!loadingMessages &&
+                                                                            messages.docs.map(
+                                                                                (msg) => {
+                                                                                    return msg.data()
+                                                                                }
+                                                                            ).length != 0 &&
+                                                                            messages.docs
+                                                                                .map((msg) => {
+                                                                                    return msg.data()
+                                                                                })
+                                                                                .at(-1)?.uid !=
+                                                                                userFirebaseData.uid &&
+                                                                            "..."}
                                                                     </div>
                                                                 </div>
-                                                            </a>
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    {/* USER 1 */}
+                                                    {/* ALL */}
 
-                                                    {/* USER 2 */}
-                                                    <div className="relative rounded-lg px-2 py-2 flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 mb-3 hover:bg-gray-200">
-                                                        <div className="flex-shrink-0">
-                                                            <img
-                                                                className="h-10 w-10 rounded-full"
-                                                                src="https://pps.whatsapp.net/v/t61.24694-24/229176898_144793694445495_5905855527830909530_n.jpg?ccb=11-4&oh=01_AdTTSS9SkGbIdjrbnvaNupEQeND1jYtWWnyj3Ih926GYTg&oe=63B1E2A1"
-                                                            />
-                                                        </div>
-                                                        <div className="flex-1 min-w-0">
-                                                            <a
-                                                                href="#"
-                                                                className="focus:outline-none"
+                                                    {ownedNFTs.map((nft, index) => {
+                                                        return (
+                                                            <div
+                                                                key={index}
+                                                                className="relative rounded-lg px-2 py-2 flex w-full items-center space-x-5 hover:border-gray-400 focus-within:ring-2 mb-3 hover:bg-gray-200"
                                                             >
-                                                                <div className="flex items-center justify-between">
-                                                                    <p className="text-sm font-bold text-red-600">
-                                                                        Misco Jones
-                                                                    </p>
-                                                                    <div className="text-gray-400 text-xs">
-                                                                        12:35 AM
-                                                                    </div>
+                                                                <div className="flex-shrink-0">
+                                                                    <img
+                                                                        className="h-10 w-10 rounded-full"
+                                                                        src={ownedNFTsMetadata
+                                                                            .filter((nftM) => {
+                                                                                if (
+                                                                                    nftM.name == nft
+                                                                                ) {
+                                                                                    return nftM.image
+                                                                                } else {
+                                                                                }
+                                                                            })[0]
+                                                                            .image.replace(
+                                                                                "ipfs://",
+                                                                                "https://ipfs.io/ipfs/"
+                                                                            )}
+                                                                    />
                                                                 </div>
-                                                                <div className="flex items-center justify-between">
-                                                                    <p className="text-sm text-gray-500 truncate">
-                                                                        Hellouda
-                                                                    </p>
-                                                                    <div className="text-white text-xs bg-red-400 rounded-full px-1 py-0">
-                                                                        2
-                                                                    </div>
+                                                                <div className="flex-1 min-w-0">
+                                                                    <button
+                                                                        type="button"
+                                                                        className="focus:outline-none w-full"
+                                                                        onClick={() => {
+                                                                            setCurrentChat(nft)
+                                                                        }}
+                                                                    >
+                                                                        <div className="flex items-center justify-between">
+                                                                            <p className="text-sm font-bold text-red-600">
+                                                                                {nft}
+                                                                            </p>
+                                                                            <div className="text-gray-400 text-xs">
+                                                                                {nft ==
+                                                                                    "nilOjeda" &&
+                                                                                    !loadingNilOjedaMsg &&
+                                                                                    nilOjedaMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        nilOjedaMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        nilOjedaMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                                {nft == "werlyb" &&
+                                                                                    !loadingWerlybMsg &&
+                                                                                    werlybMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        werlybMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        werlybMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                                {nft == "calitos" &&
+                                                                                    !loadingCalitosMsg &&
+                                                                                    calitosMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        calitosMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        calitosMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                                {nft == "espe" &&
+                                                                                    !loadingEspeMsg &&
+                                                                                    espeMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        espeMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        espeMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                                {nft == "grefg" &&
+                                                                                    !loadingGrefgMsg &&
+                                                                                    grefgMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        grefgMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        grefgMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                                {nft == "guanyar" &&
+                                                                                    !loadingGuanyarMsg &&
+                                                                                    guanyarMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        guanyarMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        guanyarMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                                {nft == "jcorko" &&
+                                                                                    !loadingJcorkoMsg &&
+                                                                                    jcorkoMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        jcorkoMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        jcorkoMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                                {nft ==
+                                                                                    "liaSikora" &&
+                                                                                    !loadingLiaSikoraMsg &&
+                                                                                    liaSikoraMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        liaSikoraMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        liaSikoraMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                                {nft == "mixwell" &&
+                                                                                    !loadingMixwellMsg &&
+                                                                                    mixwellMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    `${
+                                                                                        mixwellMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[0]
+                                                                                    }:${
+                                                                                        mixwellMsg.docs
+                                                                                            .map(
+                                                                                                (
+                                                                                                    msg
+                                                                                                ) => {
+                                                                                                    return msg.data()
+                                                                                                }
+                                                                                            )
+                                                                                            .at(-1)
+                                                                                            ?.sendAt.split(
+                                                                                                ":"
+                                                                                            )[1]
+                                                                                    }
+                                                                            `}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="flex items-center justify-between">
+                                                                            <p className="text-sm text-gray-500 truncate">
+                                                                                {nft ==
+                                                                                    "nilOjeda" &&
+                                                                                    !loadingNilOjedaMsg &&
+                                                                                    nilOjedaMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    nilOjedaMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                                {nft == "werlyb" &&
+                                                                                    !loadingWerlybMsg &&
+                                                                                    werlybMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    werlybMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                                {nft == "calitos" &&
+                                                                                    !loadingCalitosMsg &&
+                                                                                    calitosMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    calitosMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                                {nft == "espe" &&
+                                                                                    !loadingEspeMsg &&
+                                                                                    espeMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    espeMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                                {nft == "grefg" &&
+                                                                                    !loadingGrefgMsg &&
+                                                                                    grefgMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    grefgMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                                {nft == "guanyar" &&
+                                                                                    !loadingGuanyarMsg &&
+                                                                                    guanyarMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    guanyarMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                                {nft == "jcorko" &&
+                                                                                    !loadingJcorkoMsg &&
+                                                                                    jcorkoMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    jcorkoMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                                {nft ==
+                                                                                    "liaSikora" &&
+                                                                                    !loadingLiaSikoraMsg &&
+                                                                                    liaSikoraMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    liaSikoraMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                                {nft == "mixwell" &&
+                                                                                    !loadingMixwellMsg &&
+                                                                                    mixwellMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    mixwellMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.message}
+                                                                            </p>
+                                                                            <div className="text-white text-xs bg-red-400 rounded-full px-1 py-0">
+                                                                                {nft ==
+                                                                                    "nilOjeda" &&
+                                                                                    !loadingNilOjedaMsg &&
+                                                                                    nilOjedaMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    nilOjedaMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                                {nft == "werlyb" &&
+                                                                                    !loadingWerlybMsg &&
+                                                                                    werlybMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    werlybMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                                {nft == "calitos" &&
+                                                                                    !loadingCalitosMsg &&
+                                                                                    calitosMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    calitosMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                                {nft == "espe" &&
+                                                                                    !loadingEspeMsg &&
+                                                                                    espeMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    espeMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                                {nft == "grefg" &&
+                                                                                    !loadingGrefgMsg &&
+                                                                                    grefgMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    grefgMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                                {nft == "guanyar" &&
+                                                                                    !loadingGuanyarMsg &&
+                                                                                    guanyarMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    guanyarMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                                {nft == "jcorko" &&
+                                                                                    !loadingJcorkoMsg &&
+                                                                                    jcorkoMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    jcorkoMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                                {nft ==
+                                                                                    "liaSikora" &&
+                                                                                    !loadingLiaSikoraMsg &&
+                                                                                    liaSikoraMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    liaSikoraMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                                {nft == "mixwell" &&
+                                                                                    !loadingMixwellMsg &&
+                                                                                    mixwellMsg.docs.map(
+                                                                                        (msg) => {
+                                                                                            return msg.data()
+                                                                                        }
+                                                                                    ).length != 0 &&
+                                                                                    mixwellMsg.docs
+                                                                                        .map(
+                                                                                            (
+                                                                                                msg
+                                                                                            ) => {
+                                                                                                return msg.data()
+                                                                                            }
+                                                                                        )
+                                                                                        .at(-1)
+                                                                                        ?.uid !=
+                                                                                        userFirebaseData.uid &&
+                                                                                    "..."}
+                                                                            </div>
+                                                                        </div>
+                                                                    </button>
                                                                 </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    {/* USER 2 */}
-
-                                                    {/* USER 3 */}
-                                                    <div className="relative rounded-lg px-2 py-2 flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 mb-3 hover:bg-gray-200">
-                                                        <div className="flex-shrink-0">
-                                                            <img
-                                                                className="h-10 w-10 rounded-full"
-                                                                src="https://pps.whatsapp.net/v/t61.24694-24/229176898_144793694445495_5905855527830909530_n.jpg?ccb=11-4&oh=01_AdTTSS9SkGbIdjrbnvaNupEQeND1jYtWWnyj3Ih926GYTg&oe=63B1E2A1"
-                                                            />
-                                                        </div>
-                                                        <div className="flex-1 min-w-0">
-                                                            <a
-                                                                href="#"
-                                                                className="focus:outline-none"
-                                                            >
-                                                                <div className="flex items-center justify-between">
-                                                                    <p className="text-sm font-bold text-red-600">
-                                                                        Misco Jones
-                                                                    </p>
-                                                                    <div className="text-gray-400 text-xs">
-                                                                        12:35 AM
-                                                                    </div>
-                                                                </div>
-                                                                <div className="flex items-center justify-between">
-                                                                    <p className="text-sm text-gray-500 truncate">
-                                                                        Hellouda
-                                                                    </p>
-                                                                    <div className="text-white text-xs bg-red-400 rounded-full px-1 py-0">
-                                                                        2
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    {/* USER 3 */}
+                                                            </div>
+                                                        )
+                                                    })}
 
                                                     {/* NOTIFY BOX END */}
                                                 </div>
@@ -267,12 +1041,23 @@ export default function Chat() {
                                             <div className="flex items-center space-x-4">
                                                 <img
                                                     className="w-10 sm:w-12 h-10 sm:h-12 rounded-full cursor-pointer"
-                                                    src="https://pps.whatsapp.net/v/t61.24694-24/229176898_144793694445495_5905855527830909530_n.jpg?ccb=11-4&oh=01_AdTTSS9SkGbIdjrbnvaNupEQeND1jYtWWnyj3Ih926GYTg&oe=63B1E2A1"
+                                                    src={
+                                                        ownedNFTsMetadata
+                                                            .filter((nftM) => {
+                                                                return nftM.name == currentChat
+                                                            })[0]
+                                                            ?.image.replace(
+                                                                "ipfs://",
+                                                                "https://ipfs.io/ipfs/"
+                                                            ) || logo
+                                                    }
                                                 />
                                                 <div className="flex flex-col leading-tight">
                                                     <div className="text-xl mt-1 flex items-center">
                                                         <span className="text-gray-700 mr-3">
-                                                            Misco Jones
+                                                            {currentChat == "messages"
+                                                                ? "Heretics Chat"
+                                                                : currentChat}
                                                         </span>
                                                         <span className="text-green-500">
                                                             <svg width={10} height={10}>
@@ -313,38 +1098,136 @@ export default function Chat() {
                                             id="messages"
                                             className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
                                         >
-                                            {/* FIRST MESSAGE */}
-                                            <div className="chat-message">
-                                                <div className="flex items-end">
-                                                    <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                                                        <div>
-                                                            <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-200 text-gray-600">
-                                                                SEXOOOO
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <img
-                                                        className="w-6 h-6 rounded-full order-1"
-                                                        src="https://pps.whatsapp.net/v/t61.24694-24/229176898_144793694445495_5905855527830909530_n.jpg?ccb=11-4&oh=01_AdTTSS9SkGbIdjrbnvaNupEQeND1jYtWWnyj3Ih926GYTg&oe=63B1E2A1"
-                                                    />
-                                                </div>
-                                            </div>
-                                            {/* SECOND MESSAGE */}
-                                            <div className="chat-message">
-                                                <div className="flex items-end justify-end">
-                                                    <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-end">
-                                                        <div>
-                                                            <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-red-500 text-white">
-                                                                SEXOOOO
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <img
-                                                        className="w-6 h-6 rounded-full order-2"
-                                                        src="https://pps.whatsapp.net/v/t61.24694-24/229176898_144793694445495_5905855527830909530_n.jpg?ccb=11-4&oh=01_AdTTSS9SkGbIdjrbnvaNupEQeND1jYtWWnyj3Ih926GYTg&oe=63B1E2A1"
-                                                    />
-                                                </div>
-                                            </div>
+                                            {!loadingMessages &&
+                                                currentChat == "messages" &&
+                                                messages.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingNilOjedaMsg &&
+                                                currentChat == "nilOjeda" &&
+                                                nilOjedaMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingWerlybMsg &&
+                                                currentChat == "werlyb" &&
+                                                werlybMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingCalitosMsg &&
+                                                currentChat == "calitos" &&
+                                                calitosMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingEspeMsg &&
+                                                currentChat == "espe" &&
+                                                espeMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingGrefgMsg &&
+                                                currentChat == "grefg" &&
+                                                grefgMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingGuanyarMsg &&
+                                                currentChat == "guanyar" &&
+                                                guanyarMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingJcorkoMsg &&
+                                                currentChat == "jcorko" &&
+                                                jcorkoMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingLiaSikoraMsg &&
+                                                currentChat == "liaSikora" &&
+                                                liaSikoraMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
+                                            {!loadingMixwellMsg &&
+                                                currentChat == "mixwell" &&
+                                                mixwellMsg.docs.map((msg, index) => {
+                                                    return (
+                                                        <ChatMessage
+                                                            key={index}
+                                                            message={msg.data().message}
+                                                            authorUid={msg.data().uid}
+                                                            userUid={userFirebaseData.uid}
+                                                            photoURL={msg.data().photoURL}
+                                                        />
+                                                    )
+                                                })}
 
                                             {/* MESSAGES END */}
 
@@ -370,10 +1253,30 @@ export default function Chat() {
                                                             </svg>
                                                         </button>
                                                     </span>
-                                                    <input
-                                                        placeholder="Write your message"
-                                                        className="focus:ring-red-500 focus:border-red-500 w-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 pl-12 bg-gray-100 rounded-full py-3 border-gray-200"
-                                                    />
+                                                    <form
+                                                        className="flex focus:ring-red-500 focus:border-red-500 w-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 pl-12 bg-gray-100 rounded-full border-gray-200"
+                                                        onSubmit={sendMessage}
+                                                    >
+                                                        <input
+                                                            id="messageToSend"
+                                                            name="messageToSend"
+                                                            type="text"
+                                                            required
+                                                            placeholder="Write your message"
+                                                            value={messageToSend}
+                                                            onChange={(e) => {
+                                                                e.preventDefault()
+                                                                setMessageToSend(e.target.value)
+                                                            }}
+                                                            className="px-3 py-3 focus:ring-red-500 focus:border-red-500 w-full h-full focus:placeholder-gray-400 text-gray-600 placeholder-gray-300 rounded-full border-gray-200"
+                                                        />
+                                                        <button
+                                                            type="submit"
+                                                            className="rounded-full bg-green-300 px-7 py-1 font-semibold"
+                                                        >
+                                                            Send
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -386,39 +1289,4 @@ export default function Chat() {
             )}
         </>
     )
-}
-
-{
-    /* <div className="flex flex-col w-full max-w-screen-sm h-full bg-black mb-5">
-                        <div className="bg-white mx-2 my-4 px-2 py-4 text-center">Chat App</div>
-                        <div className="px-2 py-4 bg-gray-400 h-full">
-                            {messages &&
-                                messages.docs.map((msg, index) => (
-                                    <ChatMessage key={index} message={msg.data().message} />
-                                ))}
-                        </div>
-                        <form
-                            className="bg-white mx-2 my-2 rounded-full flex"
-                            onSubmit={sendMessage}
-                        >
-                            <input
-                                id="messageToSend"
-                                name="messageToSend"
-                                type="text"
-                                required
-                                className="w-full focus:outline-none py-3 pl-7 mr-1 rounded-full"
-                                value={messageToSend}
-                                onChange={(e) => {
-                                    e.preventDefault()
-                                    setMessageToSend(e.target.value)
-                                }}
-                            ></input>
-                            <button
-                                type="submit"
-                                className="rounded-full bg-green-300 px-7 py-1 font-semibold"
-                            >
-                                Send
-                            </button>
-                        </form>
-                    </div> */
 }
