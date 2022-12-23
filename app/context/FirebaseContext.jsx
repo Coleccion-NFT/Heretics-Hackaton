@@ -70,7 +70,7 @@ export const FirebaseProvider = ({ children }) => {
             console.log(e.code)
             console.log(e.message)
 
-            toast.error("Algo ha ido mal en tu registro", toastConfig)
+            toast.error("Algo ha ido mal en tu registro, contacta con soprte", toastConfig)
         }
     }
 
@@ -117,7 +117,10 @@ export const FirebaseProvider = ({ children }) => {
             console.log(e.code)
             console.log(e.message)
 
-            toast.error("Ha habido un error en el inicio de sesión", toastConfig)
+            toast.error(
+                "Ha habido un error en el inicio de sesión, contacta con soprte",
+                toastConfig
+            )
         }
     }
 

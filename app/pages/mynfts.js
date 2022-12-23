@@ -4,7 +4,6 @@ import { NFTCard, NoMetamask } from "../components"
 import { Web3Context } from "../context/Web3Context"
 
 import contractAddressJSON from "../constants/networkMapping.json"
-import HeroIcon from "../components/HeroIcon"
 
 const MyNfts = () => {
     const { checkIfWalletIsConnected, connectWallet, currentAccount } = useContext(Web3Context)
