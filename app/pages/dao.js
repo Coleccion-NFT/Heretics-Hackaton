@@ -76,7 +76,7 @@ export default function DAO() {
                         </div>
                         <SuggestionModal />
                     </div>
-                    <div className="flex flex-col justify-start items-start bg-gray-100 rounded-lg w-full h-fit px-5 py-4 mt-4">
+                    <div className="flex flex-col justify-start items-start bg-gray-100 rounded-lg w-full h-full px-5 py-4 mt-4">
                         <div className="text-black font-bold text-xl">
                             Lista de votaciones activas
                         </div>
