@@ -5,6 +5,10 @@ import { Web3Context } from "../context/Web3Context"
 import { FirebaseContext } from "../context/FirebaseContext"
 
 import { Proposal, Loader, SuggestionModal } from "../components"
+// TODO: Status de la votaciones
+// TODO: LOG IN y SIngn up hacer mejor
+// TODO: Space evenly en las proposals
+// TODO: Reuniones poner width exacto
 
 import { toast } from "react-toastify"
 import toastConfig from "../constants/toastConfig.json"
