@@ -15,6 +15,7 @@ const poppins = Poppins({
 
 const SuggestionModal = () => {
     const { createPropose } = useContext(DAOContext)
+
     let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
@@ -75,7 +76,7 @@ const SuggestionModal = () => {
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-gray-900"
                                     >
-                                        Fill the form
+                                        Haz una propuesta
                                     </Dialog.Title>
                                     <form className="mt-5 flex flex-col items-center">
                                         <div className="flex items-center justify-center my-5">
@@ -83,7 +84,7 @@ const SuggestionModal = () => {
                                                 htmlFor="newValue"
                                                 className="w-48 font-bold text-base mr-5"
                                             >
-                                                New Value
+                                                Nuevo valor
                                             </label>
                                             <input
                                                 id="newValue"
@@ -100,7 +101,7 @@ const SuggestionModal = () => {
                                                 htmlFor="functionToCall"
                                                 className="w-48 font-bold text-base mr-5"
                                             >
-                                                Function
+                                                Función
                                             </label>
                                             <input
                                                 id="functionToCall"
@@ -117,7 +118,7 @@ const SuggestionModal = () => {
                                                 htmlFor="proposalDescription"
                                                 className="w-48 font-bold text-base mr-5"
                                             >
-                                                Description
+                                                Descripción
                                             </label>
                                             <input
                                                 id="proposalDescription"

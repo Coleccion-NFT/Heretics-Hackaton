@@ -268,6 +268,24 @@ export const DAOProvider = ({ children }) => {
         }
     }
 
+    const getOldVotingInfo = async (address, block) => {
+        try {
+            const governanceToken = createEthereumContract(
+                governanceTokenAddress,
+                governanceTokenABI
+            )
+
+            const votesAmount = await governanceToken.getPastVotes(address, block)
+
+            // toast.info(`Se ha obtenido tu información de votación`, toastConfig)
+
+            return votesAmount
+        } catch (error) {
+            console.log(error.code)
+            console.log(error.message)
+        }
+    }
+
     const delegateTokensTo = async (address) => {
         try {
             const governanceToken = createEthereumContract(
@@ -319,6 +337,7 @@ export const DAOProvider = ({ children }) => {
                 updateProposalStatus,
                 updateStoreValue,
                 getVotingInfo,
+                getOldVotingInfo,
                 delegateTokensTo,
                 transferTokensTo,
             }}
