@@ -2,7 +2,7 @@ import React from "react"
 
 import SponsorsEarnings from "../public/sponsorsEarnings.svg"
 
-import TopCreators from "../public/TopCreators"
+import contentCreator from "../public/contentCreator"
 
 export default function Dashboard() {
     return (
@@ -20,12 +20,12 @@ export default function Dashboard() {
                         Top Creadores
                     </div>
                     <div className="flex flex-wrap md:flex-row md:justify-between md:items-center md:px-4">
-                        {TopCreators.topCreators.map((topCreator) => (
+                        {contentCreator.map((topCreator) => (
                             <img
                                 className="block h-12 m-2 md:m-0 w-auto rounded-md"
-                                src={topCreator.img}
+                                src={topCreator.src}
                                 alt={topCreator.name}
-                                key={topCreator.id}
+                                key={topCreator.index}
                             />
                         ))}
                     </div>

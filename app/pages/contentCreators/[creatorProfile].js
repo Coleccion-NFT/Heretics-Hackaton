@@ -21,7 +21,7 @@ export default function CreatorProfile({ Creator }) {
 
     return (
         <div className="w-full h-screen flex flex-col items-center justify-center pl-8 pr-4 py-14">
-            <img src={Creator.src} alt={Creator.alt} className="w-52 h-auto my-5 rounded-3xl" />
+            <img src={Creator.src} alt={Creator.name} className="w-52 h-auto my-5 rounded-3xl" />
             <div className="my-5 text-black font-bold text-xl">{Creator.name}</div>
             {currentAccount ? (
                 <button

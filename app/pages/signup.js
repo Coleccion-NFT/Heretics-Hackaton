@@ -5,7 +5,7 @@ import { Web3Context } from "../context/Web3Context"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-const Logo = "./HERETICS_LOGO_NAME.png"
+const Logo = "./TeamQuesoLogo.png"
 
 export default function SignUp() {
     const { handleUserSignUp } = useContext(FirebaseContext)

@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 
 import "react-toastify/dist/ReactToastify.css"
 
-const Logo = "./HERETICS_LOGO_NAME.png"
+const Logo = "./TeamQuesoLogo.png"
 
 export default function SignUp() {
     const { handleUserSignIn } = useContext(FirebaseContext)

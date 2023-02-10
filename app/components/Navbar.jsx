@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import NavItems from "../public/Navitems"
 import HeroIcon from "./HeroIcon"
 
-const logo = "./HereticsLogo.png"
+const logo = "./TeamQuesoLogo.png"
 
 export const Navbar = () => {
     const router = useRouter()
@@ -13,7 +13,7 @@ export const Navbar = () => {
     return (
         <div className="flex flex-col h-screen lg:w-60 items-center lg:items-start justify-start py-4 px-4 shadow-2xl">
             <div className="flex h-auto w-full items-center justify-center">
-                <img className="sm:h-full sm:w-16 block" src={logo} alt="Heretics Logo" />
+                <img className="sm:h-full sm:w-16 block" src={logo} alt="TeamQueso Logo" />
             </div>
             <div className="flex flex-col h-5/6 justify-evenly">
                 {NavItems.navitems.map((navitem) => (

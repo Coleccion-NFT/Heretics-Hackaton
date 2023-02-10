@@ -25,11 +25,12 @@ export default function App({ Component, pageProps }) {
     return (
         <main className={`${poppins.variable} font-sans`}>
             <Head>
-                <title>Heretics Hackaton</title>
-                <meta name="description" content="Heretics Blockchain dApp for the hackaton" />
+                <title>Team Queso APP</title>
+                <meta name="description" content="Team Queso dApp" />
                 <link rel="icon" href="/favicon.ico" />
                 <link href="../styles/global.css" rel="stylesheet" />
             </Head>
+
             <Web3Provider>
                 <FirebaseProvider>
                     <DAOProvider>

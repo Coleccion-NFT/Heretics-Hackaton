@@ -31,7 +31,7 @@ const networkConfig = {
 const developmentChains = ["hardhat", "localhost", "ganache"]
 
 // Governor Values
-const QUORUM_PERCENTAGE = 10 // Need 50% of voters to pass
+const QUORUM_PERCENTAGE = 10 // Need 10% of voters to pass
 const MIN_DELAY = 300 // 5 min - after a vote passes, you have 1 hour before you can enact
 // const VOTING_PERIOD = 45818 // 1 week - how long the vote lasts. This is pretty long even for local tests
 const VOTING_PERIOD = 300 // blocks

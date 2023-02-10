@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import { Web3Context } from "../context/Web3Context"
 import { DAOContext } from "../context/DAOContext"
 
-const logo = "./HereticsLogo.png"
+const logo = "./TeamQuesoLogo.png"
 
 const Proposal = ({ data }) => {
     const { truncateStr, proposalState, currentAccount } = useContext(Web3Context)
@@ -116,4 +116,3 @@ const Proposal = ({ data }) => {
 }
 
 export default Proposal
-

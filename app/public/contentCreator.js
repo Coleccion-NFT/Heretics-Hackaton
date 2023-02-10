@@ -1,66 +1,76 @@
+const alvaro845 = "./ContentCreators/alvaro845.jpg"
+const beniju = "./ContentCreators/beniju.jpg"
+const iamjp = "./ContentCreators/iamjp.jpg"
+const jacky = "./ContentCreators/jacky.jpg"
+const malcaide = "./ContentCreators/malcaide.jpg"
+const navalha = "./ContentCreators/navalha.jpg"
+const popifresh = "./ContentCreators/popifresh.png"
+const srtamaverick = "./ContentCreators/srtamaverick.jpg"
+const withzack = "./ContentCreators/withzack.jpg"
+
 const contentCreator = [
     {
         index: 0,
-        name: "nilOjeda",
-        src: "https://pbs.twimg.com/profile_images/1570840867698622470/vHKRrCg1_400x400.jpg",
-        alt: "nilOjedaImg",
-        h3: "NIl Ojeda",
+        name: "alvaro845",
+        src: alvaro845,
+        alt: "alvaro845",
+        h3: "Alvaro845",
     },
     {
         index: 1,
-        name: "werlyb",
-        src: "https://pbs.twimg.com/profile_images/1523656570898370560/p3fSXolW_400x400.jpg",
-        alt: "werlybImg",
-        h3: "Werlyb",
+        name: "beniju",
+        src: beniju,
+        alt: "beniju",
+        h3: "Beniju",
     },
     {
         index: 2,
-        name: "mixwell",
-        src: "https://pbs.twimg.com/profile_images/1603836635111735296/8zH0P7-g_400x400.jpg",
-        alt: "mixwellImg",
-        h3: "mixwell",
+        name: "iamjp",
+        src: iamjp,
+        alt: "iamjp",
+        h3: "iamjp",
     },
     {
         index: 3,
-        name: "calitos",
-        src: "https://pbs.twimg.com/profile_images/1603118161460600832/eO-qb-yB_400x400.jpg",
-        alt: "calitosImg",
-        h3: "Calitos",
+        name: "jacky",
+        src: jacky,
+        alt: "jacky",
+        h3: "Jacky",
     },
     {
         index: 4,
-        name: "espe",
-        src: "https://pbs.twimg.com/profile_images/1597583738392698880/j-Pj_6Mn_400x400.jpg",
-        alt: "espeImg",
-        h3: "Espe",
+        name: "malcaide",
+        src: malcaide,
+        alt: "malcaide",
+        h3: "Malcaide",
     },
     {
         index: 5,
-        name: "grefg",
-        src: "https://pbs.twimg.com/profile_images/1595860510544633856/9BPE_iz__400x400.jpg",
-        alt: "grefgImg",
-        h3: "Grefg",
+        name: "navalha",
+        src: navalha,
+        alt: "navalha",
+        h3: "Navalha",
     },
     {
         index: 6,
-        name: "liaSikora",
-        src: "https://pbs.twimg.com/profile_images/1604040333221847043/c7z6fwob_400x400.jpg",
-        alt: "liaSikoraImg",
-        h3: "LiaSikora",
+        name: "popifresh",
+        src: popifresh,
+        alt: "popifresh",
+        h3: "Popifresh",
     },
     {
         index: 7,
-        name: "guanyar",
-        src: "https://pbs.twimg.com/profile_images/1602419157563310080/sqC9CK0I_400x400.jpg",
-        alt: "guanyarImg",
-        h3: "Guanyar",
+        name: "srtamaverick",
+        src: srtamaverick,
+        alt: "srtamaverick",
+        h3: "Srta Maverick",
     },
     {
         index: 8,
-        name: "jcorko",
-        src: "https://pbs.twimg.com/profile_images/1533482911726505984/-PyH_sd5_400x400.jpg",
-        alt: "jcorkoImg",
-        h3: "Jcorko",
+        name: "withzack",
+        src: withzack,
+        alt: "withzack",
+        h3: "withzack",
     },
 ]
 

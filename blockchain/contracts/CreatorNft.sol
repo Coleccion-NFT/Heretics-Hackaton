@@ -32,16 +32,12 @@ contract CreatorNft is ERC721URIStorage, Ownable {
     // Events
     event NftMinted(Creator Creator, address minter);
 
-    constructor(
-        string[9] memory _creatorTokenUris
-    ) ERC721("Heretics Creator NFT", "HER") {
+    constructor(string[9] memory _creatorTokenUris) ERC721("Heretics Creator NFT", "HER") {
         _initializeContract(_creatorTokenUris);
         s_tokenCounter = 0;
     }
 
-    function _initializeContract(
-        string[9] memory _creatorTokenUris
-    ) private {
+    function _initializeContract(string[9] memory _creatorTokenUris) private {
         if (s_initialized) {
             revert NftCreator__AlreadyInitialized();
         }

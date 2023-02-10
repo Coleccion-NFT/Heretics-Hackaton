@@ -14,7 +14,7 @@ import { toast } from "react-toastify"
 import toastConfig from "../constants/toastConfig.json"
 import "react-toastify/dist/ReactToastify.css"
 import { LockClosedIcon } from "@heroicons/react/20/solid"
-const logo = "./HereticsLogo.png"
+const logo = "./TeamQuesoLogo.png"
 
 export default function Chat() {
     const { handleSignOut, userFirebaseData, loadingFirebaseData, auth, db, collection, doc } =
@@ -264,7 +264,7 @@ export default function Chat() {
                                                             >
                                                                 <div className="flex items-center justify-between">
                                                                     <p className="text-sm font-bold text-red-600">
-                                                                        Heretics Chat
+                                                                        Team Queso Chat
                                                                     </p>
                                                                     <div className="text-gray-400 text-xs">
                                                                         {!loadingMessages &&
@@ -1210,7 +1210,7 @@ export default function Chat() {
                                                     <div className="text-xl mt-1 flex items-center">
                                                         <span className="text-gray-700 mr-3">
                                                             {currentChat == "messages"
-                                                                ? "Heretics Chat"
+                                                                ? "Team Queso Chat"
                                                                 : currentChat}
                                                         </span>
                                                         <span className="text-green-500">
